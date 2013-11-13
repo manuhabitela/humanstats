@@ -1,0 +1,7 @@
+{
+  "name": "humantalks_stats",
+  "version": "1.33.7",
+  "devDependencies": {
+    "underscore": "latest"
+  }
+}

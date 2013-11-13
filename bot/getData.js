@@ -1,168 +1,196 @@
 //get hearthstone cards from hearthhead.com
 var _ = require('underscore');
-var _s = require('underscore.string');
 var fs = require('fs');
+var utils = require('utils');
 var childProcess;
 try { childProcess = require("child_process"); } catch (e) {}
-var casper = require('casper').create({
-	verbose: true,
-	logLevel: "debug"
-});
-casper.on('page.error', function (msg, trace) { this.echo( 'Error: ' + msg, 'ERROR' ); });
-casper.on('remote.message', function(msg) { this.echo('remote message caught: ' + msg); });
+
+
+Utils = {
+	saveJSON: function saveJSON(filepath, data) {
+		data = JSON.stringify(data);
+		fs.write(filepath, data, 'w');
+	},
+
+	getDataFromJSON: function getDataFromJSON(filepath) {
+		return JSON.save( fs.read(filepath) );
+	},
+
+	frenchDateToNumber: function frenchDateToNumber(date) {
+		var months = ["janvier", "février", "mars", "avril", "mai", "juin", "juillet", "août", "septembre", "octobre", "novembre", "décembre"];
+		date = date.replace(/\n/g, '').trim();
+		date = date.split(' ');
+		date[1] = (_(months).indexOf(date[1])+1).toString();
+		date[1] = (date[1]).toString().length > 1 ? date[1] : "0" + date[1];
+		date[0] = (date[0]).toString().length > 1 ? date[0] : "0" + date[0];
+		date = date.reverse().join('-');
+		return date;
+	}
+};
 
 
 /**
  * the Webpage object contains all variables and functions directly related to the human talks webpage we will parse
  *
- * the functions are supposed to be called in a casper.evaluate in order to work directly in the page environment
+ * the "_get...FromDOM" functions are supposed to be called in a casper.evaluate in order to work directly in the page environment
  * @type {Object}
  */
 Webpage = {
-	/**
-	 * url we go to on casper, containing the list of cities
-	 *
-	 * @type {String}
-	 */
-	url: "http://humantalks.com/",
-
-	/**
-	 * css selector that targets all the cities the human talks are
-	 * @type {String}
-	 */
-	citiesSelector: '.cities a[href^="/cities/"]',
-
-	/**
-	 * css selector targeting all the events when on a city page
-	 * @type {String}
-	 */
-	eventsSelector: '#events .event a',
-
-	/**
-	 * css selector targeting the talks of an event
-	 * @type {String}
-	 */
-	talksSelector: '.talks .talk',
-
-	/**
-	 * css selector of a talk title (to be used directly in a talk element, otherwise wouldn't be precise enough)
-	 * @type {String}
-	 */
-	talkTitleSelector: 'h3 a',
-
-	/**
-	 * css selector of a talk author (to be used directly in a talk element, otherwise wouldn't be precise enough)
-	 * @type {String}
-	 */
-	talkAuthorSelector: '.presenter a',
-
-	/**
-	 * css selector targeting the attendees of an event
-	 * @type {String}
-	 */
-	attendeesSelector: '.attendees + .attendees + .attendees .attendee a',
-
-	/**
-	 * css selector of an attendee name (to be used directly in an attendee element, otherwise wouldn't be precise enough)
-	 * @type {String}
-	 */
-	attendeeNameSelector: '.name',
-
-	/**
-	 * css selector of an attendee img (to be used directly in an attendee element, otherwise wouldn't be precise enough)
-	 * @type {String}
-	 */
-	attendeePictureSelector: '.picture img',
+	url: 'http://humantalks.com',
 
 	/**
 	 * get all human talks cities
 	 * @param  {string} selector cities css selector
 	 * @return {array}          list of {name, url} city objects
 	 */
-	getCities: function getCities(citiesSelector) {
-		var cities = document.querySelectorAll(citiesSelector);
+	_getCitiesFromDOM: function _getCitiesFromDOM() {
+		var cities = document.querySelectorAll('.cities a[href^="/cities/"]');
 		return Array.prototype.map.call(cities, function(element) {
 			return {
 				name: element.innerHTML,
-				url: element.href,
-				el: element
+				url: element.href
 			};
 		});
 	},
 
 	/**
 	 * get events of the current city page
-	 * @param  {string} eventsSelector events css selector
-	 * @return {array}                list of {city, name, url} event objects
+	 * @return {array} list of {city, name, url} event objects
 	 */
-	getEvents: function getEvents(eventsSelector) {
-		var events = document.querySelectorAll(eventsSelector);
+	_getEventsFromDOM: function _getEventsFromDOM() {
+		var events = document.querySelectorAll('#events .event > a');
 		return Array.prototype.map.call(events, function(element) {
 			return {
-				date: ,//moment
-				url: element.href,
-				el: element
+				date: element.querySelector('h3 small').innerHTML,
+				url: element.href
 			};
 		});
 	},
 
 	/**
 	 * get talks of the current event page
-	 * @param  {string} talksSelector talks css selector
-	 * @param  {string} talkTitleSelector title css selector
-	 * @param  {string} talkAuthorSelector author css selector
-	 * @return {array}                list of {name, author, url} talk objects
+	 * @return {array} list of {name, author, url} talk objects
 	 */
-	getTalks: function getTalks(talksSelector, talkTitleSelector, talkAuthorSelector) {
-		var talks = document.querySelectorAll(talksSelector);
+	_getTalksFromDOM: function _getTalksFromDOM() {
+		var talks = document.querySelectorAll('.talks .talk');
 		return Array.prototype.map.call(talks, function(element) {
+			var title = element.querySelector('h3 a');
 			return {
-				name: element.querySelector(talkTitleSelector).innerHTML,
-				author: element.querySelector(talkAuthorSelector).innerHTML,
-				url: element.href,
-				el: element
+				name: title.innerHTML,
+				author: element.querySelector('.presenter a').innerHTML,
+				url: title.href
 			};
 		});
 	},
 
 	/**
 	 * get attendees of the current talk page
-	 * @param  {string} attendeesSelector attendees css selector
-	 * @param  {string} attendeeNameSelector name css selector
-	 * @param  {string} attendeePictureSelector img css selector
-	 * @return {array}                list of {name, img, url} attendee objects
+	 * @return {array} list of {name, img, url} attendee objects
 	 */
-	getAttendees: function getAttendees(attendeesSelector, attendeeNameSelector, attendeePictureSelector) {
-		var attendees = document.querySelectorAll(attendeesSelector);
+	_getAttendeesFromDOM: function _getAttendeesFromDOM() {
+		var attendees = document.querySelectorAll('.attendees + .attendees + .attendees .attendee a');
 		return Array.prototype.map.call(attendees, function(element) {
 			return {
-				name: element.querySelector(attendeeNameSelector).innerHTML,
-				img: element.querySelector(attendeePictureSelector).src,
-				url: element.href,
-				el: element
+				name: element.querySelector('.name').innerHTML,
+				img: element.querySelector('.picture img').src,
+				url: element.href
 			};
 		});
-	}
-};
-
-Utils = {
-	saveJSON: function saveJSON(filepath, data) {
-		var data = JSON.stringify(data);
-		fs.write(filepath, data, 'w');
 	},
 
-	getDataFromJSON: function getDataFromJSON(filepath) {
-		return JSON.parse( fs.read(filepath) );
+	getCities: function getCities() {
+		var cities = casper.evaluate(Webpage._getCitiesFromDOM);
+		return cities;
+	},
+
+	getEvents: function getEvents(city) {
+		var events = casper.evaluate(Webpage._getEventsFromDOM);
+		_(events).each(function(event) {
+			event.city = city.name;
+			event.date = Utils.frenchDateToNumber(event.date);
+		});
+		return events;
+	},
+
+	getTalks: function getTalks(event) {
+		var talks = casper.evaluate(Webpage._getTalksFromDOM);
+		_(talks).each(function(talk) {
+			talk.city = event.city;
+			talk.date = event.date;
+		});
+		return talks;
+	},
+
+	getAttendees: function getAttendees(talk) {
+		var attendees = casper.evaluate(Webpage._getAttendeesFromDOM);
+		_(attendees).each(function(attendee) {
+			attendee.city = talk.city;
+			attendee.date = talk.date;
+			attendee.talk = talk.name;
+		});
+		return attendees;
 	}
 };
 
-//we load the human talks webpage
-casper.start(Webpage.url);
 
-casper.then(function homeLoaded() {
-	var cities = casper.evaluate(Webpage.getCities, Webpage.citiesSelector);
-	_(cities).each(function(city) {
-
-	});
+var casper = require('casper').create({
+	verbose: true,
+	logLevel: "debug",
+	viewportSize: { width: 1378, height: 768 }, //for real, my screen is like everyone else's!
+	pageSettings: {
+		loadImages: false,
+		loadPlugins: false,
+		//I'm using Chrome, I SWEAR
+		userAgent: "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/30.0.1599.101 Safari/537.36"
+	},
+	//don't load any external ressource
+	onResourceRequested: function(capser, requestData, networkRequest) {
+		if (requestData.url.indexOf(Webpage.url) !== 0) {
+			networkRequest.abort();
+		}
+	}
 });
-casper.run();
+//logging all the thinnnngs
+casper.on('page.error', function (msg, trace) { this.echo( 'Error: ' + msg, 'ERROR' ); });
+casper.on('remote.message', function(msg) { this.echo('Remote message: ' + msg); });
+
+
+var cities = [], events = [], talks = [], attendees = [];
+
+
+casper
+	.start(Webpage.url)
+	.then(function homeLoaded() {
+		cities = Webpage.getCities();
+	})
+	.then(function citiesSaved() {
+		_(cities).each(function(city) {
+			casper.thenOpen(city.url, function openedCity() {
+				events = events.concat(Webpage.getEvents(city));
+			});
+		});
+	})
+	.then(function eventsSaved() {
+		_(events).each(function(event) {
+			casper.thenOpen(event.url, function openedEvent() {
+				talks = talks.concat(Webpage.getTalks(event));
+			});
+		});
+	})
+	.then(function talksSaved() {
+		_(talks).each(function(talk) {
+			casper.thenOpen(talk.url, function openedTalk() {
+				attendees = attendees.concat(Webpage.getAttendees(talk));
+			});
+		});
+	})
+	.then(function attendeesSaved() {
+		var all = {
+			cities: cities,
+			events: events,
+			talks: talks,
+			attendees: attendees
+		};
+		Utils.saveJSON('humantalks.json', all);
+	})
+	.run();
