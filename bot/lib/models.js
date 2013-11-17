@@ -114,11 +114,11 @@ var modelsUtils = {
 	getInfoFromURL: function getInfoFromURL(url, info) {
 		if (!_(['slug', 'id']).contains(info))
 			return false;
-		url = url.substr(_(url).lastIndexOf('/')+1);
+		url = url.substr(url.lastIndexOf('/')+1);
 		if (info === 'id')
-			return (url.substr(0, _(url).indexOf('-')))*1;
+			return (url.substr(0, url.indexOf('-')))*1;
 		if (info === 'slug')
-			return url.substr(_(url).indexOf('-')+1);
+			return url.substr(url.indexOf('-')+1);
 		return false;
 	},
 
