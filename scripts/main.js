@@ -8,3 +8,10 @@ var talks = new models.Talks(data.talks);
 var users = new models.Users(data.users);
 
 var citiesView = new views.Cities({ collection: cities, el: document.querySelector('.cities') });
+var dataView = new views.Data({
+	cities: cities,
+	events: events,
+	talks: talks,
+	users: users,
+	el: document.querySelector('.data')
+});
