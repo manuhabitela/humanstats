@@ -68,7 +68,8 @@ casper
 		events.each(function(event) {
 			casper.thenOpen(event.getURL(), function openedEvent() {
 				var currentTalks = humantalks.talks();
-				currentTalks = _(currentTalks).map(function( talk, currentTalks ) {
+				var currentTalkers = _(currentTalks).map(function(talk) { return talk.author; });
+				currentTalks = _(currentTalks).map(function(talk) {
 					return _.extend(talk, { event: event.toJSON() });
 				});
 				talks.add(currentTalks);
@@ -79,6 +80,7 @@ casper
 				users.add(rawAttendees);
 
 				users.add(humantalks.talkers());
+				users.add(currentTalkers);
 
 				saveAll();
 			});

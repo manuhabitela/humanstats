@@ -49,19 +49,28 @@ HumanTalks.prototype = {
 	talks: function talks() {
 		return this.casper.evaluate(function talks() {
 			var elements = document.querySelectorAll('.talks .talk');
+			//recent paris events page are filled with talks all registered by m. parisot, with the real talkers in the end of the talk' title
+			var parisotStyle = Array.prototype.every.call(document.querySelectorAll('.talks .talk .presenter a'), function(link) {
+				return link.innerHTML === "Mathieu Parisot";
+			});
 			return Array.prototype.map.call(elements, function(element) {
-				var title = element.querySelector('h3 a');
-				var author = element.querySelector('.presenter a');
+				var titleLink = element.querySelector('h3 a');
+				var authorLink = element.querySelector('.presenter a');
+				title = titleLink ? titleLink.innerHTML : '';
+				author = authorLink ? authorLink.innerHTML : '';
+				if (parisotStyle) {
+					title = titleLink ? titleLink.innerHTML.substr(0, titleLink.innerHTML.lastIndexOf('par ')) : '';
+					author = titleLink ? titleLink.innerHTML.substr(titleLink.innerHTML.lastIndexOf('par ')+('par ').length) : '';
+				}
 				var obj = {};
 				if (title) {
-					obj.name = title.innerHTML;
-					obj.url = title.href;
+					obj.name = title.trim();
+					obj.url = titleLink.href;
 				}
 				if (author) {
-					obj.author = {
-						url: author.href,
-						name: author.innerHTML
-					};
+					obj.author = { name: author.trim() };
+					if (!parisotStyle)
+						obj.author.url = authorLink.href;
 				}
 				return obj;
 			});

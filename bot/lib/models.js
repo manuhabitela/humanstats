@@ -52,6 +52,7 @@ var Event = module.exports.Event = Backbone.Model.extend({
 		}
 		if (data.date)
 			data.date = appUtils.frenchDateToNumber(data.date);
+
 		return data;
 	},
 
@@ -78,8 +79,12 @@ var Talk = module.exports.Talk = Backbone.Model.extend({
 			data.eventId = data.event.id;
 			delete data.event;
 		}
-		if (data.author && data.author.url) {
-			data.authorId = modelsUtils.getIDFromURL(data.author.url);
+		if (data.author) {
+			if (data.author.url) {
+				data.authorId = modelsUtils.getIDFromURL(data.author.url);
+			} else if (data.author.name) {
+				data.authorName = data.author.name;
+			}
 			delete data.author;
 		}
 		return data;
@@ -101,6 +106,8 @@ var User = module.exports.User = Backbone.Model.extend({
 			data.id = modelsUtils.getIDFromURL(data.url);
 			data.slug = modelsUtils.getSlugFromURL(data.url);
 			delete data.url;
+		} else if (data.name && !data.id && !data.slug) {
+			data.id = data.name;
 		}
 		return data;
 	},
