@@ -86,4 +86,10 @@ casper
 			});
 		});
 	})
+	.then(function afterAll() {
+		users.setAttendance(events);
+		users.setTalks(talks);
+
+		saveAll();
+	})
 	.run();

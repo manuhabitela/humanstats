@@ -111,10 +111,44 @@ var User = module.exports.User = Backbone.Model.extend({
 		}
 		return data;
 	},
+
+	setAttendance: function(events) {
+		this.set('attendedEventIds', []);
+		var id = this.get('id');
+		events.each(function(event) {
+			if ( id && _(event.get('attendeeIds')).contains(id) ) {
+				var attendedEventIds = _.clone(this.get('attendedEventIds'));
+				attendedEventIds.push(event.get('id'));
+				this.set('attendedEventIds', attendedEventIds);
+			}
+		}, this);
+	},
+
+	setTalks: function(talks) {
+		this.set('talkIds', []);
+		var id = this.get('id');
+		talks.each(function(talk) {
+			if ( id && talk.get('authorId') == id ) {
+				var talkIds = this.get('talkIds');
+				talkIds.push(talk.get('id'));
+				this.set('talkIds', talkIds);
+			}
+		}, this);
+	}
 });
 var Users = module.exports.Users = Backbone.Collection.extend({
 	model: User,
-	htURL: 'http://news.humancoders.com/users/<%= id %>-<%= slug %>'
+	htURL: 'http://news.humancoders.com/users/<%= id %>-<%= slug %>',
+	setAttendance: function(events) {
+		_(this.models).each(function(user) {
+			user.setAttendance(events);
+		}, this);
+	},
+	setTalks: function(talks) {
+		_(this.models).each(function(user) {
+			user.setTalks(talks);
+		}, this);
+	}
 });
 
 var modelsUtils = {
