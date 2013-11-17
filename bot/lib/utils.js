@@ -8,8 +8,9 @@ module.exports = {
 		var file = null;
 		try {
 			file = fs.read(filepath);
+			file = JSON.parse(file);
 		} catch (e) {}
-		return file !== null ? JSON.parse( file ) : null;
+		return file;
 	},
 
 	frenchDateToNumber: function frenchDateToNumber(date) {
