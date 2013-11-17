@@ -1,5 +1,5 @@
 {
-  "name": "humantalks_stats",
+  "name": "humantalks_scraper",
   "version": "1.33.7",
   "devDependencies": {
     "underscore": "latest",
