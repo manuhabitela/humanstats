@@ -45,7 +45,19 @@ var City = module.exports.City = Backbone.Model.extend({
 });
 var Cities = module.exports.Cities = Backbone.Collection.extend({
 	model: City,
-	htURL: 'http://humantalks.com/cities/<%= city %>'
+	htURL: 'http://humantalks.com/cities/<%= city %>',
+
+	activate: function (id) {
+		if (!this.get(id))
+			return false;
+		this.activeItem = this.get(id);
+		this.trigger('activate', this.activeItem);
+	},
+
+	desactivate: function() {
+		this.activeItem = null;
+		this.trigger('desactivate', this.activeItem);
+	}
 });
 
 
@@ -84,6 +96,7 @@ var Talk = module.exports.Talk = Backbone.Model.extend({
 		}
 		if (data.event && data.event.id) {
 			data.eventId = data.event.id;
+			data.city = data.event.city;
 			delete data.event;
 		}
 		if (data.author) {
