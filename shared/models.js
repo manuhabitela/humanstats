@@ -8,6 +8,13 @@ Backbone.Collection.prototype.add = function(models, options) {
 	return _originalAdd.call(this, models, options);
 };
 
+Backbone.Collection.prototype.comparator = function(model) {
+	if (model.name) return model.name;
+	if (model.title) return model.title;
+	if (model.id) return model.id;
+	return model.cid;
+};
+
 Backbone.Collection.prototype.parse = function(resp, options) {
 	var data = resp;
 	if (this.model && resp.length) {
