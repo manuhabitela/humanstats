@@ -46,17 +46,19 @@ function saveAll() {
 casper
 	.start(humantalks.url)
 	.then(function humanTalksHomeLoaded() {
-		cities.add(humantalks.cities(), { parse: true });
+		cities.add(humantalks.cities());
+
+		saveAll();
 	})
 	.then(function citiesSaved() {
 		cities.each(function(city) {
 			casper.thenOpen(city.getURL(), function openedCity() {
-				events.add(humantalks.events(), { parse: true });
+				events.add(humantalks.events());
 
 				var rawOrganizers = humantalks.organizers();
 				var organizers = new models.Users(rawOrganizers, { parse: true });
 				city.set('organizerIds', organizers.pluck('id'));
-				users.add(rawOrganizers, { parse: true });
+				users.add(rawOrganizers);
 
 				saveAll();
 			});
@@ -69,14 +71,14 @@ casper
 				currentTalks = _(currentTalks).map(function( talk, currentTalks ) {
 					return _.extend(talk, { event: event.toJSON() });
 				});
-				talks.add(currentTalks, { parse: true });
+				talks.add(currentTalks);
 
 				var rawAttendees = humantalks.attendees();
 				var attendees = new models.Users(rawAttendees, { parse: true });
 				event.set('attendeeIds', attendees.pluck('id'));
-				users.add(rawAttendees, { parse: true });
+				users.add(rawAttendees);
 
-				users.add(humantalks.talkers(), { parse: true });
+				users.add(humantalks.talkers());
 
 				saveAll();
 			});

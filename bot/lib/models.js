@@ -2,6 +2,12 @@ var _ = require('underscore');
 var Backbone = require('backbone');
 var appUtils = require('./utils.js');
 
+var _originalAdd = Backbone.Collection.prototype.add;
+Backbone.Collection.prototype.add = function(models, options) {
+	options = _.extend({ parse: true, merge: true }, options);
+	return _originalAdd.call(this, models, options);
+};
+
 Backbone.Collection.prototype.parse = function(resp, options) {
 	var data = resp;
 	if (this.model && resp.length) {
