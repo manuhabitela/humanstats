@@ -1,5 +1,5 @@
-var Backbone = require('backbone');
-var _ = require('underscore');
+var Backbone = require('../node_modules/backbone/backbone.js');
+var _ = require('../node_modules/underscore/underscore.js');
 var fs = require('fs');
 var utils = require('utils');
 var HumanTalks = require('./humantalks.js');
