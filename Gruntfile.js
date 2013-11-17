@@ -18,21 +18,35 @@ module.exports = function(grunt) {
                 files: ['scss/**/*.scss'],
                 tasks: ['compass:dev', 'autoprefixer:dev']
             },
-            css: {
-                files: ['*.css']
-            },
             livereload: {
                 files: [
                     '*.html',
                     'css/*.css',
-                    '/**.js',
                     '/img/*.{png,jpg,jpeg}'
                 ],
                 options: {
                     livereload: true
                 }
+            },
+            scripts: {
+                files: ['shared/*.js', 'scripts/!(bundled).js'],
+                tasks: ['browserify:dev'],
+                options: {
+                    livereload: true
+                }
             }
         },
+
+        browserify: {
+            dev: {
+                src: ['scripts/main.js'],
+                dest: 'scripts/bundled.js',
+                options: {
+                  debug: true
+                }
+            }
+        },
+
         compass: {
             dev: {
                 options: {
@@ -86,5 +100,10 @@ module.exports = function(grunt) {
         'clean:server',
         'connect:livereload',
         'watch'
+    ]);
+    grunt.registerTask('build', [
+        'compass:dev',
+        'autoprefixer:dev',
+        'browserify:dev'
     ]);
 };

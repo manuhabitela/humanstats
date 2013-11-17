@@ -1,10 +1,6 @@
-require.config({
-	paths: {
-		text: '../bower_components/requirejs-plugins/lib/text',
-		json: '../bower_components/requirejs-plugins/src/json'
-	}
-});
+var data = require('../data/humantalks.json');
+var models = require('../shared/models');
 
-require(["json!../data/humantalks.json"], function(util) {
-	console.log(util);
-});
+var cities = new models.Cities();
+console.log(cities);
+console.log(data);

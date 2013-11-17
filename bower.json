@@ -2,8 +2,6 @@
   "name": "humantalks_stats",
   "version": "13.3.7",
   "dependencies": {
-    "requirejs": "latest",
-    "d3": "~3.3.9",
-    "requirejs-plugins": "~1.0.2"
+    "d3": "~3.3.9"
   }
 }
