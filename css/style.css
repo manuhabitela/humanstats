@@ -849,6 +849,28 @@ img.right {
   text-align: center;
 }
 
+/* line 155, ../scss/helpers/_layout-helpers.scss */
+
+.inline-list,
+.cities ul {
+  padding-left: 0;
+}
+
+/* line 157, ../scss/helpers/_layout-helpers.scss */
+
+.inline-list li,
+.cities ul li {
+  display: inline-block;
+  margin: 0 20px;
+}
+
+/* line 160, ../scss/helpers/_layout-helpers.scss */
+
+.inline-list li:first-child,
+.cities ul li:first-child {
+  margin-left: 0;
+}
+
 /**
  * Blocks widths 
  * (percentages and pixels) 

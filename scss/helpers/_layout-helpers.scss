@@ -151,3 +151,14 @@ img.right { margin-bottom: 5px; }
 .txtleft   { text-align: left; }
 .txtright  { text-align: right; }
 .txtcenter { text-align: center; }
+
+.inline-list {
+  padding-left: 0;
+  li {
+    display: inline-block;
+    margin: 0 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
