@@ -2,9 +2,9 @@ var Backbone = require('backbone');
 var _ = require('underscore');
 var fs = require('fs');
 var utils = require('utils');
-var appUtils = require('./lib/utils.js');
-var HumanTalks = require('./lib/humantalks.js');
-var models = require('./lib/models.js');
+var HumanTalks = require('./humantalks.js');
+var appUtils = require('../shared/utils.js');
+var models = require('../shared/models.js');
 
 var casper = require('casper').create({
 	verbose: true,

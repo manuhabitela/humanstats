@@ -1,8 +1,0 @@
-{
-  "name": "humantalks_scraper",
-  "version": "1.33.7",
-  "devDependencies": {
-    "underscore": "latest",
-    "backbone": "latest"
-  }
-}
