@@ -1,9 +1,10 @@
-define(["jquery", "backbone", "underscore", "./data.text"], function($, Backbone, _, TextDataView) {
+define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbone, _, TextDataView, MapDataView) {
 
 	var DataView = Backbone.View.extend({
 		initialize: function(options) {
 			this.subViews = {
-				"text": new TextDataView({ el: this.$('.text') })
+				"text": new TextDataView({ el: this.$('.text') }),
+				"map": new MapDataView({ el: this.$('.map') })
 			};
 			this.cities = options.cities || [];
 			this.events = options.events || [];

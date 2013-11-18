@@ -5,6 +5,7 @@
     "d3": "~3.3.9",
     "jquery": "~2.0.3",
     "requirejs": "~2.1.9",
-    "requirejs-plugins": "~1.0.2"
+    "requirejs-plugins": "~1.0.2",
+    "datamaps": "~0.2.0"
   }
 }
