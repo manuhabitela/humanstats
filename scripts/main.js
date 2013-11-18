@@ -22,7 +22,7 @@ require.config({
 		underscore: '../bower_components/underscore/underscore',
 		backbone: '../bower_components/backbone/backbone',
 		d3: '../bower_components/d3/d3',
-		datamaps: '../bower_components/datamaps/datamaps.world',
+		datamaps: '../lib/datamaps',
 		topojson: '../bower_components/topojson/topojson',
 		text: '../bower_components/requirejs-plugins/lib/text',
 		json: '../bower_components/requirejs-plugins/src/json'

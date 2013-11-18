@@ -2319,3 +2319,22 @@ h6,
     /* 2 */
   }
 }
+
+/* line 5, ../scss/_main.scss */
+
+.map {
+  width: 600px;
+  height: 600px;
+  position: relative;
+}
+
+/* line 9, ../scss/_main.scss */
+
+.map .hoverinfo {
+  -webkit-box-shadow: none;
+  box-shadow: none;
+  border: 2px solid #bbb;
+  padding: 10px;
+  font-size: 16px;
+  font-family: "PT Serif", "Georgia", "DejaVu Serif", Norasi, serif;
+}
