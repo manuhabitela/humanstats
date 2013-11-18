@@ -1,6 +1,4 @@
 require.config({
-	// The shim config allows us to configure dependencies for
-	// scripts that do not call define() to register a module
 	shim: {
 		underscore: {
 			exports: '_'
@@ -22,18 +20,6 @@ require.config({
 	}
 });
 
-require(["json!../data/humantalks.json", "../scripts/models", "./views"], function(data, models, views) {
-	var cities = new models.Cities(data.cities);
-	var events = new models.Events(data.events);
-	var talks = new models.Talks(data.talks);
-	var users = new models.Users(data.users);
-
-	var citiesView = new views.Cities({ collection: cities, el: document.querySelector('.cities') });
-	var dataView = new views.Data({
-		cities: cities,
-		events: events,
-		talks: talks,
-		users: users,
-		el: document.querySelector('.data')
-	});
+require(["./app"], function(HumanStatistics) {
+	var app = new HumanStatistics('#container');
 });

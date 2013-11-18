@@ -22,7 +22,7 @@ module.exports = function(grunt) {
                 files: [
                     '*.html',
                     'css/*.css',
-                    'scripts/*.js',
+                    'scripts/**/*.js',
                     '/img/*.{png,jpg,jpeg}'
                 ],
                 options: {

@@ -1,63 +1,10 @@
-define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
+define(["jquery", "backbone", "underscore", "./data.text"], function($, Backbone, _, TextDataView) {
 
-	var views = {};
-	var Cities = views.Cities = Backbone.View.extend({
-		template: _.template([
-			'<ul class="inline-list">',
-				'<li>Tout</li>',
-				'<% _.each(cities, function(city) { %>',
-				'<li data-id="<%= city.id %>"><%- city.name %></li>',
-				'<% }) %>',
-			'</ul>'].join('')
-		),
-
-		events: {
-			'click li': 'selectCity'
-		},
-
-		initialize: function() {
-			this.render();
-		},
-
-		render: function() {
-			this.$el.html( this.template({ cities: this.collection.toJSON() }) );
-		},
-
-		selectCity: function(e) {
-			this.$('li').removeClass('active');
-			$(e.currentTarget).addClass('active');
-			var dataId = this.$('li.active').attr('data-id');
-			if (dataId)
-				this.collection.activate(dataId);
-			else
-				this.collection.desactivate();
-		}
-	});
-
-	var Data = views.Data = Backbone.View.extend({
-		template: _.template([
-			'<div class="row">',
-				'<div class="col">',
-					'<h2>Les Human Talks, c\'est :</h2>',
-					'<ul>',
-						'<li><%- talks.length %> talks</li>',
-						'<li>en <%- events.length %> évènements</li>',
-						'<% if (cities && cities.length > 1) { %><li>dans <%- cities.length %> villes</li><% } %>',
-					'</ul>',
-				'</div>',
-				'<div class="col">',
-					'<h2>Les Human Talks, c\'est :</h2>',
-					'<ul>',
-						'<li><%- organizers.length %> organiseurs</li>',
-						'<li><%- talkers.length %> talkers</li>',
-						'<li><%- attendees.length %> participants venus <%- appearances %> fois</li>',
-					'</ul>',
-				'</div>',
-			'</div>'
-			].join('')
-		),
-
+	var DataView = Backbone.View.extend({
 		initialize: function(options) {
+			this.subViews = {
+				"text": new TextDataView({ el: this.$('.text') })
+			};
 			this.cities = options.cities || [];
 			this.events = options.events || [];
 			this.talks = options.talks || [];
@@ -68,21 +15,17 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 			this.cities.on('activate desactivate', _(this.onCityChange).bind(this));
 		},
 
+		render: function() {
+			if (this.subViews) {
+				_(this.subViews).each(function(subView) {
+					subView.render();
+				});
+			}
+		},
+
 		onCityChange: function(city) {
 			this.filterData(city);
 			this.render();
-		},
-
-		render: function() {
-			this.$el.html( this.template({
-				cities: this.data.cities,
-				events: this.data.events,
-				talks: this.data.talks,
-				organizers: this.data.organizers,
-				talkers: this.data.talkers,
-				attendees: this.data.attendees,
-				appearances: this.data.appearances
-			}) );
 		},
 
 		filterData: function(city) {
@@ -90,6 +33,12 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 			_(['Cities', 'Events', 'Talks', 'Organizers', 'Talkers', 'Attendees', 'Appearances']).each(function(type) {
 				this.data[type.toLowerCase()] = this['filtered' + type](city);
 			}, this);
+
+			if (this.subViews) {
+				_(this.subViews).each(function(subView) {
+					subView.data = this.data;
+				}, this);
+			}
 		},
 
 		filteredCities: function(city) {
@@ -135,7 +84,5 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 			}, 0);
 		}
 	});
-
-	return views;
-
+	return DataView;
 });
