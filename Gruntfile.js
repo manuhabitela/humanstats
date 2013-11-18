@@ -22,27 +22,11 @@ module.exports = function(grunt) {
                 files: [
                     '*.html',
                     'css/*.css',
+                    'scripts/*.js',
                     '/img/*.{png,jpg,jpeg}'
                 ],
                 options: {
                     livereload: true
-                }
-            },
-            scripts: {
-                files: ['shared/*.js', 'scripts/!(bundled).js'],
-                tasks: ['browserify:dev'],
-                options: {
-                    livereload: true
-                }
-            }
-        },
-
-        browserify: {
-            dev: {
-                src: ['scripts/main.js'],
-                dest: 'scripts/bundled.js',
-                options: {
-                  debug: true
                 }
             }
         },
@@ -103,7 +87,6 @@ module.exports = function(grunt) {
     ]);
     grunt.registerTask('build', [
         'compass:dev',
-        'autoprefixer:dev',
-        'browserify:dev'
+        'autoprefixer:dev'
     ]);
 };

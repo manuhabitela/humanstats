@@ -1,10 +1,11 @@
-var Backbone = require('../node_modules/backbone/backbone.js');
-var _ = require('../node_modules/underscore/underscore.js');
+//run this from the root project directory to fill the data dir correctly
+var Backbone = require('backbone');
+var _ = require('underscore');
 var fs = require('fs');
 var utils = require('utils');
 var HumanTalks = require('./humantalks.js');
-var appUtils = require('../shared/utils.js');
-var models = require('../shared/models.js');
+var IO = require('./io.js');
+var models = require('../scripts/models.js');
 
 var casper = require('casper').create({
 	verbose: true,
@@ -23,10 +24,10 @@ casper.on('remote.message', function(msg) { this.echo('Remote message: ' + msg);
 //don't load any external ressource
 casper.on("resource.requested", function(res, req) { if (res.url.indexOf(humantalks.url) !== 0) req.abort(); });
 
-var cities = new models.Cities(appUtils.getDataFromJSON('../data/cities.json')),
-	events = new models.Events(appUtils.getDataFromJSON('../data/events.json')),
-	talks = new models.Talks(appUtils.getDataFromJSON('../data/talks.json')),
-	users = new models.Users(appUtils.getDataFromJSON('../data/users.json')),
+var cities = new models.Cities(IO.getDataFromJSON('./data/cities.json')),
+	events = new models.Events(IO.getDataFromJSON('./data/events.json')),
+	talks = new models.Talks(IO.getDataFromJSON('./data/talks.json')),
+	users = new models.Users(IO.getDataFromJSON('./data/users.json')),
 	humantalks = new HumanTalks({ casper: casper });
 
 function saveAll() {
@@ -36,11 +37,11 @@ function saveAll() {
 		talks: talks.toJSON(),
 		users: users.toJSON()
 	};
-	appUtils.saveJSON('../data/cities.json', all.cities);
-	appUtils.saveJSON('../data/events.json', all.events);
-	appUtils.saveJSON('../data/talks.json', all.talks);
-	appUtils.saveJSON('../data/users.json', all.users);
-	appUtils.saveJSON('../data/humantalks.json', all);
+	IO.saveJSON('./data/cities.json', all.cities);
+	IO.saveJSON('./data/events.json', all.events);
+	IO.saveJSON('./data/talks.json', all.talks);
+	IO.saveJSON('./data/users.json', all.users);
+	IO.saveJSON('./data/humantalks.json', all);
 }
 
 casper

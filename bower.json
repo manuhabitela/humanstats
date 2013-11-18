@@ -3,6 +3,8 @@
   "version": "13.3.7",
   "dependencies": {
     "d3": "~3.3.9",
-    "jquery": "~2.0.3"
+    "jquery": "~2.0.3",
+    "requirejs": "~2.1.9",
+    "requirejs-plugins": "~1.0.2"
   }
 }

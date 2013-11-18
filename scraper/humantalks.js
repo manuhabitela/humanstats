@@ -1,4 +1,5 @@
 var _ = require('underscore');
+
 var HumanTalks = function(opts) {
 	this.options = _.extend({}, { url: 'http://humantalks.com', casper: null }, opts);
 	this.casper = this.options.casper;

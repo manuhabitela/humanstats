@@ -16,8 +16,6 @@
     "grunt-contrib-livereload": "0.1.2",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-watch": "0.4.4",
-    "grunt-autoprefixer": "~0.3.1",
-    "browserify": "~2.35.2",
-    "grunt-browserify": "~1.2.11"
+    "grunt-autoprefixer": "~0.3.1"
   }
 }
