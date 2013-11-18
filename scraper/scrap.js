@@ -6,6 +6,7 @@ var utils = require('utils');
 var HumanTalks = require('./humantalks.js');
 var IO = require('./io.js');
 var models = require('../scripts/models.js');
+var geocoder = require('./geocode.js');
 
 var casper = require('casper').create({
 	verbose: true,
@@ -21,8 +22,13 @@ var casper = require('casper').create({
 //logging all the thinnnngs
 casper.on('page.error', function (msg, trace) { this.echo( 'Error: ' + msg, 'ERROR' ); });
 casper.on('remote.message', function(msg) { this.echo('Remote message: ' + msg); });
-//don't load any external ressource
-casper.on("resource.requested", function(res, req) { if (res.url.indexOf(humantalks.url) !== 0) req.abort(); });
+//don't load any external ressource except bing geocoder
+casper.on("resource.requested", function(res, req) {
+	if (res.url.indexOf(humantalks.url) !== 0 && res.url.indexOf(geocoder.baseURL) !== 0)
+		req.abort();
+});
+
+geocoder.key = 'AqJNOV0iGMNRfUf9gp5Rb2gf1HHKoJ-752bZ1xgUuT3qdqGJ8z2-KFttDY39aQcH';
 
 var cities = new models.Cities(IO.getDataFromJSON('./data/cities.json')),
 	events = new models.Events(IO.getDataFromJSON('./data/events.json')),
@@ -49,6 +55,17 @@ casper
 	.then(function humanTalksHomeLoaded() {
 		cities.add(humantalks.cities());
 
+		cities.each(function(city) {
+			var coordsURL = geocoder.getQueryURL({ locality: city.get('name'), countryRegion: "FR", maxResults: 1 });
+			casper.thenOpen(coordsURL, { method: 'get', headers: { 'Accept': 'application/json' } }, function openedCityCoords() {
+				var response = JSON.parse(casper.getPageContent());
+				var coords = geocoder.getCoordsFromResponse(response);
+				city.set({ coords: coords }, { silent: true });
+				casper.echo("hhaa)");
+			});
+		});
+	})
+	.then(function citiesParsedAndGeocoded() {
 		saveAll();
 	})
 	.then(function citiesSaved() {
