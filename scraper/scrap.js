@@ -76,6 +76,11 @@ casper
 				var rawOrganizers = humantalks.organizers();
 				var organizers = new models.Users(rawOrganizers, { parse: true });
 				city.set('organizerIds', organizers.pluck('id'));
+				cityEvents = _.chain( events.where({ city: city.id }) )
+					.map(function(ev) { return ev.toJSON(); })
+					.pluck('id')
+					.value();
+				city.set('eventIds', cityEvents);
 				users.add(rawOrganizers);
 
 				saveAll();
