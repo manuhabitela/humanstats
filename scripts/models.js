@@ -108,7 +108,8 @@ define(function (require, exports, module) {
 					attendedEventIds.push(event.get('id'));
 				}
 			}, this);
-			this.set('attendedEventIds', attendedEventIds);
+			if (attendedEventIds.length)
+				this.set('attendedEventIds', attendedEventIds);
 		},
 		setTalks: function(talks) {
 			var talkIds = [];
@@ -118,11 +119,16 @@ define(function (require, exports, module) {
 					talkIds.push(talk.get('id'));
 				}
 			}, this);
-			this.set('talkIds', talkIds);
+			if (talkIds.length)
+				this.set('talkIds', talkIds);
 		}
 	});
 	var Users = models.Users = BaseCollection.extend({
 		model: User,
+		initialize: function() {
+			_.bindAll(this, 'handleDuplicates');
+			this.on('add', this.handleDuplicates);
+		},
 		setAttendance: function(events) {
 			_(this.models).each(function(user) {
 				if (user.get('id') !== undefined)
@@ -134,6 +140,27 @@ define(function (require, exports, module) {
 				if (user.get('id') !== undefined)
 					user.setTalks(talks);
 			}, this);
+		},
+		handleDuplicates: function(addedUser) {
+			var existings = this.filter(function(model) {
+				return model.get('name') === addedUser.get('name') && model.id !== addedUser.id;
+			}, this);
+			if (existings.length) {
+				_(existings).each(function(existing) {
+					//merge meetup user
+					if (addedUser.id.toString().indexOf('m_') === 0) {
+						var meetupId = (addedUser.id.substr(2))*1; //looks like ("m_123", so, substring to get 123);
+						existing.set({ m_id: meetupId, m_group: (addedUser.get('group') || '') });
+						this.remove(addedUser);
+					} else {
+						//remove unused user
+						var newModelKeys = _(addedUser.omit('attendedEventIds', 'talkIds')).keys();
+						if ( !_(newModelKeys).difference( ['name', 'id'] ).length )
+							this.remove(addedUser);
+					}
+				}, this);
+			}
+			this.trigger('handledDuplicates');
 		}
 	});
 

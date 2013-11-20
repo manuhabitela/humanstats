@@ -3,7 +3,8 @@
   "version": "1.33.7",
   "dependencies": {
     "underscore": "latest",
-    "backbone": "latest"
+    "backbone": "latest",
+    "moment": "~2.4.0"
   },
   "devDependencies": {
     "matchdep": "0.1.2",
