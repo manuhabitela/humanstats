@@ -64,8 +64,8 @@ Meetup.Utils = {
 
 	getGroupFromURL: function getGroupFromURL(url) {
 		url = url.replace('http://', '');
-		var group = url.substr(url.indexOf('/'));
-		return group.substr(0, group.lastIndexOf('/'));
+		var group = url.substr(url.indexOf('/')+1);
+		return group.substr(0, group.indexOf('/'));
 	}
 };
 module.exports = Meetup;
