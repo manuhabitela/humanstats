@@ -41,10 +41,19 @@ Meetup.prototype = {
 			var elements = document.querySelectorAll('#rsvp-list > .memberinfo-widget');
 			return Array.prototype.map.call(elements, function(element) {
 				var name = element.querySelector('.member-name a');
-				var img = element.querySelector('.mem-photo-small img');
+				var imgLink = element.querySelector('a.mem-photo-small');
+				var imgURL = '';
+				if (imgLink && jQuery) {
+					if (jQuery(imgLink).attr('data-src'))
+						imgURL = jQuery(imgLink).attr('data-src');
+					else {
+						imgURL = jQuery(imgLink).css('background-image').replace("url(", "");
+						imgURL = imgURL.substr(0, imgURL.length-1);
+					}
+				}
 				return {
 					name: name ? name.innerHTML : '',
-					img: img ? img.src : '',
+					img: imgURL ? imgURL : '',
 					url: name ? name.href.replace(meetupURL, '') : ''
 				};
 			});
