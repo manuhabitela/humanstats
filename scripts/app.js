@@ -1,5 +1,5 @@
 define(
-	["json!../data/humantalks.json", "./models", "./views/cities", "./views/data"],
+	["json!../data/all.json", "./models", "./views/cities", "./views/data"],
 	function(data, models, CitiesView, DataView) {
 
 	var HumanStatistics = function(container) {
