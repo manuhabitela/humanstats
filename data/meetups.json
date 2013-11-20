@@ -1,0 +1,49 @@
+[{
+    "eventId": 80,
+    "meetup": {
+        "group": "HumanTalks-Paris",
+        "id": 126207802
+    }
+},
+{
+    "eventId": 84,
+    "meetup": {
+        "group": "HumanTalks-Paris",
+        "id": 137484932
+    }
+},
+{
+    "eventId": 90,
+    "meetup": {
+        "group": "HumanTalks-Lyon",
+        "id": 141121902
+    }
+},
+{
+    "eventId": 95,
+    "meetup": {
+        "group": "HumanTalks-Paris",
+        "id": 142883912
+    }
+},
+{
+    "eventId": 99,
+    "meetup": {
+        "group": "HumanTalks-Lyon",
+        "id": 146531002
+    }
+},
+{
+    "eventId": 100,
+    "meetup": {
+        "group": "HumanTalks-Paris",
+        "id": 148407972
+    }
+},
+{
+    "eventId": 105,
+    "meetup": {
+        "group": "HumanTalks-Lyon",
+        "id": 151197902
+    }
+}]
