@@ -11,40 +11,44 @@ define(function (require, exports, module) {
 
 	var models = {};
 
-	var _originalAdd = Backbone.Collection.prototype.add;
-	Backbone.Collection.prototype.add = function(models, options) {
-		options = _.extend({ parse: true, merge: true }, options);
-		return _originalAdd.call(this, models, options);
-	};
+	var BaseModel = models.BaseModel = Backbone.Model.extend({});
+	var BaseCollection = models.BaseCollection = Backbone.Collection.extend({
 
-	Backbone.Collection.prototype.comparator = function(model) {
-		if (model.name) return model.name;
-		if (model.title) return model.title;
-		if (model.id) return model.id;
-		return model.cid;
-	};
+		add: function(models, options) {
+			options = _.extend({ parse: true, merge: true }, options);
+			return Backbone.Collection.prototype.add.call(this, models, options);
+		},
 
-	Backbone.Collection.prototype.parse = function(resp, options) {
-		var data = resp;
-		if (this.model && resp.length) {
-			data = _(resp).map(function(item) {
-				if (!(item instanceof Backbone.Model)) {
-					item = new this.model(item, _.extend({ parse: true }, options));
-					return item.toJSON();
-				}
-				return item;
-			}, this);
+		comparator: function(model) {
+			if (model.name) return model.name;
+			if (model.title) return model.title;
+			if (model.id) return model.id;
+			return model.cid;
+		},
+
+		parse: function(resp, options) {
+			var data = resp;
+			if (this.model && resp.length) {
+				data = _(resp).map(function(item) {
+					if (!(item instanceof Backbone.Model)) {
+						item = new this.model(item, _.extend({ parse: true }, options));
+						return item.toJSON();
+					}
+					return item;
+				}, this);
+			}
+			return data;
 		}
-		return data;
-	};
 
-	var City = models.City = Backbone.Model.extend({
+	});
+
+	var City = models.City = BaseModel.extend({
 		htURL: 'http://humantalks.com/cities/<%= city %>',
 		getURL: function() {
 			return _.template(this.htURL, { city: this.get('id') });
 		}
 	});
-	var Cities = models.Cities = Backbone.Collection.extend({
+	var Cities = models.Cities = BaseCollection.extend({
 		model: City,
 
 		activate: function (id) {
@@ -61,7 +65,7 @@ define(function (require, exports, module) {
 	});
 
 
-	var Event = models.Event = Backbone.Model.extend({
+	var Event = models.Event = BaseModel.extend({
 		htURL: 'http://humantalks.com/cities/<%= city %>/events/<%= event %>',
 		meetupURL: 'http://www.meetup.com/<%= city %>/events/<%= event %>/',
 		getURL: function() {
@@ -72,23 +76,23 @@ define(function (require, exports, module) {
 			return meetup ? _.template(this.meetupURL, { city: meetup.group, event: meetup.id }) : false;
 		}
 	});
-	var Events = models.Events = Backbone.Collection.extend({
+	var Events = models.Events = BaseCollection.extend({
 		model: Event
 	});
 
 
-	var Talk = models.Talk = Backbone.Model.extend({
+	var Talk = models.Talk = BaseModel.extend({
 		htURL: 'http://humantalks.com/talks/<%= id %>-<%= slug %>',
 		getURL: function() {
 			return _.template(this.htURL, { id: this.get('id'), slug: this.get('slug') });
 		}
 	});
-	var Talks = models.Talks = Backbone.Collection.extend({
+	var Talks = models.Talks = BaseCollection.extend({
 		model: Talk
 	});
 
 
-	var User = models.User = Backbone.Model.extend({
+	var User = models.User = BaseModel.extend({
 		htURL: 'http://news.humancoders.com/users/<%= id %>-<%= slug %>',
 		parse: function(res) {
 			return res.id ? res : false;
@@ -117,7 +121,7 @@ define(function (require, exports, module) {
 			this.set('talkIds', talkIds);
 		}
 	});
-	var Users = models.Users = Backbone.Collection.extend({
+	var Users = models.Users = BaseCollection.extend({
 		model: User,
 		setAttendance: function(events) {
 			_(this.models).each(function(user) {
