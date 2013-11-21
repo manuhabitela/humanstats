@@ -59,7 +59,10 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 						var values = _( stuff ).map(function(data) {
 							return Math.round(data[0](t) * data[1]) / data[1];
 						});
-						this.innerHTML = _.template(d.tpl, { value: values.length > 1 ? values : values[0] });
+						var newFinalValueForReal = values.length > 1 ? values : values[0];
+						this.innerHTML = _.template(d.tpl, { value: newFinalValueForReal });
+						if (that.numberData)
+							_(that.numberData).findWhere({type : d.type }).value = newFinalValueForReal;
 					};
 				})
 				.call(d3utils.allTransitionEnd, function() {
