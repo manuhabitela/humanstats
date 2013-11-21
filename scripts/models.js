@@ -51,16 +51,49 @@ define(function (require, exports, module) {
 	var Cities = models.Cities = BaseCollection.extend({
 		model: City,
 
-		activate: function (id) {
-			if (!this.get(id))
-				return false;
-			this.activeItem = this.get(id);
-			this.trigger('activate', this.activeItem);
+		initialize: function(models, options) {
+			this.activeItems = new Backbone.Collection([], { model: City });
 		},
 
-		desactivate: function() {
-			this.activeItem = null;
-			this.trigger('desactivate', this.activeItem);
+		activate: function(id, silent) {
+			if (!this.get(id))
+				return false;
+			silent = !!silent;
+			var city = this.get(id);
+			this.activeItems.add(city);
+			if (!silent)
+				this.trigger('activate', city, this.activeItems);
+		},
+
+		deactivate: function(id, silent) {
+			if (!this.get(id))
+				return false;
+			silent = !!silent;
+			var city = this.get(id);
+			this.activeItems.remove(city);
+			if (!silent)
+				this.trigger('deactivate', city, this.activeItems);
+		},
+
+		isActive: function(id) {
+			return this.get(id) && this.activeItems.get(id);
+		},
+
+		toggle: function(id) {
+			if (this.isActive(id))
+				this.deactivate(id);
+			else
+				this.activate(id);
+			this.trigger('toggle', this.get(id), this.activeItems);
+		},
+
+		deactivateAll: function(silent) {
+			silent = !!silent;
+			this.activeItems.each(function(i) {
+				this.deactivate(i, true);
+			}, this);
+			if (!silent)
+				this.trigger('deactivateAll');
 		}
 	});
 

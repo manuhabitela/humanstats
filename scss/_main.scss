@@ -1,5 +1,8 @@
 .cities ul {
 	@extend .inline-list;
+	li.active {
+		background: deeppink;
+	}
 }
 
 .map {

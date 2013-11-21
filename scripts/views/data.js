@@ -21,7 +21,8 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 			this.filterData();
 			this.render();
 
-			this.originalData.cities.on('activate desactivate', _(this.onCityChange).bind(this));
+			_.bindAll(this, 'onCityChange');
+			this.originalData.cities.on('activate deactivate deactivateAll', this.onCityChange);
 		},
 
 		render: function() {
@@ -32,15 +33,15 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 			}
 		},
 
-		onCityChange: function(city) {
-			this.filterData(city);
+		onCityChange: function(city, activeItems) {
+			this.filterData( (activeItems ? activeItems.toJSON() : []) );
 			this.render();
 		},
 
-		filterData: function(city) {
+		filterData: function(cities) {
 			if (!this.data) this.data = {};
 			_(['Cities', 'Events', 'Talks', 'Organizers', 'Talkers', 'Attendees', 'Appearances']).each(function(type) {
-				this.data[type.toLowerCase()] = this['filtered' + type](city);
+				this.data[type.toLowerCase()] = this['filtered' + type](cities);
 			}, this);
 
 			if (this.subViews) {
@@ -50,44 +51,61 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 			}
 		},
 
-		filteredCities: function(city) {
-			return city ? [city.toJSON()] : this.originalData.cities.toJSON();
+		filteredCities: function(cities) {
+			return cities && cities.length ? cities : this.originalData.cities.toJSON();
 		},
 
-		filteredEvents: function(city) {
-			return city ? _(this.originalData.events.where({ city: city.get('id') })).map(function(ev) { return ev.toJSON(); }) : this.originalData.events.toJSON();
+		//I am so inspired to name those things
+		_filteredStuff: function(cities, stuff) {
+			var data;
+			var cityIds = _(cities).pluck('id');
+			if (cities) {
+				data = _(stuff.filter(function(yolo) {
+					return _(cityIds).contains(yolo.get('city'));
+				})).map(function(yolo) {
+					return yolo.toJSON();
+				});
+			} else
+				data = stuff.toJSON();
+			return data;
 		},
 
-		filteredTalks: function(city) {
-			return city ? _(this.originalData.talks.where({ city: city.get('id') })).map(function(ta) { return ta.toJSON(); }) : this.originalData.talks.toJSON();
+		filteredEvents: function(cities) {
+			cities = this.filteredCities(cities);
+			return this._filteredStuff(cities, this.originalData.events);
 		},
 
-		filteredOrganizers: function(city) {
-			var cities = this.filteredCities(city);
-			var organizerIds = _.uniq( _.flatten( _(cities).pluck('organizerIds') ) );
+		filteredTalks: function(cities) {
+			cities = this.filteredCities(cities);
+			return this._filteredStuff(cities, this.originalData.talks);
+		},
+
+		filteredOrganizers: function(cities) {
+			var filteredCities = this.filteredCities(cities);
+			var organizerIds = _.uniq( _.flatten( _(filteredCities).pluck('organizerIds') ) );
 			return this.originalData.users.filter(function(user) {
 				return _(organizerIds).contains(user.get('id'));
 			});
 		},
 
-		filteredTalkers: function(city) {
-			var talks = this.filteredTalks(city);
+		filteredTalkers: function(cities) {
+			var talks = this.filteredTalks(cities);
 			var talkers = _(talks).pluck('authorId');
 			return this.originalData.users.filter(function(user) {
 				return _(talkers).contains(user.get('id'));
 			});
 		},
 
-		filteredAttendees: function(city) {
-			var events = this.filteredEvents(city);
+		filteredAttendees: function(cities) {
+			var events = this.filteredEvents(cities);
 			var attendeeIds = _.uniq( _.flatten( _(events).pluck('attendeeIds') ) );
 			return this.originalData.users.filter(function(user) {
 				return _(attendeeIds).contains(user.get('id'));
 			});
 		},
 
-		filteredAppearances: function(city) {
-			var events = this.filteredEvents(city);
+		filteredAppearances: function(cities) {
+			var events = this.filteredEvents(cities);
 			return _.reduce(events, function(memo, event) {
 				return memo + event.attendeeIds.length;
 			}, 0);

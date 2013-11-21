@@ -10,7 +10,7 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 		),
 
 		events: {
-			'click li': 'selectCity'
+			'click li': 'toggleCity'
 		},
 
 		initialize: function() {
@@ -21,14 +21,16 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 			this.$el.html( this.template({ cities: this.collection.toJSON() }) );
 		},
 
-		selectCity: function(e) {
-			this.$('li').removeClass('active');
-			$(e.currentTarget).addClass('active');
-			var dataId = this.$('li.active').attr('data-id');
-			if (dataId)
-				this.collection.activate(dataId);
-			else
-				this.collection.desactivate();
+		toggleCity: function(e) {
+			var $city = $(e.currentTarget);
+			var cityId = $city.attr('data-id');
+			if (cityId) {
+				this.collection.toggle(cityId);
+				$city.toggleClass('active', this.collection.isActive(cityId));
+			} else {
+				this.collection.deactivateAll();
+				this.$('li').removeClass('active');
+			}
 		}
 	});
 	return CitiesView;

@@ -2320,7 +2320,13 @@ h6,
   }
 }
 
-/* line 5, ../scss/_main.scss */
+/* line 3, ../scss/_main.scss */
+
+.cities ul li.active {
+  background: deeppink;
+}
+
+/* line 8, ../scss/_main.scss */
 
 .map {
   width: 600px;
@@ -2328,7 +2334,7 @@ h6,
   position: relative;
 }
 
-/* line 9, ../scss/_main.scss */
+/* line 12, ../scss/_main.scss */
 
 .map .hoverinfo {
   -webkit-box-shadow: none;
