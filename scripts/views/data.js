@@ -6,14 +6,22 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 				"text": new TextDataView({ el: this.$('.text') }),
 				"map": new MapDataView({ el: this.$('.map') })
 			};
-			this.cities = options.cities || [];
-			this.events = options.events || [];
-			this.talks = options.talks || [];
-			this.users = options.users || [];
+
+			this.originalData = {
+				cities: (options.cities || []),
+				events: (options.events || []),
+				talks: (options.talks || []),
+				users: (options.users || [])
+			};
+
+			_(this.subViews).each(function(subView) {
+				subView.originalData = this.originalData;
+			}, this);
+
 			this.filterData();
 			this.render();
 
-			this.cities.on('activate desactivate', _(this.onCityChange).bind(this));
+			this.originalData.cities.on('activate desactivate', _(this.onCityChange).bind(this));
 		},
 
 		render: function() {
@@ -43,21 +51,21 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 		},
 
 		filteredCities: function(city) {
-			return city ? [city.toJSON()] : this.cities.toJSON();
+			return city ? [city.toJSON()] : this.originalData.cities.toJSON();
 		},
 
 		filteredEvents: function(city) {
-			return city ? _(this.events.where({ city: city.get('id') })).map(function(ev) { return ev.toJSON(); }) : this.events.toJSON();
+			return city ? _(this.originalData.events.where({ city: city.get('id') })).map(function(ev) { return ev.toJSON(); }) : this.originalData.events.toJSON();
 		},
 
 		filteredTalks: function(city) {
-			return city ? _(this.talks.where({ city: city.get('id') })).map(function(ta) { return ta.toJSON(); }) : this.talks.toJSON();
+			return city ? _(this.originalData.talks.where({ city: city.get('id') })).map(function(ta) { return ta.toJSON(); }) : this.originalData.talks.toJSON();
 		},
 
 		filteredOrganizers: function(city) {
 			var cities = this.filteredCities(city);
 			var organizerIds = _.uniq( _.flatten( _(cities).pluck('organizerIds') ) );
-			return this.users.filter(function(user) {
+			return this.originalData.users.filter(function(user) {
 				return _(organizerIds).contains(user.get('id'));
 			});
 		},
@@ -65,7 +73,7 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 		filteredTalkers: function(city) {
 			var talks = this.filteredTalks(city);
 			var talkers = _(talks).pluck('authorId');
-			return this.users.filter(function(user) {
+			return this.originalData.users.filter(function(user) {
 				return _(talkers).contains(user.get('id'));
 			});
 		},
@@ -73,7 +81,7 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 		filteredAttendees: function(city) {
 			var events = this.filteredEvents(city);
 			var attendeeIds = _.uniq( _.flatten( _(events).pluck('attendeeIds') ) );
-			return this.users.filter(function(user) {
+			return this.originalData.users.filter(function(user) {
 				return _(attendeeIds).contains(user.get('id'));
 			});
 		},

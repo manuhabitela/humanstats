@@ -1,10 +1,6 @@
 define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], function($, Backbone, _, d3, topojson, Datamap) {
 
 	var MapDataView = Backbone.View.extend({
-		template: _.template([
-			'<div class="data-map"></div>'
-			].join('')
-		),
 
 		initialize: function() {
 			var that = this;
