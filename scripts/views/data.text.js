@@ -35,14 +35,34 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 				.duration(1500)
 				.tween("text", function(d) {
 					var prevVal = that.numberData ? _(that.numberData).findWhere({ type: d.type }).value : 0;
-					var i = d3.interpolate( prevVal, d.value),
-						prec = (d.value + "").split("."),
-						round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+					var newVal;
+					if ( _(d.value).isArray() ) {
+						newVal = d.value;
+						if (prevVal === 0) {
+							prevVal = [];
+							_(d.value.length).times(function() { prevVal.push(0); });
+						}
+					}
+					if ( !_(d.value).isArray() ) {
+						prevVal = [prevVal];
+						newVal = [d.value];
+					}
+
+					var stuff = _(prevVal).map(function(val, n) {
+						var i = d3.interpolate( val, newVal[n]),
+							prec = (d[n] + "").split("."),
+							round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
+						return [i, round];
+					}, this);
+
 					return function(t) {
-						this.innerHTML = _.template(d.tpl, { value: Math.round(i(t) * round) / round });
+						var values = _( stuff ).map(function(data) {
+							return Math.round(data[0](t) * data[1]) / data[1];
+						});
+						this.innerHTML = _.template(d.tpl, { value: values.length > 1 ? values : values[0] });
 					};
 				})
-				.call(d3utils.transitionEndAll, function() {
+				.call(d3utils.allTransitionEnd, function() {
 					//don't forget to save the data to be able to compare it next time we update the list
 					that.numberData = numberData;
 				});
