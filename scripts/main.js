@@ -20,8 +20,10 @@ require.config({
 	paths: {
 		jquery: '../bower_components/jquery/jquery',
 		underscore: '../bower_components/underscore/underscore',
+		mixins: '../lib/underscore.mixins',
 		backbone: '../bower_components/backbone/backbone',
 		d3: '../bower_components/d3/d3',
+		d3utils: '../lib/d3utils',
 		datamaps: '../lib/datamaps',
 		topojson: '../bower_components/topojson/topojson',
 		text: '../bower_components/requirejs-plugins/lib/text',

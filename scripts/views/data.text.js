@@ -1,63 +1,47 @@
-define(["backbone", "underscore", "d3"], function(Backbone, _, d3) {
+define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone, _, d3, d3utils) {
 
 	var TextDataView = Backbone.View.extend({
-		template: _.template([
-			'<div class="data-text"><div class="row">',
-				'<div class="col">',
-					'<h2>Les Human Talks <% if (cities && cities.length === 1) { %><%- cities[0].name %><% } %>, c\'est :</h2>',
-					'<ul>',
-						'<li><span class="number"><%- talks.length %></span> talks</li>',
-						'<li>en <span class="number"></span> évènements</li>',
-						'<li>dans <span class="number"></span> villes</li>',
-						'<li><span class="number"></span> organiseurs</li>',
-						'<li><span class="number"></span> talkers</li>',
-						'<li><span class="number"></span> participants venus <span class="number"></span> fois</li>',
-					'</ul>',
-				'</div>',
-			'</div></div>'
-			].join('')
-		),
+		tagName: 'ul',
+		templates: {
+			talks: '<span class="number"><%- value %></span> <%- _("talk").pluralize(value) %>',
+			events: 'en <span class="number"><%- value %></span> <%- _("évènement").pluralize(value) %>',
+			cities: 'dans <span class="number"><%- value %></span> <%- _("ville").pluralize(value) %>',
+			organizers: '<span class="number"><%- value %></span> <%- _("organisateur").pluralize(value) %>',
+			talkers: '<span class="number"><%- value %></span> <%- _("talker").pluralize(value) %>',
+			attendees: '<span class="number"><%- value[0] %></span> <%- _("participant").pluralize(value) %> venus <span class="number"><%- value[1] %></span> fois',
+		},
 
 		render: function() {
 			if (!this.data) return false;
 
-			var firstRendering = false;
-			if (!this.$el.find('.data-text').length) {
-				this.$el.html( this.template({
-					cities: this.data.cities,
-					talks: this.data.talks
-				}) );
-				firstRendering = true;
-			}
-
-			//must match the .number elements order in the template
+			var that = this;
 			var numberData = [
-				this.data.talks.length,
-				this.data.events.length,
-				this.data.cities.length,
-				this.data.organizers.length,
-				this.data.talkers.length,
-				this.data.attendees.length,
-				this.data.appearances
+				{ type: "talks", value: this.data.talks.length, tpl: this.templates.talks },
+				{ type: "events", value: this.data.events.length, tpl: this.templates.events },
+				{ type: "cities", value: this.data.cities.length, tpl: this.templates.cities },
+				{ type: "organizers", value: this.data.organizers.length, tpl: this.templates.organizers },
+				{ type: "talkers", value: this.data.talkers.length, tpl: this.templates.talkers },
+				{ type: "attendees", value: [this.data.attendees.length, this.data.appearances], tpl: this.templates.attendees },
 			];
-			// if (this.data.cities.length > 1)
-			// 	numberData.splice(2, 0, this.data.cities.length);
 
-			d3.select(this.el)
-				.selectAll(".number")
-				.data(numberData)
-				.text(function() {
-					return firstRendering ? 0 : this.textContent;
-				})
-				.transition()
+			var selection = d3.select(this.el).selectAll('li').data(numberData);
+			selection.enter().append('li');
+			selection.html(function(d) {
+				return _.template(d.tpl, { value: d.value });
+			});
+			selection.transition()
 				.duration(1500)
 				.tween("text", function(d) {
-					var i = d3.interpolate(this.textContent, d),
-						prec = (d + "").split("."),
+					var prevVal = that.numberData ? _(that.numberData).findWhere({ type: d.type }).value : 0;
+					var i = d3.interpolate( prevVal, d.value),
+						prec = (d.value + "").split("."),
 						round = (prec.length > 1) ? Math.pow(10, prec[1].length) : 1;
 					return function(t) {
-						this.textContent = Math.round(i(t) * round) / round;
+						this.innerHTML = _.template(d.tpl, { value: Math.round(i(t) * round) / round });
 					};
+				})
+				.call(d3utils.transitionEndAll, function() {
+					that.numberData = numberData;
 				});
 		}
 	});
