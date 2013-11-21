@@ -14,10 +14,10 @@ define(
 			el: container.querySelector('.cities')
 		});
 		this.dataView = new DataView({
-			cities: this.cities,
-			events: this.events,
-			talks: this.talks,
-			users: this.users,
+			citiesCollection: this.cities,
+			eventsCollection: this.events,
+			talksCollection: this.talks,
+			usersCollection: this.users,
 			el: container.querySelector('.data')
 		});
 	};

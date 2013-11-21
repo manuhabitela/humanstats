@@ -8,10 +8,10 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 			};
 
 			this.originalData = {
-				cities: (options.cities || []),
-				events: (options.events || []),
-				talks: (options.talks || []),
-				users: (options.users || [])
+				cities: (options.citiesCollection || []),
+				events: (options.eventsCollection || []),
+				talks: (options.talksCollection || []),
+				users: (options.usersCollection || [])
 			};
 
 			_(this.subViews).each(function(subView) {
