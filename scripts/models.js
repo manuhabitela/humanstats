@@ -76,7 +76,7 @@ define(function (require, exports, module) {
 		},
 
 		isActive: function(id) {
-			return this.get(id) && this.activeItems.get(id);
+			return !!(this.get(id) && this.activeItems.get(id));
 		},
 
 		toggle: function(id) {
@@ -89,9 +89,7 @@ define(function (require, exports, module) {
 
 		deactivateAll: function(silent) {
 			silent = !!silent;
-			this.activeItems.each(function(i) {
-				this.deactivate(i, true);
-			}, this);
+			this.activeItems.reset();
 			if (!silent)
 				this.trigger('deactivateAll');
 		}

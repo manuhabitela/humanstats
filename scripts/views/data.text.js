@@ -24,7 +24,7 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 
 			//update existing li with new data
 			var selection = d3.select(this.el).selectAll('li').data(numberData);
-			//create missing li (at first start or when going from city to all view)
+			//create missing li (at first start)
 			selection.enter().append('li');
 			//put the templated data in the list
 			selection.html(function(d) {
@@ -69,7 +69,6 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 					//don't forget to save the data to be able to compare it next time we update the list
 					that.numberData = numberData;
 				});
-
 		}
 	});
 	return TextDataView;

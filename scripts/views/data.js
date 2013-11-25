@@ -40,8 +40,17 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 
 		filterData: function(cities) {
 			if (!this.data) this.data = {};
-			_(['Cities', 'Events', 'Talks', 'Organizers', 'Talkers', 'Attendees', 'Appearances']).each(function(type) {
-				this.data[type.toLowerCase()] = this['filtered' + type](cities);
+
+			this.data.cities = this.filteredCities(cities);
+
+			_(['Events', 'Talks', 'Organizers']).each(function(type) {
+				this.data[type.toLowerCase()] = this['filtered' + type](this.data.cities);
+			}, this);
+
+			this.data.talkers = this.filteredTalkers(this.data.talks);
+
+			_(['Attendees', 'Appearances']).each(function(type) {
+				this.data[type.toLowerCase()] = this['filtered' + type](this.data.events);
 			}, this);
 
 			if (this.subViews) {
@@ -71,41 +80,35 @@ define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbon
 		},
 
 		filteredEvents: function(cities) {
-			cities = this.filteredCities(cities);
 			return this._filteredStuff(cities, this.originalData.events);
 		},
 
 		filteredTalks: function(cities) {
-			cities = this.filteredCities(cities);
 			return this._filteredStuff(cities, this.originalData.talks);
 		},
 
 		filteredOrganizers: function(cities) {
-			var filteredCities = this.filteredCities(cities);
-			var organizerIds = _.uniq( _.flatten( _(filteredCities).pluck('organizerIds') ) );
+			var organizerIds = _.uniq( _.flatten( _(cities).pluck('organizerIds') ) );
 			return this.originalData.users.filter(function(user) {
 				return _(organizerIds).contains(user.get('id'));
 			});
 		},
 
-		filteredTalkers: function(cities) {
-			var talks = this.filteredTalks(cities);
+		filteredTalkers: function(talks) {
 			var talkers = _(talks).pluck('authorId');
 			return this.originalData.users.filter(function(user) {
 				return _(talkers).contains(user.get('id'));
 			});
 		},
 
-		filteredAttendees: function(cities) {
-			var events = this.filteredEvents(cities);
+		filteredAttendees: function(events) {
 			var attendeeIds = _.uniq( _.flatten( _(events).pluck('attendeeIds') ) );
 			return this.originalData.users.filter(function(user) {
 				return _(attendeeIds).contains(user.get('id'));
 			});
 		},
 
-		filteredAppearances: function(cities) {
-			var events = this.filteredEvents(cities);
+		filteredAppearances: function(events) {
 			return _.reduce(events, function(memo, event) {
 				return memo + event.attendeeIds.length;
 			}, 0);
