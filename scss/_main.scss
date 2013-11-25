@@ -6,6 +6,8 @@
 }
 
 .map {
+	display: none;
+	float: left;
 	width: 600px;
 	height: 600px;
 	position: relative;
@@ -16,4 +18,25 @@
 		font-size: #{$base-font-size}px;
 		font-family: $regular-font-stack;
 	}
+}
+
+.lines {
+	float: left;
+}
+
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.x.axis path {
+  display: none;
+}
+
+.line {
+  fill: none;
+  stroke: steelblue;
+  stroke-width: 1.5px;
 }

@@ -1,10 +1,11 @@
-define(["backbone", "underscore", "./data.text", "./data.map"], function(Backbone, _, TextDataView, MapDataView) {
+define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines"], function(Backbone, _, TextDataView, MapDataView, LinesChartDataView) {
 
 	var DataView = Backbone.View.extend({
 		initialize: function(options) {
 			this.subViews = {
 				"text": new TextDataView({ el: this.$('.text') }),
-				"map": new MapDataView({ el: this.$('.map') })
+				"map": new MapDataView({ el: this.$('.map') }),
+				"lines": new LinesChartDataView({ el: this.$('.lines') }),
 			};
 
 			this.originalData = {
