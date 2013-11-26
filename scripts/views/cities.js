@@ -4,7 +4,7 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 			'<ul class="inline-list">',
 				'<li>Tout</li>',
 				'<% _.each(cities, function(city) { %>',
-				'<li data-id="<%= city.id %>"><%- city.name %></li>',
+				'<li data-id="<%= city.id %>" data-color="<%= city.color %>"><%- city.name %></li>',
 				'<% }) %>',
 			'</ul>'].join('')
 		),

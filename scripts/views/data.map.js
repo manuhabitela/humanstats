@@ -1,15 +1,14 @@
 define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], function($, Backbone, _, d3, topojson, Datamap) {
 
 	var MapDataView = Backbone.View.extend({
-
-		initialize: function() {
+		initializeWithData: function() {
 			var that = this;
-			this.map = new Datamap({
+			var mapOptions = {
 				element: this.el,
 				fills: {
 					bubble: '#fff',
-					dot: '#000',
-					defaultFill: '#9467bd'
+					dot: '#ddd',
+					defaultFill: '#A688BC'
 				},
 				geographyConfig: {
 					dataUrl: '/data/regions.topojson',
@@ -31,7 +30,12 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 					that.map.done = true;
 					that.render();
 				}
+			};
+			this.originalData.cities.each(function(city) {
+				if (city.get('color'))
+					mapOptions.fills[city.id] = city.get('color');
 			});
+			this.map = new Datamap(mapOptions);
 		},
 
 		render: function() {
@@ -40,7 +44,7 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 			var maxRadius = 40;
 			var bubbles = _(this.data.cities).map(function(city) {
 				var radius = city.eventIds.length / maxEventsNb * maxRadius;
-				return _.extend({ latitude: city.coords.lat, longitude: city.coords.lng, radius: radius, fillKey: 'bubble' }, city);
+				return _.extend({ latitude: city.coords.lat, longitude: city.coords.lng, radius: radius, fillKey: city.id }, city);
 			});
 			var dots = _(this.data.cities).map(function(city) {
 				return _.extend({ latitude: city.coords.lat, longitude: city.coords.lng, radius: 1, fillKey: 'dot' }, city);
@@ -52,8 +56,8 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 					'</div>'].join('');
 				},
 				borderWidth: 1,
-				borderColor: '#9467bd',
-				fillOpacity: 0.9,
+				borderColor: '#fff',
+				fillOpacity: 0.8,
 				highlightOnHover: false
 			});
 		}

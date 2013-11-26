@@ -17,6 +17,7 @@ define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines"], 
 
 			_(this.subViews).each(function(subView) {
 				subView.originalData = this.originalData;
+				if (subView.initializeWithData) subView.initializeWithData();
 			}, this);
 
 			this.filterData();

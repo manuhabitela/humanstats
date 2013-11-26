@@ -9,6 +9,8 @@ define(
 		this.talks = new models.Talks(data.talks);
 		this.users = new models.Users(data.users);
 
+		this.cities.setColors();
+
 		this.citiesList = new CitiesView({
 			collection: this.cities,
 			el: container.querySelector('.cities')
