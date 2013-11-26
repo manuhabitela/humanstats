@@ -2,17 +2,17 @@ define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines"], 
 
 	var DataView = Backbone.View.extend({
 		initialize: function(options) {
-			this.subViews = {
-				"text": new TextDataView({ el: this.$('.text') }),
-				"map": new MapDataView({ el: this.$('.map') }),
-				"lines": new LinesChartDataView({ el: this.$('.lines') }),
-			};
-
 			this.originalData = {
 				cities: (options.citiesCollection || []),
 				events: (options.eventsCollection || []),
 				talks: (options.talksCollection || []),
 				users: (options.usersCollection || [])
+			};
+
+			this.subViews = {
+				"text": new TextDataView({ el: this.$('.text') }),
+				"map": new MapDataView({ el: this.$('.map') }),
+				"lines": new LinesChartDataView({ el: this.$('.lines') }),
 			};
 
 			_(this.subViews).each(function(subView) {
@@ -25,6 +25,7 @@ define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines"], 
 
 			_.bindAll(this, 'onCityChange');
 			this.originalData.cities.on('activate deactivate deactivateAll', this.onCityChange);
+
 		},
 
 		render: function() {

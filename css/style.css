@@ -2329,14 +2329,13 @@ h6,
 /* line 8, ../scss/_main.scss */
 
 .map {
-  display: none;
   float: left;
   width: 600px;
   height: 600px;
   position: relative;
 }
 
-/* line 14, ../scss/_main.scss */
+/* line 13, ../scss/_main.scss */
 
 .map .hoverinfo {
   -webkit-box-shadow: none;
@@ -2347,13 +2346,13 @@ h6,
   font-family: "PT Serif", "Georgia", "DejaVu Serif", Norasi, serif;
 }
 
-/* line 23, ../scss/_main.scss */
+/* line 22, ../scss/_main.scss */
 
 .lines {
   float: left;
 }
 
-/* line 27, ../scss/_main.scss */
+/* line 26, ../scss/_main.scss */
 
 .axis path,
 .axis line {
@@ -2362,13 +2361,19 @@ h6,
   shape-rendering: crispEdges;
 }
 
-/* line 34, ../scss/_main.scss */
+/* line 33, ../scss/_main.scss */
+
+.axis--x {
+  font-size: 10px;
+}
+
+/* line 37, ../scss/_main.scss */
 
 .x.axis path {
   display: none;
 }
 
-/* line 38, ../scss/_main.scss */
+/* line 41, ../scss/_main.scss */
 
 .line {
   fill: none;

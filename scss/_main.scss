@@ -6,7 +6,6 @@
 }
 
 .map {
-	display: none;
 	float: left;
 	width: 600px;
 	height: 600px;
@@ -29,6 +28,10 @@
   fill: none;
   stroke: #000;
   shape-rendering: crispEdges;
+}
+
+.axis--x {
+	font-size: 10px;
 }
 
 .x.axis path {
