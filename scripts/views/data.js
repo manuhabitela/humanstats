@@ -92,23 +92,23 @@ define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines"], 
 
 		filteredOrganizers: function(cities) {
 			var organizerIds = _.uniq( _.flatten( _(cities).pluck('organizerIds') ) );
-			return this.originalData.users.filter(function(user) {
+			return _( this.originalData.users.filter(function(user) {
 				return _(organizerIds).contains(user.get('id'));
-			});
+			}) ).map(function(user) { return user.toJSON(); });
 		},
 
 		filteredTalkers: function(talks) {
 			var talkers = _(talks).pluck('authorId');
-			return this.originalData.users.filter(function(user) {
+			return _( this.originalData.users.filter(function(user) {
 				return _(talkers).contains(user.get('id'));
-			});
+			}) ).map(function(user) { return user.toJSON(); });
 		},
 
 		filteredAttendees: function(events) {
 			var attendeeIds = _.uniq( _.flatten( _(events).pluck('attendeeIds') ) );
-			return this.originalData.users.filter(function(user) {
+			return _( this.originalData.users.filter(function(user) {
 				return _(attendeeIds).contains(user.get('id'));
-			});
+			}) ).map(function(user) { return user.toJSON(); });
 		},
 
 		filteredAppearances: function(events) {
