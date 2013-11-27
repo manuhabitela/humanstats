@@ -15,6 +15,11 @@ require.config({
 		},
 		topojson: {
 			exports: 'topojson'
+		},
+		d3tip: {
+			deps: [
+				'd3'
+			]
 		}
 	},
 	paths: {
@@ -24,13 +29,15 @@ require.config({
 		backbone: '../bower_components/backbone/backbone',
 		d3: '../bower_components/d3/d3',
 		d3utils: '../lib/d3utils',
+		d3tip: '../bower_components/d3-tip/index',
 		datamaps: '../lib/datamaps',
 		topojson: '../bower_components/topojson/topojson',
 		text: '../bower_components/requirejs-plugins/lib/text',
-		json: '../bower_components/requirejs-plugins/src/json'
+		json: '../bower_components/requirejs-plugins/src/json',
+		moment: '../bower_components/momentjs/min/moment-with-langs.min',
 	}
 });
 
 require(["./app"], function(HumanStatistics) {
-	var app = new HumanStatistics('#container');
+	window.myApp = new HumanStatistics('#container');
 });

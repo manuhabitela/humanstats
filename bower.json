@@ -6,6 +6,8 @@
     "jquery": "~2.0.3",
     "requirejs": "~2.1.9",
     "requirejs-plugins": "~1.0.2",
-    "datamaps": "~0.2.0"
+    "datamaps": "~0.2.0",
+    "d3-tip": "~0.6.2",
+    "momentjs": "~2.4.0"
   }
 }

@@ -2357,7 +2357,7 @@ h6,
 .axis path,
 .axis line {
   fill: none;
-  stroke: #000;
+  stroke-width: 0;
   shape-rendering: crispEdges;
 }
 
@@ -2379,4 +2379,19 @@ h6,
   fill: none;
   stroke: steelblue;
   stroke-width: 1.5px;
+}
+
+/* line 47, ../scss/_main.scss */
+
+.graph-tip {
+  pointer-events: none;
+}
+
+/* line 51, ../scss/_main.scss */
+
+.graph-tip__inner {
+  padding: 3px 6px;
+  border-radius: 3px;
+  color: white;
+  border: 1px solid rgba(125, 125, 125, 0.3);
 }

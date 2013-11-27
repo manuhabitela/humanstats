@@ -140,7 +140,30 @@ define(function (require, exports, module) {
 		}
 	});
 	var Events = models.Events = BaseCollection.extend({
-		model: Event
+		model: Event,
+
+		initialize: function(models, options) {
+			_.bindAll(this, 'removeCurrents');
+
+			if (options && options.unfinished === false) {
+				options.silent = false;
+				this.once('reset', this.removeCurrents);
+			}
+		},
+
+		removeCurrents: function() {
+			var now = new Date();
+			var currentMonth = now.getMonth()+1;
+			var currentYear = now.getFullYear();
+			this.each(function(event) {
+				var date = event.get('date').split('-');
+				var year = date[0]*1;
+				var month = date[1]*1;
+				if (year > currentYear || (year === currentYear && month > currentMonth)) {
+					this.remove(event);
+				}
+			}, this);
+		}
 	});
 
 

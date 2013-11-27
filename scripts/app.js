@@ -5,7 +5,7 @@ define(
 	var HumanStatistics = function(container) {
 		container = document.querySelector(container);
 		this.cities = new models.Cities(data.cities);
-		this.events = new models.Events(data.events);
+		this.events = new models.Events(data.events, { unfinished: false });
 		this.talks = new models.Talks(data.talks);
 		this.users = new models.Users(data.users);
 
