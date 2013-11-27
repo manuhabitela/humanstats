@@ -7,13 +7,13 @@
 	a {
 		display: block;
 		padding: 3px 6px;
-		color: white;
-		background: black;
-		&:active {
-			border: 1px solid red;
-		}
+		color: black;
+		background: none;
 		text-decoration: none;
 		border-radius: 3px;
+		&.active {
+			border: 1px solid #777;
+		}
 	}
 }
 

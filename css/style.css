@@ -2431,16 +2431,16 @@ h6,
 .cities ul a {
   display: block;
   padding: 3px 6px;
-  color: white;
-  background: black;
+  color: black;
+  background: none;
   text-decoration: none;
   border-radius: 3px;
 }
 
-/* line 12, ../scss/_main.scss */
+/* line 14, ../scss/_main.scss */
 
-.cities ul a:active {
-  border: 1px solid red;
+.cities ul a.active {
+  border: 1px solid #777;
 }
 
 /* line 20, ../scss/_main.scss */
