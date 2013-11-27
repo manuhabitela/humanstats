@@ -10,6 +10,7 @@ define(
 		this.users = new models.Users(data.users);
 
 		this.cities.setColors();
+		this.users.setMainCities(this.events);
 
 		this.citiesList = new CitiesView({
 			collection: this.cities,

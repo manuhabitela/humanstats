@@ -1,4 +1,5 @@
-define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines"], function(Backbone, _, TextDataView, MapDataView, LinesChartDataView) {
+define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines", "./data.bubbles"],
+	function(Backbone, _, TextDataView, MapDataView, LinesChartDataView, BubblesChartDataView) {
 
 	var DataView = Backbone.View.extend({
 		initialize: function(options) {
@@ -10,17 +11,19 @@ define(["backbone", "underscore", "./data.text", "./data.map", "./data.lines"], 
 			};
 
 			this.subViews = {
+				"bubbles": new BubblesChartDataView({ el: this.$('.bubbles') }),
 				"text": new TextDataView({ el: this.$('.text') }),
 				"map": new MapDataView({ el: this.$('.map') }),
-				"lines": new LinesChartDataView({ el: this.$('.lines') }),
+				"lines": new LinesChartDataView({ el: this.$('.lines') })
 			};
+
+			this.filterData();
 
 			_(this.subViews).each(function(subView) {
 				subView.originalData = this.originalData;
 				if (subView.initializeWithData) subView.initializeWithData();
 			}, this);
 
-			this.filterData();
 			this.render();
 
 			_.bindAll(this, 'onCityChange');
