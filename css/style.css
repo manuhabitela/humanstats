@@ -2320,6 +2320,105 @@ h6,
   }
 }
 
+/* line 1, ../scss/_d3slider.scss */
+
+.d3-slider {
+  position: relative;
+  font-family: Verdana,Arial,sans-serif;
+  font-size: 1.1em;
+  border: 1px solid #aaaaaa;
+  z-index: 2;
+}
+
+/* line 9, ../scss/_d3slider.scss */
+
+.d3-slider-horizontal {
+  height: .8em;
+}
+
+/* line 13, ../scss/_d3slider.scss */
+
+.d3-slider-vertical {
+  width: .8em;
+  height: 100px;
+}
+
+/* line 18, ../scss/_d3slider.scss */
+
+.d3-slider-handle {
+  position: absolute;
+  width: 1.2em;
+  height: 1.2em;
+  border: 1px solid #d3d3d3;
+  border-radius: 4px;
+  background: #eee;
+  background: -webkit-gradient(linear, top left, bottom left, from(#eeeeee), to(#dddddd));
+  background: -webkit-linear-gradient(top, #eeeeee 0%, #dddddd 100%);
+  background: linear-gradient(to bottom, #eeeeee 0%, #dddddd 100%);
+  z-index: 3;
+}
+
+/* line 29, ../scss/_d3slider.scss */
+
+.d3-slider-handle:hover {
+  border: 1px solid #999999;
+}
+
+/* line 33, ../scss/_d3slider.scss */
+
+.d3-slider-horizontal .d3-slider-handle {
+  top: -0.3em;
+  margin-left: -0.6em;
+}
+
+/* line 38, ../scss/_d3slider.scss */
+
+.d3-slider-axis {
+  position: relative;
+  z-index: 1;
+}
+
+/* line 43, ../scss/_d3slider.scss */
+
+.d3-slider-axis-bottom {
+  top: .8em;
+}
+
+/* line 47, ../scss/_d3slider.scss */
+
+.d3-slider-axis-right {
+  left: .8em;
+}
+
+/* line 51, ../scss/_d3slider.scss */
+
+.d3-slider-axis path {
+  stroke-width: 0;
+  fill: none;
+}
+
+/* line 56, ../scss/_d3slider.scss */
+
+.d3-slider-axis line {
+  fill: none;
+  stroke: #aaa;
+  shape-rendering: crispEdges;
+}
+
+/* line 62, ../scss/_d3slider.scss */
+
+.d3-slider-axis text {
+  font-size: 11px;
+}
+
+/* line 66, ../scss/_d3slider.scss */
+
+.d3-slider-vertical .d3-slider-handle {
+  left: -0.25em;
+  margin-left: 0;
+  margin-bottom: -0.6em;
+}
+
 /* line 3, ../scss/_main.scss */
 
 .cities ul li {

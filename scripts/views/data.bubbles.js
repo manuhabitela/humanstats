@@ -1,17 +1,26 @@
-define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"], function(Backbone, _, d3, d3utils, moment) {
+define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "d3slider", "mixins"], function(Backbone, _, d3, d3utils, moment) {
 	moment.lang('fr');
 
 	var BubblesChartDataView = Backbone.View.extend({
 
-		initializeWithData: function() {
+		initialize: function() {
+			_.bindAll(this, 'updateSlider', 'render');
+		},
+
+		updateSlider: function() {
 			var that = this;
-			this.maxBubbleSize = _( _(that.data.attendees).map(function(user) {
-				return user.talkIds ? user.talkIds.length : 1;
-			}) ).max();
+			this.slider = d3.slider().min(1).max(this.data.events.length).on('slide', function(evt, value) {
+				that.data.attendees = _(that.data.attendees).filter(function(user) {
+					return user.attendedEventIds && user.attendedEventIds.length >= value;
+				});
+				that.render();
+			});
 		},
 
 		render: function() {
 			if (!this.data) return false;
+			this.updateSlider();
+			d3.select( this.el.querySelector('.slider') ).call(this.slider);
 			var that = this;
 			var diameter = 700;
 
@@ -36,7 +45,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.padding(4)
 				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*1.5 : 1; });
 
-			var svg = d3.select(this.el)
+			var svg = d3.select(this.el.querySelector('svg'))
 				.attr("width", diameter)
 				.attr("height", diameter)
 				.attr("class", "bubble");
