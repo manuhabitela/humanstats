@@ -100,8 +100,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			if (!this.el.querySelector('.axis--x')) {
 				chart.append("g")
 					.attr("class", "axis axis--x")
-					.attr("transform", "translate(0," + height + ")")
-					.call(xAxis);
+					.attr("transform", "translate(0," + height + ")");
 			}
 			if (!this.el.querySelector('.axis--y')) {
 				chart.append("g")
