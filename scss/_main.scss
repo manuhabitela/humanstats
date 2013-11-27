@@ -1,7 +1,19 @@
 .cities ul {
 	@extend .inline-list;
-	li.active {
-		background: deeppink;
+	li {
+		display: inline-block;
+		margin: 0 5px;
+	}
+	a {
+		display: block;
+		padding: 3px 6px;
+		color: white;
+		background: black;
+		&:active {
+			border: 1px solid red;
+		}
+		text-decoration: none;
+		border-radius: 3px;
 	}
 }
 
