@@ -2,15 +2,15 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 	var CitiesView = Backbone.View.extend({
 		template: _.template([
 			'<ul class="inline-list">',
-				'<li>Tout</li>',
+				'<li><a href="#">Tout</a></li>',
 				'<% _.each(cities, function(city) { %>',
-				'<li data-id="<%= city.id %>" data-color="<%= city.color %>"><%- city.name %></li>',
+				'<li><a href="#" data-id="<%- city.id %>" style="background-color: <%- city.color %>"><%- city.name %></a></li>',
 				'<% }) %>',
 			'</ul>'].join('')
 		),
 
 		events: {
-			'click li': 'toggleCity'
+			'click a': 'toggleCity'
 		},
 
 		initialize: function() {
@@ -29,8 +29,9 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 				$city.toggleClass('active', this.collection.isActive(cityId));
 			} else {
 				this.collection.deactivateAll();
-				this.$('li').removeClass('active');
+				this.$('a').removeClass('active');
 			}
+			e.preventDefault();
 		}
 	});
 	return CitiesView;
