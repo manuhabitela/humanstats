@@ -66,3 +66,21 @@
 	color: white;
 	border: 1px solid rgba(125, 125, 125, 0.3);
 }
+
+.bubbles-slider {
+	position: relative;
+	margin-bottom: 30px;
+	margin: 0 auto;
+	width: 300px;
+}
+.bubbles-slider__min,
+.bubbles-slider__max {
+  position: absolute;
+  top: 100%;
+}
+.bubbles-slider__min {
+  left: 0;
+}
+.bubbles-slider__max {
+	right: 0;
+}

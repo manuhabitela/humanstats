@@ -191,7 +191,7 @@ li ol {
  * Prevents those to break out of their container
  */
 
-/* line 96, ../scss/helpers/_reset.scss */
+/* line 94, ../scss/helpers/_reset.scss */
 
 img,
 table,
@@ -249,7 +249,7 @@ a img {
  * Hide script and style tags in case of table mode
  */
 
-/* line 135, ../scss/helpers/_reset.scss */
+/* line 134, ../scss/helpers/_reset.scss */
 
 body > script,
 body > style {
@@ -261,7 +261,7 @@ body > style {
  */
 
 @media (max-width: 768px) {
-  /* line 145, ../scss/helpers/_reset.scss */
+  /* line 143, ../scss/helpers/_reset.scss */
 
   div,
   textarea,
@@ -730,7 +730,7 @@ body > style {
  * module, contains floats (.item is the same) 
  */
 
-/* line 93, ../scss/helpers/_layout-helpers.scss */
+/* line 92, ../scss/helpers/_layout-helpers.scss */
 
 .mod,
 .item {
@@ -741,7 +741,7 @@ body > style {
  * Blocks that needs to be placed under floats 
  */
 
-/* line 102, ../scss/helpers/_layout-helpers.scss */
+/* line 100, ../scss/helpers/_layout-helpers.scss */
 
 .clear,
 .line,
@@ -765,7 +765,7 @@ body > style {
   width: 100%;
 }
 
-/* line 125, ../scss/helpers/_layout-helpers.scss */
+/* line 124, ../scss/helpers/_layout-helpers.scss */
 
 .row > *,
 .col {
@@ -786,7 +786,7 @@ body > style {
   *vertical-align: auto;
   zoom: 1;
   *display: inline;
-  margin-right: -0.25em;
+  margin-right: -.25em;
 }
 
 /* Alignments (blocks and inline) */
@@ -817,7 +817,7 @@ img.right {
   margin-left: 1em;
 }
 
-/* line 148, ../scss/helpers/_layout-helpers.scss */
+/* line 147, ../scss/helpers/_layout-helpers.scss */
 
 img.left,
 img.right {
@@ -1074,7 +1074,7 @@ img.right {
   padding: 0;
   margin-left: -20px;
   text-align: left;
-  letter-spacing: -0.31em;
+  letter-spacing: -.31em;
   text-rendering: optimizespeed;
 }
 
@@ -1109,11 +1109,11 @@ img.right {
  * 1. Opera hack 
  */
 
-/* line 44, ../scss/modules/_grids.scss */
+/* line 43, ../scss/modules/_grids.scss */
 
 .opera:-o-prefocus,
 .grid > * {
-  word-spacing: -0.43em;
+  word-spacing: -.43em;
 }
 
 /* line 48, ../scss/modules/_grids.scss */
@@ -1169,28 +1169,28 @@ img.right {
  * (1-2, 2-1, 1-3 and 3-1) for 2 blocks 
  */
 
-/* line 85, ../scss/modules/_grids.scss */
+/* line 84, ../scss/modules/_grids.scss */
 
 .grid2-1 > *:first-child,
 .grid1-2 > * + * {
   width: 66.666%;
 }
 
-/* line 90, ../scss/modules/_grids.scss */
+/* line 89, ../scss/modules/_grids.scss */
 
 .grid1-2 > *:first-child,
 .grid2-1 > * + * {
   width: 33.333%;
 }
 
-/* line 95, ../scss/modules/_grids.scss */
+/* line 94, ../scss/modules/_grids.scss */
 
 .grid1-3 > *:first-child,
 .grid3-1 > * + * {
   width: 25%;
 }
 
-/* line 100, ../scss/modules/_grids.scss */
+/* line 99, ../scss/modules/_grids.scss */
 
 .grid3-1 > *:first-child,
 .grid1-3 > * + * {
@@ -1227,7 +1227,7 @@ img.right {
  * Tables                     *
 \*----------------------------*/
 
-/* line 8, ../scss/modules/_tables.scss */
+/* line 7, ../scss/modules/_tables.scss */
 
 table,
 .table {
@@ -1290,7 +1290,7 @@ tr > * + * {
   border-left: 1px solid #cccccc;
 }
 
-/* line 53, ../scss/modules/_tables.scss */
+/* line 52, ../scss/modules/_tables.scss */
 
 th,
 td {
@@ -1300,7 +1300,7 @@ td {
 }
 
 @media (max-width: 640px) {
-  /* line 53, ../scss/modules/_tables.scss */
+  /* line 52, ../scss/modules/_tables.scss */
 
   th,
   td {
@@ -1392,7 +1392,7 @@ td {
  * Source: github.com/nathansmith/formalize & www.sitepen.com 
  */
 
-/* line 11, ../scss/modules/_forms.scss */
+/* line 10, ../scss/modules/_forms.scss */
 
 form,
 fieldset {
@@ -1403,7 +1403,7 @@ fieldset {
  * 1. Bugfix alignment
  */
 
-/* line 20, ../scss/modules/_forms.scss */
+/* line 18, ../scss/modules/_forms.scss */
 
 input,
 button,
@@ -1439,7 +1439,7 @@ legend {
   white-space: normal;
 }
 
-/* line 41, ../scss/modules/_forms.scss */
+/* line 39, ../scss/modules/_forms.scss */
 
 button,
 input,
@@ -1472,7 +1472,7 @@ textarea {
  * 1. Clickable input types in iOS
  */
 
-/* line 67, ../scss/modules/_forms.scss */
+/* line 64, ../scss/modules/_forms.scss */
 
 button,
 input[type="button"],
@@ -1487,7 +1487,7 @@ input[type="submit"] {
  * 1. Corrects excess space around these inputs in IE8/9
  */
 
-/* line 76, ../scss/modules/_forms.scss */
+/* line 75, ../scss/modules/_forms.scss */
 
 input[type="checkbox"],
 input[type="radio"] {
@@ -1510,7 +1510,7 @@ select { -webkit-appearance: none; } /**/
  * Removes 'x' on right of search input when text is entered
  */
 
-/* line 96, ../scss/modules/_forms.scss */
+/* line 93, ../scss/modules/_forms.scss */
 
 input[type="search"]::-webkit-search-decoration,
 input[type="search"]::-webkit-search-cancel-button,
@@ -1581,7 +1581,7 @@ input[type='submit']::-moz-focus-inner {
  * 2. Triggers hardware acceleration
  */
 
-/* line 14, ../scss/modules/_icons.scss */
+/* line 13, ../scss/modules/_icons.scss */
 
 .icon:before,
 .icon.after:after {
@@ -1593,7 +1593,7 @@ input[type='submit']::-moz-focus-inner {
   zoom: 1;
   *display: inline;
   position: relative;
-  top: -0.1em;
+  top: -.1em;
   margin: 0 .3em 0 0;
   font: 1.4em/1 sans-serif;
   color: #000;
@@ -1603,7 +1603,7 @@ input[type='submit']::-moz-focus-inner {
 }
 
 @media (min-width: 769px) {
-  /* line 14, ../scss/modules/_icons.scss */
+  /* line 13, ../scss/modules/_icons.scss */
 
   .icon:before,
   .icon.after:after {
@@ -1625,42 +1625,42 @@ input[type='submit']::-moz-focus-inner {
   content: "" !important;
 }
 
-/* line 40, ../scss/modules/_icons.scss */
+/* line 39, ../scss/modules/_icons.scss */
 
 .icon-rate:before,
 .icon-rate.after:after {
   content: "\2605";
 }
 
-/* line 45, ../scss/modules/_icons.scss */
+/* line 44, ../scss/modules/_icons.scss */
 
 .icon-unrate:before,
 .icon-unrate.after:after {
   content: "\2606";
 }
 
-/* line 50, ../scss/modules/_icons.scss */
+/* line 49, ../scss/modules/_icons.scss */
 
 .icon-check:before,
 .icon-check.after:after {
   content: "\2713";
 }
 
-/* line 55, ../scss/modules/_icons.scss */
+/* line 54, ../scss/modules/_icons.scss */
 
 .icon-uncheck:before,
 .icon-uncheck.after:after {
   content: "\2717";
 }
 
-/* line 60, ../scss/modules/_icons.scss */
+/* line 59, ../scss/modules/_icons.scss */
 
 .icon-cloud:before,
 .icon-cloud.after:after {
   content: "\2601";
 }
 
-/* line 65, ../scss/modules/_icons.scss */
+/* line 64, ../scss/modules/_icons.scss */
 
 .icon-dl:before,
 .icon-dl.after:after {
@@ -1668,7 +1668,7 @@ input[type='submit']::-moz-focus-inner {
   font-weight: bold;
 }
 
-/* line 71, ../scss/modules/_icons.scss */
+/* line 70, ../scss/modules/_icons.scss */
 
 .icon-cross:before,
 .icon-cross.after:after {
@@ -1676,7 +1676,7 @@ input[type='submit']::-moz-focus-inner {
   font-weight: bold;
 }
 
-/* line 77, ../scss/modules/_icons.scss */
+/* line 76, ../scss/modules/_icons.scss */
 
 .icon-arrow1:before,
 .icon-arrow1.after:after {
@@ -1685,21 +1685,21 @@ input[type='submit']::-moz-focus-inner {
   top: -0.15em;
 }
 
-/* line 84, ../scss/modules/_icons.scss */
+/* line 83, ../scss/modules/_icons.scss */
 
 .icon-arrow2:before,
 .icon-arrow2.after:after {
   content: "\279E";
 }
 
-/* line 89, ../scss/modules/_icons.scss */
+/* line 88, ../scss/modules/_icons.scss */
 
 .icon-arrow3:before,
 .icon-arrow3.after:after {
   content: "\279A";
 }
 
-/* line 94, ../scss/modules/_icons.scss */
+/* line 93, ../scss/modules/_icons.scss */
 
 .icon-bracket1:before,
 .icon-bracket1.after:after {
@@ -1710,7 +1710,7 @@ input[type='submit']::-moz-focus-inner {
   top: -0.15em;
 }
 
-/* line 103, ../scss/modules/_icons.scss */
+/* line 102, ../scss/modules/_icons.scss */
 
 .icon-bracket2:before,
 .icon-bracket2.after:after {
@@ -1721,21 +1721,21 @@ input[type='submit']::-moz-focus-inner {
   top: -0.15em;
 }
 
-/* line 112, ../scss/modules/_icons.scss */
+/* line 111, ../scss/modules/_icons.scss */
 
 .icon-up:before,
 .icon-up.after:after {
   content: "\25B2";
 }
 
-/* line 117, ../scss/modules/_icons.scss */
+/* line 116, ../scss/modules/_icons.scss */
 
 .icon-down:before,
 .icon-down.after:after {
   content: "\25BC";
 }
 
-/* line 122, ../scss/modules/_icons.scss */
+/* line 121, ../scss/modules/_icons.scss */
 
 .icon-bull:before,
 .icon-bull.after:after {
@@ -1744,7 +1744,7 @@ input[type='submit']::-moz-focus-inner {
   top: -0.05em;
 }
 
-/* line 129, ../scss/modules/_icons.scss */
+/* line 128, ../scss/modules/_icons.scss */
 
 .icon-bull2:before,
 .icon-bull2.after:after {
@@ -1752,7 +1752,7 @@ input[type='submit']::-moz-focus-inner {
   top: -0.05em;
 }
 
-/* line 135, ../scss/modules/_icons.scss */
+/* line 134, ../scss/modules/_icons.scss */
 
 .icon-bull3:before,
 .icon-bull3.after:after {
@@ -1761,7 +1761,7 @@ input[type='submit']::-moz-focus-inner {
   top: -0.05em;
 }
 
-/* line 142, ../scss/modules/_icons.scss */
+/* line 141, ../scss/modules/_icons.scss */
 
 .icon-nav:before,
 .icon-nav.after:after {
@@ -1769,14 +1769,14 @@ input[type='submit']::-moz-focus-inner {
   font-weight: bold;
 }
 
-/* line 148, ../scss/modules/_icons.scss */
+/* line 147, ../scss/modules/_icons.scss */
 
 .icon-losange:before,
 .icon-losange.after:after {
   content: "\25C6";
 }
 
-/* line 153, ../scss/modules/_icons.scss */
+/* line 152, ../scss/modules/_icons.scss */
 
 .icon-asteri:before,
 .icon-asteri.after:after {
@@ -1784,13 +1784,13 @@ input[type='submit']::-moz-focus-inner {
   font-weight: bold;
 }
 
-/* line 159, ../scss/modules/_icons.scss */
+/* line 158, ../scss/modules/_icons.scss */
 
 .icon-mail:before,
 .icon-mail.after:after {
   content: "\2709";
   font-size: 1.6em;
-  top: -0.05em;
+  top: -.05em;
 }
 
 /*----------------------------*\
@@ -1862,7 +1862,7 @@ input[type='submit']::-moz-focus-inner {
  * 1. ...and pseudo-elements 
  */
 
-/* line 11, ../scss/modules/_layout.scss */
+/* line 9, ../scss/modules/_layout.scss */
 
 *,
 *:after,
@@ -2006,7 +2006,7 @@ body {
  * Source: http://soqr.fr/vertical-rhythm/ 
  */
 
-/* line 35, ../scss/modules/_typography.scss */
+/* line 31, ../scss/modules/_typography.scss */
 
 p,
 ul,
@@ -2201,7 +2201,7 @@ h6,
     color: #000              !important;
   }
 
-  /* line 24, ../scss/partials/_print.scss */
+  /* line 22, ../scss/partials/_print.scss */
 
   h1,
   h2,
@@ -2246,7 +2246,7 @@ h6,
    * 2. No widows
    */
 
-  /* line 48, ../scss/partials/_print.scss */
+  /* line 47, ../scss/partials/_print.scss */
 
   p,
   blockquote {
@@ -2260,7 +2260,7 @@ h6,
    * Prevents breaks inside these elements
    */
 
-  /* line 57, ../scss/partials/_print.scss */
+  /* line 56, ../scss/partials/_print.scss */
 
   blockquote,
   ul,
@@ -2282,7 +2282,7 @@ h6,
    * Prevents breaks after these elements
    */
 
-  /* line 72, ../scss/partials/_print.scss */
+  /* line 71, ../scss/partials/_print.scss */
 
   h1,
   h2,
@@ -2310,7 +2310,7 @@ h6,
     /* 1 */
   }
 
-  /* line 90, ../scss/partials/_print.scss */
+  /* line 88, ../scss/partials/_print.scss */
 
   a[href^="javascript:"]:after,
   a[href^="#"]:after,
@@ -2367,8 +2367,8 @@ h6,
 /* line 33, ../scss/_d3slider.scss */
 
 .d3-slider-horizontal .d3-slider-handle {
-  top: -0.3em;
-  margin-left: -0.6em;
+  top: -.3em;
+  margin-left: -.6em;
 }
 
 /* line 38, ../scss/_d3slider.scss */
@@ -2414,9 +2414,9 @@ h6,
 /* line 66, ../scss/_d3slider.scss */
 
 .d3-slider-vertical .d3-slider-handle {
-  left: -0.25em;
+  left: -.25em;
   margin-left: 0;
-  margin-bottom: -0.6em;
+  margin-bottom: -.6em;
 }
 
 /* line 3, ../scss/_main.scss */
@@ -2469,7 +2469,7 @@ h6,
   float: left;
 }
 
-/* line 39, ../scss/_main.scss */
+/* line 38, ../scss/_main.scss */
 
 .axis path,
 .axis line {
@@ -2511,4 +2511,33 @@ h6,
   border-radius: 3px;
   color: white;
   border: 1px solid rgba(125, 125, 125, 0.3);
+}
+
+/* line 70, ../scss/_main.scss */
+
+.bubbles-slider {
+  position: relative;
+  margin-bottom: 30px;
+  margin: 0 auto;
+  width: 300px;
+}
+
+/* line 76, ../scss/_main.scss */
+
+.bubbles-slider__min,
+.bubbles-slider__max {
+  position: absolute;
+  top: 100%;
+}
+
+/* line 81, ../scss/_main.scss */
+
+.bubbles-slider__min {
+  left: 0;
+}
+
+/* line 84, ../scss/_main.scss */
+
+.bubbles-slider__max {
+  right: 0;
 }

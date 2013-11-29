@@ -20,11 +20,6 @@ require.config({
 			deps: [
 				'd3'
 			]
-		},
-		d3slider: {
-			deps: [
-				'd3'
-			]
 		}
 	},
 	paths: {
@@ -35,7 +30,6 @@ require.config({
 		d3: '../bower_components/d3/d3',
 		d3utils: '../lib/d3utils',
 		d3tip: '../bower_components/d3-tip/index',
-		d3slider: '../lib/d3slider',
 		datamaps: '../lib/datamaps',
 		topojson: '../bower_components/topojson/topojson',
 		text: '../bower_components/requirejs-plugins/lib/text',
