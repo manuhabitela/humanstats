@@ -14,14 +14,14 @@ define(
 
 		this.citiesList = new CitiesView({
 			collection: this.cities,
-			el: container.querySelector('.cities')
+			el: container.querySelector('.cities-container')
 		});
 		this.dataView = new DataView({
 			citiesCollection: this.cities,
 			eventsCollection: this.events,
 			talksCollection: this.talks,
 			usersCollection: this.users,
-			el: container.querySelector('.data')
+			el: container.querySelector('.data-container')
 		});
 	};
 

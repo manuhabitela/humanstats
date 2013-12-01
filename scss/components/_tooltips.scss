@@ -1,0 +1,10 @@
+.ChartTooltip {
+	pointer-events: none;
+}
+
+.ChartTooltip-inner {
+	padding: 3px 6px;
+	border-radius: 3px;
+	color: white;
+	border: 1px solid rgba(125, 125, 125, 0.3);
+}

@@ -3,10 +3,10 @@ define(["jquery", "underscore"], function($, _) {
 		_.bindAll(this, 'onMenuClick');
 		this.view = view;
 		this.$container = view.$el;
-		this.$container.on('click', '.tabs .tab-link', this.onMenuClick);
+		this.$container.on('click', '.Tabs .Tabs-link', this.onMenuClick);
 
 		var hrefs = [];
-		this.$container.find('.tabs .tab-link').each(function(n, val) { hrefs.push($(this).attr('href')); });
+		this.$container.find('.Tabs .Tabs-link').each(function(n, val) { hrefs.push($(this).attr('href')); });
 		if ( _(hrefs).contains(window.location.hash) )
 			this.showTab(window.location.hash.substr(1));
 		else
@@ -21,8 +21,8 @@ define(["jquery", "underscore"], function($, _) {
 	};
 
 	Tabs.prototype.showTab = function(id) {
-		this.$container.find('.tab-contents .tab-content').not('#' + id).addClass('tab-content--hidden');
-		this.$container.find('.tab-contents .tab-content#' + id).removeClass('tab-content--hidden');
+		this.$container.find('.Tabs-contents .Tabs-content').not('#' + id).addClass('Tabs-content--hidden');
+		this.$container.find('.Tabs-contents .Tabs-content#' + id).removeClass('Tabs-content--hidden');
 
 		this.view.trigger('tab.show', id);
 	};

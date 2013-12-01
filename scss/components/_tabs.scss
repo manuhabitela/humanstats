@@ -1,0 +1,7 @@
+.Tabs-tabs {
+	@extend .u-inlineList;
+}
+
+.Tabs-content--hidden {
+	display: none;
+}

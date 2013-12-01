@@ -1,0 +1,12 @@
+.CitiesList {
+	@extend .u-inlineList;
+}
+
+.CitiesList-link {
+	display: block;
+	@extend .u-paddingB;
+	color: black;
+	background: none;
+	text-decoration: none;
+	border-radius: 3px;
+}

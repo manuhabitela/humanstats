@@ -4,17 +4,19 @@ define(["backbone", "underscore", "tabs", "./data.info", "./data.cities", "./dat
 	var DataView = Backbone.View.extend({
 
 		template: [
-			'<ul class="tabs u-inlineList">',
-				'<li class="tab"><a class="tab-link" href="#cities">Les villes</a></li>',
-				'<li class="tab"><a class="tab-link" href="#events">Les évènements</a></li>',
-				'<li class="tab"><a class="tab-link" href="#attendees">Les participants</a></li>',
-				'<li class="tab"><a class="tab-link" href="#talks">Les talks</a></li>',
-			'</ul>',
-			'<ul id="info" class="chart--text u-inlineList"></ul>',
-			'<div class="data tab-contents">',
-				'<div id="attendees" class="tab-content chart--bubbles"></div>',
-				'<div id="cities" class="tab-content chart--map"></div>',
-				'<div id="events" class="tab-content chart--lines"></div>',
+			'<div class="Tabs">',
+				'<ul class="Tabs-tabs">',
+					'<li class="Tabs-tab"><a class="Tabs-link" href="#cities">Les villes</a></li>',
+					'<li class="Tabs-tab"><a class="Tabs-link" href="#events">Les évènements</a></li>',
+					'<li class="Tabs-tab"><a class="Tabs-link" href="#attendees">Les participants</a></li>',
+					'<li class="Tabs-tab"><a class="Tabs-link" href="#talks">Les talks</a></li>',
+				'</ul>',
+				'<ul id="info" class="TextChart"></ul>',
+				'<div class="Data Tabs-contents">',
+					'<div id="attendees" class="Tabs-content BubblesChart"></div>',
+					'<div id="cities" class="Tabs-content MapChart"></div>',
+					'<div id="events" class="Tabs-content LinesChart"></div>',
+				'</div>',
 			'</div>'
 		].join(''),
 
@@ -29,10 +31,10 @@ define(["backbone", "underscore", "tabs", "./data.info", "./data.cities", "./dat
 			this.initDOM();
 
 			this.subViews = {
-				"attendees": new BubblesChartDataView({ el: this.$('.chart--bubbles') }),
-				"info": new TextDataView({ el: this.$('.chart--text') }),
-				"cities": new MapDataView({ el: this.$('.chart--map') }),
-				"events": new LinesChartDataView({ el: this.$('.chart--lines') })
+				"attendees": new BubblesChartDataView({ el: this.$('.BubblesChart') }),
+				"info": new TextDataView({ el: this.$('.TextChart') }),
+				"cities": new MapDataView({ el: this.$('.MapChart') }),
+				"events": new LinesChartDataView({ el: this.$('.LinesChart') })
 			};
 
 			this.filterData();
@@ -58,7 +60,7 @@ define(["backbone", "underscore", "tabs", "./data.info", "./data.cities", "./dat
 		render: function() {
 			if (this.subViews) {
 				_(this.subViews).each(function(subView) {
-					if (!subView.$el.hasClass('tab-content--hidden'))
+					if (!subView.$el.hasClass('Tabs-content--hidden'))
 						subView.render();
 				});
 			}

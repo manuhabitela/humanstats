@@ -1,0 +1,16 @@
+.LinesChart-axis path,
+.LinesChart-axis line {
+	fill: none;
+	stroke-width: 0;
+	shape-rendering: crispEdges;
+}
+
+.LinesChart-axis--x {
+	font-size: 10px;
+}
+
+.LinesChart-line {
+	fill: none;
+	stroke: steelblue;
+	stroke-width: 1.5px;
+}

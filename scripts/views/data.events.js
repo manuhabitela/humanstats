@@ -2,7 +2,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 	moment.lang('fr');
 
 	var LinesChartDataView = Backbone.View.extend({
-
+		className: 'LinesChart',
 		render: function() {
 			if (!this.data) return false;
 			var that = this;
@@ -38,24 +38,24 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.x(function(d) { return x(d.axisDate); })
 				.y(function(d) { return y(d.attendees); });
 
-			var dotsScale = d3.scale.linear().domain([1, that.originalData.cities.length]).range([5, 3]);
+			var dotsScale = d3.scale.linear().domain([1, that.originalData.cities.length]).range([5, 3.5]);
 
 			var tip = d3.tip()
-				.attr('class', 'graph-tip')
+				.attr('class', 'ChartTooltip')
 				.html(function(d) {
 					var currentYear = moment().year(),
 						eventDate = moment(d.date);
 					return [
-						'<div class="graph-tip__inner" style="background-color: ',
+						'<div class="ChartTooltip-inner" style="background-color: ',
 						that.originalData.cities.findWhere({ id: d.city }).get('color'),
 						'">',
-							'<span class="graph-tip__attendees">',
+							'<span class="ChartTooltip-attendees">',
 								d.attendees, ' ', _.pluralize('personne', d.attendees),
 							'</span> ',
-							'<span class="graph-tip__date">',
+							'<span class="ChartTooltip-date">',
 								'le ', eventDate.format('D MMMM' + (currentYear != eventDate.year() ? ' YYYY' : '')),
 							'</span> ',
-							'<span class="graph-tip__city">',
+							'<span class="ChartTooltip-city">',
 								'à ', d.city.substr(0, 1).toUpperCase() + d.city.substr(1),
 							'</span>',
 						'</div>'
@@ -87,13 +87,13 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				chart = d3.select(this.el).append('svg').attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
 			else
 				chart = d3.select(this.el.querySelector('svg'));
-			if (!this.el.querySelector('g.chart-container')) {
+			if (!this.el.querySelector('g.LinesChart-container')) {
 				chart = chart
 					.append("g")
 					.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-					.attr("class", "chart-container");
+					.attr("class", "LinesChart-container");
 			} else {
-				chart = chart.select('g.chart-container');
+				chart = chart.select('g.LinesChart-container');
 			}
 
 			chart.call(tip);
@@ -101,14 +101,14 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			x.domain(d3.extent(data, function(d) { return d.axisDate; }));
 			y.domain([0, d3.max(data, function(d) { return d.attendees; })+10]);
 
-			if (!this.el.querySelector('.axis--x')) {
+			if (!this.el.querySelector('.LinesChart-axis--x')) {
 				chart.append("g")
-					.attr("class", "axis axis--x")
+					.attr("class", "LinesChart-axis LinesChart-axis--x")
 					.attr("transform", "translate(0," + height + ")");
 			}
-			if (!this.el.querySelector('.axis--y')) {
+			if (!this.el.querySelector('.LinesChart-axis--y')) {
 				chart.append("g")
-					.attr("class", "axis axis--y")
+					.attr("class", "LinesChart-axis LinesChart-axis--y")
 					.append("text")
 						.attr("transform", "rotate(-90)")
 						.attr("y", 6)
@@ -117,24 +117,24 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 						.text("Participants");
 			}
 
-			chart.select('.axis--x').transition().call(xAxis);
-			chart.select('.axis--y').transition().call(yAxis);
+			chart.select('.LinesChart-axis--x').transition().call(xAxis);
+			chart.select('.LinesChart-axis--y').transition().call(yAxis);
 
 
-			var chartCities = chart.selectAll(".city").data(cities);
-			chartCities.enter().append("g").attr("class", "city").append("path").attr("class", "line");
+			var chartCities = chart.selectAll(".LinesChart-city").data(cities);
+			chartCities.enter().append("g").attr("class", "LinesChart-city").append("path").attr("class", "LinesChart-line");
 
-			chart.selectAll('.line').data(cities)
+			chart.selectAll('.LinesChart-line').data(cities)
 				.transition()
 					.attr("d", function(d) { return line(d.values); })
 					.style("stroke", function(d) { return that.originalData.cities.findWhere({ id: d.name }).get('color'); });
 
 			chartCities.exit().remove();
-			var chartDots = chart.selectAll(".dot").data(data);
-			chartDots.enter().append("circle").attr("class", "dot");
+			var chartDots = chart.selectAll(".LinesChart-dot").data(data);
+			chartDots.enter().append("circle").attr("class", "LinesChart-dot");
 
 			var tooltipTimeout = null;
-			chart.selectAll(".dot")
+			chart.selectAll(".LinesChart-dot")
 				.on('mouseover', function(d) {
 					clearTimeout(tooltipTimeout);
 					tip.show(d);

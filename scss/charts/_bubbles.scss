@@ -1,0 +1,20 @@
+.BubblesChart-slider {
+	position: relative;
+	margin-bottom: 30px;
+	margin: 0 auto;
+	width: 300px;
+}
+
+.BubblesChart-slider-min,
+.BubblesChart-slider-max {
+  position: absolute;
+  top: 100%;
+}
+
+.BubblesChart-slider-min {
+  left: 0;
+}
+
+.BubblesChart-slider-max {
+	right: 0;
+}

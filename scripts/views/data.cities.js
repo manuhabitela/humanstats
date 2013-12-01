@@ -1,6 +1,7 @@
 define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], function($, Backbone, _, d3, topojson, Datamap) {
 
 	var MapDataView = Backbone.View.extend({
+		className: 'MapChart',
 		initializeWithData: function() {
 			var that = this;
 			var mapOptions = {
@@ -20,8 +21,8 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 					var projection = d3.geo.albers()
 						.center([2, 46])
 						.rotate([-1, 0])
-						.translate([$(element).width()/2, $(element).height()/2])
-						.scale(5400 * $(element).height() / 1060);
+						.translate([600/2, 600/2])
+						.scale(5400 * 600 / 1060);
 
 					var path = d3.geo.path().projection(projection);
 					return { path: path, projection: projection};

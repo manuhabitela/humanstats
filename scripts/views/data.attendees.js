@@ -2,13 +2,13 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 	moment.lang('fr');
 
 	var BubblesChartDataView = Backbone.View.extend({
-
-		template: ['<svg class="bubble"></svg>',
-			'<div class="bubbles-slider">',
-				'<output class="bubbles-slider__min">1</output>',
-				'<input class="bubbles-slider__input" name="bubbles-slider" type="range" min="1" step="1" value="1">',
-				'<output class="bubbles-slider__max"></output>',
-				'<output class="bubbles-slider__value"></output>',
+		className: 'BubblesChart',
+		template: ['<svg class="BubblesChart-chart"></svg>',
+			'<div class="BubblesChart-slider">',
+				'<output class="BubblesChart-slider-min">1</output>',
+				'<input class="BubblesChart-slider-input" name="BubblesChart-slider" type="range" min="1" step="1" value="1">',
+				'<output class="BubblesChart-slider-max"></output>',
+				'<output class="BubblesChart-slider-value"></output>',
 			'</div>'].join(''),
 
 		initialize: function() {
@@ -21,10 +21,10 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			if (!this.$el.children().length) {
 				this.$el.html( this.template );
 				this.$slider = {
-					min: this.$('.bubbles-slider__min'),
-					input: this.$('.bubbles-slider__input'),
-					value: this.$('.bubbles-slider__value'),
-					max: this.$('.bubbles-slider__max')
+					min: this.$('.BubblesChart-slider-min'),
+					input: this.$('.BubblesChart-slider-input'),
+					value: this.$('.BubblesChart-slider-value'),
+					max: this.$('.BubblesChart-slider-max')
 				};
 				this.$slider.input.on('change', this.onSliderChange);
 				this.$slider.input.on('mouseup', this.onSliderMouseup);
@@ -42,13 +42,13 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			var diameter = 700;
 
 			var tip = d3.tip()
-				.attr('class', 'graph-tip')
+				.attr('class', 'ChartTooltip')
 				.html(function(d) {
 					return [
-						'<div class="graph-tip__inner" style="background-color: ',
+						'<div class="ChartTooltip-inner" style="background-color: ',
 						that.originalData.cities.findWhere({ id: d.mainCity }).get('color'),
 						'">',
-							'<span class="graph-tip__attendee">',
+							'<span class="ChartTooltip-attendee">',
 								d.name,
 							'</span> ',
 						'</div>'
@@ -66,19 +66,21 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			var svg = d3.select(this.el.querySelector('svg'))
 				.attr("width", diameter)
 				.attr("height", diameter)
-				.attr("class", "bubble");
+				.attr("class", "BubblesChart-bubble");
 			svg.call(tip);
 
-			var node = svg.selectAll(".node")
+			var node = svg.selectAll(".BubblesChart-node")
 				.data(bubble.nodes({ children: attendees}).filter(function(d) { return !d.children; }));
 
-			node.enter().append("g").attr("class", "node").append("circle").attr('class', 'node-circle');
+			node.enter().append("g").attr("class", "BubblesChart-node").append("circle").attr('class', 'BubblesChart-node-circle').style("fill", function(d) { return "#fff"; });
 
 			node.transition()
+				.duration(500)
 				.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
-			node.selectAll('.node-circle').data(function(d) { return [d]; })
+			node.selectAll('.BubblesChart-node-circle').data(function(d) { return [d]; })
 				.transition()
+				.duration(500)
 				.attr("r", function(d) { return d.id ? d.r : 0; })
 				.style("fill", function(d) { return d.id ? that.originalData.cities.findWhere({ id: d.mainCity }).get('color') : ''; });
 

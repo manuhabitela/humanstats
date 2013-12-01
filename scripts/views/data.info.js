@@ -1,14 +1,13 @@
 define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone, _, d3, d3utils) {
 
 	var TextDataView = Backbone.View.extend({
-		tagName: 'ul',
-		className: 'u-inlineList',
+		className: 'TextChart',
 		templates: {
-			talks: '<span class="number"><%- value %></span> <%- _("talk").pluralize(value) %>',
-			events: 'en <span class="number"><%- value %></span> <%- _("évènement").pluralize(value) %>',
-			organizers: '<span class="number"><%- value %></span> <%- _("organisateur").pluralize(value) %>',
-			talkers: '<span class="number"><%- value %></span> <%- _("talker").pluralize(value) %>',
-			attendees: '<span class="number"><%- value[0] %></span> <%- _("participant").pluralize(value) %> venus <span class="number"><%- value[1] %></span> fois',
+			talks: '<span class="TextChart-number"><%- value %></span> <%- _("talk").pluralize(value) %>',
+			events: 'en <span class="TextChart-number"><%- value %></span> <%- _("évènement").pluralize(value) %>',
+			organizers: '<span class="TextChart-number"><%- value %></span> <%- _("organisateur").pluralize(value) %>',
+			talkers: '<span class="TextChart-number"><%- value %></span> <%- _("talker").pluralize(value) %>',
+			attendees: '<span class="TextChart-number"><%- value[0] %></span> <%- _("participant").pluralize(value) %> venus <span class="TextChart-number"><%- value[1] %></span> fois',
 		},
 
 		render: function() {
