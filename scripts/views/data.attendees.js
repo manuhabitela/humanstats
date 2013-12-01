@@ -60,8 +60,8 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.sort(null)
 				.size([diameter, diameter])
 				.padding(4)
-				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*4 : 1; })
-				.radius(function(d) { return 9 + d; });
+				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*(attendees.length > 500 ? 2 : 4) : 1; })
+				.radius(function(d) { return attendees.length > 500 ? 6 + d : 12 + d; });
 
 			var svg = d3.select(this.el.querySelector('svg'))
 				.attr("width", diameter)
