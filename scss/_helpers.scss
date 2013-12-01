@@ -1,0 +1,7 @@
+.u-inlineList {
+	@extend .u-marginVm;
+	li {
+		@extend .u-inlineBlock;
+		@extend .u-marginRm;
+	}
+}

@@ -2,6 +2,7 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 
 	var TextDataView = Backbone.View.extend({
 		tagName: 'ul',
+		className: 'u-inlineList',
 		templates: {
 			talks: '<span class="number"><%- value %></span> <%- _("talk").pluralize(value) %>',
 			events: 'en <span class="number"><%- value %></span> <%- _("évènement").pluralize(value) %>',
@@ -32,7 +33,7 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 			});
 			//visually increment/decrement numbers with new values
 			selection.transition()
-				.duration(1500)
+				.duration(750)
 				.tween("text", function(d) {
 					var prevVal = that.numberData ? _(that.numberData).findWhere({ type: d.type }).value : 0;
 					var newVal;

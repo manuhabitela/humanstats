@@ -4,13 +4,13 @@ define(["backbone", "underscore", "tabs", "./data.info", "./data.cities", "./dat
 	var DataView = Backbone.View.extend({
 
 		template: [
-			'<ul class="tabs">',
+			'<ul class="tabs u-inlineList">',
 				'<li class="tab"><a class="tab-link" href="#cities">Les villes</a></li>',
 				'<li class="tab"><a class="tab-link" href="#events">Les évènements</a></li>',
 				'<li class="tab"><a class="tab-link" href="#attendees">Les participants</a></li>',
 				'<li class="tab"><a class="tab-link" href="#talks">Les talks</a></li>',
 			'</ul>',
-			'<div id="info" class="chart--text"></div>',
+			'<ul id="info" class="chart--text u-inlineList"></ul>',
 			'<div class="data tab-contents">',
 				'<div id="attendees" class="tab-content chart--bubbles"></div>',
 				'<div id="cities" class="tab-content chart--map"></div>',

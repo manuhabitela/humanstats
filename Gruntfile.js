@@ -40,7 +40,8 @@ module.exports = function(grunt) {
                     imagesDir: "img",
                     fontsDir: "fonts",
                     outputStyle: 'expanded',
-                    relativeAssets: true
+                    relativeAssets: true,
+                    require: ['sass-css-importer']
                 }
             }
         },

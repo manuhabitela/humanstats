@@ -1,7 +1,7 @@
 define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 	var CitiesView = Backbone.View.extend({
 		template: _.template([
-			'<ul class="inline-list">',
+			'<ul class="u-inlineList">',
 				'<li><a href="#" data-color="#000">Tout</a></li>',
 				'<% _.each(cities, function(city) { %>',
 				'<li><a href="#" data-id="<%- city.id %>" data-color="<%- city.color %>"><%- city.name %></a></li>',

@@ -1,9 +1,4 @@
 .cities ul {
-	@extend .inline-list;
-	li {
-		display: inline-block;
-		margin: 0 5px;
-	}
 	a {
 		display: block;
 		padding: 3px 6px;
@@ -26,8 +21,6 @@
 		box-shadow: none;
 		border: 2px solid #bbb;
 		padding: 10px;
-		font-size: #{$base-font-size}px;
-		font-family: $regular-font-stack;
 	}
 }
 
