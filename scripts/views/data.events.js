@@ -82,7 +82,11 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				};
 			});
 
-			var chart = d3.select(this.el).attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
+			var chart;
+			if (!this.el.querySelector('svg'))
+				chart = d3.select(this.el).append('svg').attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
+			else
+				chart = d3.select(this.el.querySelector('svg'));
 			if (!this.el.querySelector('g.chart-container')) {
 				chart = chart
 					.append("g")

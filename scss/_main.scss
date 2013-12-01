@@ -17,8 +17,8 @@
 	}
 }
 
-.map {
-	float: left;
+
+.chart--map {
 	width: 600px;
 	height: 600px;
 	position: relative;
@@ -83,4 +83,8 @@
 }
 .bubbles-slider__max {
 	right: 0;
+}
+
+.tab-content--hidden {
+	display: none;
 }

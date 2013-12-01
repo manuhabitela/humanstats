@@ -30,6 +30,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				this.$slider.input.on('mouseup', this.onSliderMouseup);
 			}
 
+
 			attendees = _(attendees || this.data.attendees).shuffle();
 
 			this.$slider.input.attr('max', this.data.cities.length > 1 ? _(attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.length; }).max().value() : this.data.events.length);
@@ -59,7 +60,8 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.sort(null)
 				.size([diameter, diameter])
 				.padding(4)
-				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*1.5 : 1; });
+				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*4 : 1; })
+				.radius(function(d) { return 9 + d; });
 
 			var svg = d3.select(this.el.querySelector('svg'))
 				.attr("width", diameter)

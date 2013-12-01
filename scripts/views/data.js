@@ -1,7 +1,23 @@
-define(["backbone", "underscore", "./data.info", "./data.cities", "./data.events", "./data.attendees"],
-	function(Backbone, _, TextDataView, MapDataView, LinesChartDataView, BubblesChartDataView) {
+define(["backbone", "underscore", "tabs", "./data.info", "./data.cities", "./data.events", "./data.attendees"],
+	function(Backbone, _, tabs, TextDataView, MapDataView, LinesChartDataView, BubblesChartDataView) {
 
 	var DataView = Backbone.View.extend({
+
+		template: [
+			'<ul class="tabs">',
+				'<li class="tab"><a class="tab-link" href="#cities">Les villes</a></li>',
+				'<li class="tab"><a class="tab-link" href="#events">Les évènements</a></li>',
+				'<li class="tab"><a class="tab-link" href="#attendees">Les participants</a></li>',
+				'<li class="tab"><a class="tab-link" href="#talks">Les talks</a></li>',
+			'</ul>',
+			'<div id="info" class="chart--text"></div>',
+			'<div class="data tab-contents">',
+				'<div id="attendees" class="tab-content chart--bubbles"></div>',
+				'<div id="cities" class="tab-content chart--map"></div>',
+				'<div id="events" class="tab-content chart--lines"></div>',
+			'</div>'
+		].join(''),
+
 		initialize: function(options) {
 			this.originalData = {
 				cities: (options.citiesCollection || []),
@@ -10,11 +26,13 @@ define(["backbone", "underscore", "./data.info", "./data.cities", "./data.events
 				users: (options.usersCollection || [])
 			};
 
+			this.initDOM();
+
 			this.subViews = {
-				"bubbles": new BubblesChartDataView({ el: this.$('.bubbles') }),
-				"text": new TextDataView({ el: this.$('.text') }),
-				"map": new MapDataView({ el: this.$('.map') }),
-				"lines": new LinesChartDataView({ el: this.$('.lines') })
+				"attendees": new BubblesChartDataView({ el: this.$('.chart--bubbles') }),
+				"info": new TextDataView({ el: this.$('.chart--text') }),
+				"cities": new MapDataView({ el: this.$('.chart--map') }),
+				"events": new LinesChartDataView({ el: this.$('.chart--lines') })
 			};
 
 			this.filterData();
@@ -24,17 +42,24 @@ define(["backbone", "underscore", "./data.info", "./data.cities", "./data.events
 				if (subView.initializeWithData) subView.initializeWithData();
 			}, this);
 
+
 			this.render();
 
-			_.bindAll(this, 'onCityChange');
+			_.bindAll(this, 'onCityChange', 'render');
 			this.originalData.cities.on('activate deactivate deactivateAll', this.onCityChange);
+			this.on('tab.show', this.render);
+		},
 
+		initDOM: function() {
+			this.$el.html( this.template );
+			new tabs(this);
 		},
 
 		render: function() {
 			if (this.subViews) {
 				_(this.subViews).each(function(subView) {
-					subView.render();
+					if (!subView.$el.hasClass('tab-content--hidden'))
+						subView.render();
 				});
 			}
 		},
