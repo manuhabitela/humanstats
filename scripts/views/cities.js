@@ -10,25 +10,29 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 		),
 
 		events: {
-			'click .CitiesList-link': 'toggleCity'
+			'click .CitiesList-link': 'onCityClick'
 		},
 
 		initialize: function() {
 			this.render();
+			this.toggleCity(null);
 		},
 
 		render: function() {
 			this.$el.html( this.template({ cities: this.collection.toJSON() }) );
 		},
 
-		toggleCity: function(e) {
-			var $city = $(e.currentTarget);
-			var cityId = $city.attr('data-id');
-			var that = this;
+		onCityClick: function(e) {
+			this.toggleCity( $(e.currentTarget) );
+			e.preventDefault();
+		},
 
+		toggleCity: function(city) {
+			var that = this;
+			var cityId = city && city.attr('data-id');
 			if (cityId) {
 				this.collection.toggle(cityId);
-				$city.toggleClass('CitiesList-link--active', this.collection.isActive(cityId));
+				city.toggleClass('CitiesList-link--active', this.collection.isActive(cityId));
 			} else {
 				this.collection.deactivateAll();
 				this.$('.CitiesList-link').removeClass('CitiesList-link--active');
@@ -41,7 +45,6 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 				else
 					$link.css({ 'color': $link.attr('data-color'), 'background-color': '' });
 			});
-			e.preventDefault();
 		}
 	});
 	return CitiesView;
