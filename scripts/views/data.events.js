@@ -3,6 +3,9 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 
 	var LinesChartDataView = Backbone.View.extend({
 		className: 'LinesChart',
+		initialize: function(options) {
+			this.data = options.data;
+		},
 		render: function() {
 			if (!this.data) return false;
 			var that = this;
@@ -38,7 +41,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.x(function(d) { return x(d.axisDate); })
 				.y(function(d) { return y(d.attendees); });
 
-			var dotsScale = d3.scale.linear().domain([1, that.originalData.cities.length]).range([5, 3.5]);
+			var dotsScale = d3.scale.linear().domain([1, that.data.cities.length]).range([5, 3.5]);
 
 			var tip = d3.tip()
 				.attr('class', 'ChartTooltip')
@@ -47,7 +50,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 						eventDate = moment(d.date);
 					return [
 						'<div class="ChartTooltip-inner" style="background-color: ',
-						that.originalData.cities.findWhere({ id: d.city }).get('color'),
+						that.data.cities.findWhere({ id: d.city }).get('color'),
 						'">',
 							'<span class="ChartTooltip-attendees">',
 								d.attendees, ' ', _.pluralize('personne', d.attendees),
@@ -63,7 +66,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				});
 
 
-			var data = _(this.data.events).map(function(d) {
+			var data = _(this.data.filtered.events).map(function(d) {
 				var obj = {
 					date: parseDate(d.date),
 					attendees: d.attendeeIds.length,
@@ -127,7 +130,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			chart.selectAll('.LinesChart-line').data(cities)
 				.transition()
 					.attr("d", function(d) { return line(d.values); })
-					.style("stroke", function(d) { return that.originalData.cities.findWhere({ id: d.name }).get('color'); });
+					.style("stroke", function(d) { return that.data.cities.findWhere({ id: d.name }).get('color'); });
 
 			chartCities.exit().remove();
 			var chartDots = chart.selectAll(".LinesChart-dot").data(data);
@@ -147,7 +150,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 					.attr("r", dotsScale(cities.length))
 					.attr("cx", function(d) { return x(d.axisDate); })
 					.attr("cy", function(d) { return y(d.attendees); })
-					.style("fill", function(d) { return that.originalData.cities.findWhere({ id: d.city }).get('color'); });
+					.style("fill", function(d) { return that.data.cities.findWhere({ id: d.city }).get('color'); });
 
 			chartDots.exit().remove();
 		}

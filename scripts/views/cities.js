@@ -1,30 +1,48 @@
-define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
+	define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 	var CitiesView = Backbone.View.extend({
 		template: _.template([
-			'<ul class="CitiesList">',
-				'<li><a href="#" class="CitiesList-link" data-color="#000">Tout</a></li>',
+			'<ul class="CitiesList CitiesList--Vleft">',
+				'<li class="CitiesList-item" data-color="#000"><label class="CitiesList-item-inner">',
+					'<input type="checkbox" class="CitiesList-input u-isInvisible">',
+					'<button type="button" class="CitiesList-toggle">Tout</button>',
+				'</label></li>',
+				// <li><button type="button" class="CitiesList-item CitiesList-toggle" data-color="#000">Tout</button></li>',
 				'<% _.each(cities, function(city) { %>',
-				'<li><a href="#" class="CitiesList-link" data-id="<%- city.id %>" data-color="<%- city.color %>"><%- city.name %></a></li>',
+				'<li class="CitiesList-item" data-id="<%- city.id %>" data-color="<%- city.color %>"><label class="CitiesList-item-inner">',
+					'<input type="checkbox" class="CitiesList-input">',
+					'<span class="CitiesList-label"><%- city.name %></span>',
+				'</label></li>',
 				'<% }) %>',
 			'</ul>'].join('')
 		),
 
 		events: {
-			'click .CitiesList-link': 'onCityClick'
+			'click .CitiesList-input': 'onCityClick',
+			'click .CitiesList-toggle': 'onToggleClick',
 		},
 
 		initialize: function() {
 			this.render();
-			this.toggleCity(null);
 		},
 
 		render: function() {
 			this.$el.html( this.template({ cities: this.collection.toJSON() }) );
+			this.updateView();
 		},
 
 		onCityClick: function(e) {
-			this.toggleCity( $(e.currentTarget) );
-			e.preventDefault();
+			var $target = $(e.currentTarget);
+			this.toggleCity( $target.hasClass('CitiesList-item') ? $target : $target.closest('.CitiesList-item') );
+		},
+
+		onToggleClick: function(e) {
+			var activeItems = this.collection.activeItems.length > 0;
+			this.collection[activeItems ? 'deactivateAll' : 'activateAll']();
+			this.$('.CitiesList-toggle')
+				.text(activeItems ? 'Tout' : 'Rien')
+				.closest('.CitiesList-item').toggleClass('CitiesList-item--active', activeItems);
+
+			this.updateView();
 		},
 
 		toggleCity: function(city) {
@@ -32,18 +50,25 @@ define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 			var cityId = city && city.attr('data-id');
 			if (cityId) {
 				this.collection.toggle(cityId);
-				city.toggleClass('CitiesList-link--active', this.collection.isActive(cityId));
-			} else {
-				this.collection.deactivateAll();
-				this.$('.CitiesList-link').removeClass('CitiesList-link--active');
+				city.toggleClass('CitiesList-item--active', this.collection.isActive(cityId));
 			}
 
-			this.$('.CitiesList-link').each(function(n, link) {
-				var $link = $(link);
-				if ($link.hasClass('CitiesList-link--active') || (!$link.attr('data-id') && !that.$('.CitiesList-link--active').length))
-					$link.css({ 'color': 'white', 'background-color': $link.attr('data-color') });
-				else
-					$link.css({ 'color': $link.attr('data-color'), 'background-color': '' });
+			this.updateView();
+		},
+
+		updateView: function() {
+			var that = this;
+			this.$('.CitiesList-item').each(function(n, item) {
+				var $item = $(item);
+				var $inner = $item.find('.CitiesList-item-inner');
+				if ($item.hasClass('CitiesList-item--active') || (!$item.attr('data-id') && !that.$('.CitiesList-item--active').length)) {
+					$inner.css({ 'color': 'white', 'background-color': $item.attr('data-color') });
+					$item.find('.CitiesList-input').prop('checked', true);
+				}
+				else {
+					$inner.css({ 'color': $item.attr('data-color'), 'background-color': '' });
+					$item.find('.CitiesList-input').prop('checked', false);
+				}
 			});
 		}
 	});

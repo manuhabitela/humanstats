@@ -11,7 +11,8 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				'<output class="BubblesChart-slider-value"></output>',
 			'</div>'].join(''),
 
-		initialize: function() {
+		initialize: function(options) {
+			this.data = options.data;
 			_.bindAll(this, 'onSliderChange', 'onSliderMouseup', 'render');
 		},
 
@@ -31,9 +32,9 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			}
 
 
-			attendees = _(attendees || this.data.attendees).shuffle();
+			attendees = _(attendees || this.data.filtered.attendees).shuffle();
 
-			this.$slider.input.attr('max', this.data.cities.length > 1 ? _(attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.length; }).max().value() : this.data.events.length);
+			this.$slider.input.attr('max', this.data.filtered.cities.length > 1 ? _(attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.length; }).max().value() : this.data.filtered.events.length);
 			this.$slider.max.text( this.$slider.input.attr('max') );
 			if (!attendees)
 				this.$slider.input.val(1);
@@ -46,7 +47,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.html(function(d) {
 					return [
 						'<div class="ChartTooltip-inner" style="background-color: ',
-						that.originalData.cities.findWhere({ id: d.mainCity }).get('color'),
+						that.data.cities.findWhere({ id: d.mainCity }).get('color'),
 						'">',
 							'<span class="ChartTooltip-attendee">',
 								d.name,
@@ -82,7 +83,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.transition()
 				.duration(500)
 				.attr("r", function(d) { return d.id ? d.r : 0; })
-				.style("fill", function(d) { return d.id ? that.originalData.cities.findWhere({ id: d.mainCity }).get('color') : ''; });
+				.style("fill", function(d) { return d.id ? that.data.cities.findWhere({ id: d.mainCity }).get('color') : ''; });
 
 			node
 				.on('mouseover', function(d) {
@@ -98,13 +99,13 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 		},
 
 		onSliderChange: function(e) {
-			this.data.filteredAttendees = _(this.data.attendees).filter(function(user) {
+			this.data.filtered.filteredAttendees = _(this.data.filtered.attendees).filter(function(user) {
 				return user.attendedEventIds && user.attendedEventIds.length >= Math.round(this.$slider.input.val());
 			}, this);
 
 			this.$slider.value.text( this.$slider.input.val() );
 
-			this.render(this.data.filteredAttendees);
+			this.render(this.data.filtered.filteredAttendees);
 		},
 
 		onSliderMouseup: function(e) {

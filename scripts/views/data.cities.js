@@ -2,7 +2,11 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 
 	var MapDataView = Backbone.View.extend({
 		className: 'MapChart',
-		initializeWithData: function() {
+		initialize: function(options) {
+			this.data = options.data;
+
+			_.bindAll(this, 'render');
+
 			var that = this;
 			var mapOptions = {
 				element: this.el,
@@ -32,7 +36,7 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 					that.render();
 				}
 			};
-			this.originalData.cities.each(function(city) {
+			this.data.cities.each(function(city) {
 				if (city.get('color'))
 					mapOptions.fills[city.id] = city.get('color');
 			});
@@ -41,13 +45,13 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 
 		render: function() {
 			if (!this.data || !this.map.done) return false;
-			var maxEventsNb = _(this.data.cities).chain().pluck('eventIds').sortBy(function(ids) { return ids.length*-1; }).value()[0].length;
+			var maxEventsNb = _(this.data.filtered.cities).chain().pluck('eventIds').sortBy(function(ids) { return ids.length*-1; }).value()[0].length;
 			var maxRadius = 40;
-			var bubbles = _(this.data.cities).map(function(city) {
+			var bubbles = _(this.data.filtered.cities).map(function(city) {
 				var radius = city.eventIds.length / maxEventsNb * maxRadius;
 				return _.extend({ latitude: city.coords.lat, longitude: city.coords.lng, radius: radius, fillKey: city.id }, city);
 			});
-			var dots = _(this.data.cities).map(function(city) {
+			var dots = _(this.data.filtered.cities).map(function(city) {
 				return _.extend({ latitude: city.coords.lat, longitude: city.coords.lng, radius: 1, fillKey: 'dot' }, city);
 			});
 			this.map.bubbles([].concat(bubbles, dots), {

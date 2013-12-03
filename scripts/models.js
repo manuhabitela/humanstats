@@ -52,7 +52,7 @@ define(function (require, exports, module) {
 		model: City,
 
 		initialize: function(models, options) {
-			this.activeItems = new Backbone.Collection([], { model: City });
+			this.activeItems = new Backbone.Collection([], { model: this.model });
 		},
 
 		activate: function(id, silent) {
@@ -85,6 +85,13 @@ define(function (require, exports, module) {
 			else
 				this.activate(id);
 			this.trigger('toggle', this.get(id), this.activeItems);
+		},
+
+		activateAll: function(silent) {
+			silent = !!silent;
+			this.activeItems.reset(this.models);
+			if (!silent)
+				this.trigger('activateAll');
 		},
 
 		deactivateAll: function(silent) {
@@ -143,26 +150,50 @@ define(function (require, exports, module) {
 		model: Event,
 
 		initialize: function(models, options) {
-			_.bindAll(this, 'removeCurrents');
+			_.bindAll(this, 'removeUpcomings', 'removeEmpty');
 
-			if (options && options.unfinished === false) {
-				options.silent = false;
-				this.once('reset', this.removeCurrents);
-			}
+			this.activeItems = new Backbone.Collection([], { model: this.model });
 		},
 
-		removeCurrents: function() {
+		removeUpcomings: function() {
 			var now = new Date();
 			var currentMonth = now.getMonth()+1;
 			var currentYear = now.getFullYear();
+			var currentDay = now.getDate();
+			var toDelete = [];
 			this.each(function(event) {
 				var date = event.get('date').split('-');
 				var year = date[0]*1;
 				var month = date[1]*1;
-				if (year > currentYear || (year === currentYear && month > currentMonth)) {
-					this.remove(event);
+				var day = date[2]*1;
+				if (year > currentYear || (year === currentYear && month > currentMonth) ||
+					(year === currentYear && month === currentMonth && day > currentDay)) {
+					toDelete.push(event);
 				}
 			}, this);
+			this.remove(toDelete);
+		},
+
+		removeEmpty: function() {
+			var toDelete = [];
+			this.each(function(event) {
+				if (event.get('attendeeIds') && event.get('attendeeIds').length === 0)
+					toDelete.push(event);
+			}, this);
+			this.remove(toDelete);
+		},
+
+		filterByCities: function(cities) {
+			var data;
+			var cityIds = cities.pluck('id');
+			if (cityIds) {
+				data = this.filter(function(event) {
+					return _(cityIds).contains(event.get('city'));
+				});
+			} else
+				data = this.models;
+			this.activeItems.reset(data);
+			return this.activeItems.toJSON();
 		}
 	});
 
@@ -174,7 +205,24 @@ define(function (require, exports, module) {
 		}
 	});
 	var Talks = models.Talks = BaseCollection.extend({
-		model: Talk
+		model: Talk,
+
+		initialize: function() {
+			this.activeItems = new Backbone.Collection([], { model: this.model });
+		},
+
+		filterByCities: function(cities) {
+			var data;
+			var cityIds = cities.pluck('id');
+			if (cityIds) {
+				data = this.filter(function(talk) {
+					return _(cityIds).contains(talk.get('city'));
+				});
+			} else
+				data = this.models;
+			this.activeItems.reset(data);
+			return this.activeItems.toJSON();
+		}
 	});
 
 
@@ -223,6 +271,8 @@ define(function (require, exports, module) {
 		initialize: function() {
 			_.bindAll(this, 'handleDuplicates');
 			this.on('add', this.handleDuplicates);
+
+			this.activeItems = new Backbone.Collection([], { model: this.model });
 		},
 		setAttendance: function(events) {
 			_(this.models).each(function(user) {
@@ -262,6 +312,46 @@ define(function (require, exports, module) {
 				}, this);
 			}
 			this.trigger('handledDuplicates');
+		},
+		filterOrganizersByCities: function(cities) {
+			var data;
+			var organizerIds = cities && cities.length ?
+				_.uniq( _.flatten( cities.pluck('organizerIds') ) ) :
+				null;
+			if (organizerIds) {
+				data = this.filter(function(user) {
+					return _(organizerIds).contains(user.id);
+				});
+			} else
+				data = this.models;
+			this.activeItems.reset(data);
+			return this.activeItems.toJSON();
+		},
+		filterTalkersByTalks: function(talks) {
+			var data;
+			var talkers = talks.pluck('authorId');
+			if (talkers) {
+				data = this.filter(function(user) {
+					return _(talkers).contains(user.id);
+				});
+			} else
+				data = this.models;
+			this.activeItems.reset(data);
+			return this.activeItems.toJSON();
+		},
+		filterAttendeesByEvents: function(events) {
+			var data;
+			var attendeeIds = events && events.length ?
+				_.uniq( _.flatten( events.pluck('attendeeIds') ) ) :
+				null;
+			if (attendeeIds) {
+				data = this.filter(function(user) {
+					return _(attendeeIds).contains(user.id);
+				});
+			} else
+				data = this.models;
+			this.activeItems.reset(data);
+			return this.activeItems.toJSON();
 		}
 	});
 
