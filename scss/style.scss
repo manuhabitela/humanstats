@@ -13,10 +13,14 @@
 @import "CSS:../bower_components/suit-button/button";
 @import "CSS:../bower_components/suit-grid/grid";
 
+$purple: #9467bd;
+$white: #fff;
+
 @import "helpers";
-@import "components/cities-list";
+@import "components/button";
 @import "components/tabs";
 @import "components/tooltips";
+@import "components/cities-list";
 @import "charts/text";
 @import "charts/map";
 @import "charts/lines";

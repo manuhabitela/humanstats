@@ -1,0 +1,8 @@
+// see suit-button for base styles
+.Button {
+	@extend .u-paddingButtonM;
+	@extend .u-textTruncate;
+	border-radius: 3px;
+	border: none;
+	background: none;
+}

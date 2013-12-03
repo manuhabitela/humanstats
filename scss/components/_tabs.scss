@@ -1,7 +1,26 @@
 .Tabs-tabs {
-	@extend .u-inlineList;
-	@extend .u-marginBm;
-}
+		@extend .u-inlineList;
+		@extend .u-marginBm;
+	}
+
+	.Tabs-tab {
+
+	}
+
+		.Tabs-link {
+			&:hover,
+			&:focus {
+				background: rgba($purple, 0.5);
+				color: $white;
+			}
+			&:active {
+				background: darken($purple, 20%);
+			}
+			.Tabs-tab--active & {
+				background: $purple;
+				color: $white;
+			}
+		}
 
 .Tabs-content--hidden {
 	display: none;

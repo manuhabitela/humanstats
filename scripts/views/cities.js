@@ -2,12 +2,12 @@
 	var CitiesView = Backbone.View.extend({
 		template: _.template([
 			'<ul class="CitiesList CitiesList--Vleft">',
-				'<li class="CitiesList-item" data-color="#000"><label class="CitiesList-item-inner">',
+				'<li class="CitiesList-item" data-color="#000"><label class="CitiesList-item-inner Button">',
 					'<input type="checkbox" class="CitiesList-input u-isInvisible">',
 					'<button type="button" class="CitiesList-toggle">Tout</button>',
 				'</label></li>',
 				'<% _.each(cities, function(city) { %>',
-				'<li class="CitiesList-item" data-id="<%- city.id %>" data-color="<%- city.color %>"><label class="CitiesList-item-inner">',
+				'<li class="CitiesList-item" data-id="<%- city.id %>" data-color="<%- city.color %>"><label class="CitiesList-item-inner Button">',
 					'<input type="checkbox" class="CitiesList-input">',
 					'<span class="CitiesList-label"><%- city.name %></span>',
 				'</label></li>',
