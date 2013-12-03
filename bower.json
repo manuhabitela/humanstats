@@ -15,6 +15,7 @@
     "suit-button": "~3.0.0",
     "suit-grid-layouts": "~0.2.1",
     "suit-utils-space": "~0.1.2",
-    "suit-utils-link": "~0.2.0"
+    "suit-utils-link": "~0.2.0",
+    "suit-arrange": "~0.2.0"
   }
 }

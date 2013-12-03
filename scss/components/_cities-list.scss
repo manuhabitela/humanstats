@@ -1,12 +1,40 @@
-.CitiesList {
-	@extend .u-inlineList;
+.CitiesList-item {
+	display: inline-block;
+	.CitiesList--Vleft & {
+		display: list-item;
+	}
 }
 
-.CitiesList-link {
-	display: block;
-	@extend .u-paddingB;
+.CitiesList-item-inner {
+	@extend .u-paddingButtonM;
+	@extend .u-textTruncate;
+	display: inline-block;
 	color: black;
 	background: none;
 	text-decoration: none;
+	border: none;
+	outline: 0;
+	cursor: pointer;
 	border-radius: 3px;
+	.CitiesList--Vleft & {
+		border-top-left-radius: 0;
+		border-bottom-left-radius: 0;
+	}
+}
+
+.CitiesList-input,
+.CitiesList-label,
+.CitiesList-toggle {
+	display: inline-block;
+	vertical-align: middle;
+}
+.CitiesList-input {
+	margin-right: 5px;
+}
+.CitiesList-toggle {
+	background: none;
+	border: none;
+	outline: 0;
+	padding: 0;
+	margin: 0;
 }

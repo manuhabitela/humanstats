@@ -1,20 +1,19 @@
 .u-inlineList {
-	@extend .u-marginVm;
 	li {
 		@extend .u-inlineBlock;
 		@extend .u-marginRm;
 	}
 }
 
-.u-paddingB {
+.u-paddingButton {
 	padding: 0.4em 0.75em;
 }
-.u-paddingBs {
+.u-paddingButtonS {
 	padding: 3px 6px;
 }
-.u-paddingBm {
-	padding: 6px 12px;
+.u-paddingButtonM {
+	padding: 5px 10px;
 }
-.u-paddingBl {
+.u-paddingButtonL {
 	padding: 12px 24px;
 }
