@@ -2517,6 +2517,7 @@ ul {
   outline: 0;
   padding: 0;
   margin: 0;
+  font-size: 14px;
 }
 
 /* line 1, ../scss/charts/_map.scss */
@@ -2586,4 +2587,20 @@ ul {
 
 .BubblesChart-slider-max {
   right: 0;
+}
+
+/* line 1, ../scss/_main.scss */
+
+html {
+  font-size: 62.5%;
+}
+
+/* line 5, ../scss/_main.scss */
+
+body {
+  background-color: #fff;
+  color: #000;
+  font-family: helvetica, arial, sans-serif;
+  font-size: 1.6em;
+  line-height: 1.5;
 }
