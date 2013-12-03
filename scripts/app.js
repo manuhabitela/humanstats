@@ -25,6 +25,7 @@ define(
 
 		this.data.cities = new models.Cities(data.cities);
 		this.data.cities.setColors();
+		this.data.cities.activateAll();
 
 		this.data.events = new models.Events(data.events);
 		this.data.events.removeUpcomings();
@@ -53,6 +54,7 @@ define(
 		this.data.talkers = new models.Users(talkers);
 
 		this.data.cities.on('activate deactivate deactivateAll activateAll', this.filterData);
+		this.filterData();
 	};
 
 	HumanStatistics.prototype.filterData = function() {

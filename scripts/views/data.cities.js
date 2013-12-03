@@ -45,7 +45,8 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 
 		render: function() {
 			if (!this.data || !this.map.done) return false;
-			var maxEventsNb = _(this.data.filtered.cities).chain().pluck('eventIds').sortBy(function(ids) { return ids.length*-1; }).value()[0].length;
+			var sortedEventIds =  _(this.data.filtered.cities).chain().pluck('eventIds').sortBy(function(ids) { return ids.length*-1; }).value();
+			var maxEventsNb = sortedEventIds && sortedEventIds[0] ? sortedEventIds[0].length : 0;
 			var maxRadius = 40;
 			var bubbles = _(this.data.filtered.cities).map(function(city) {
 				var radius = city.eventIds.length / maxEventsNb * maxRadius;

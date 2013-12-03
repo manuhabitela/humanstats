@@ -6,7 +6,6 @@
 					'<input type="checkbox" class="CitiesList-input u-isInvisible">',
 					'<button type="button" class="CitiesList-toggle">Tout</button>',
 				'</label></li>',
-				// <li><button type="button" class="CitiesList-item CitiesList-toggle" data-color="#000">Tout</button></li>',
 				'<% _.each(cities, function(city) { %>',
 				'<li class="CitiesList-item" data-id="<%- city.id %>" data-color="<%- city.color %>"><label class="CitiesList-item-inner">',
 					'<input type="checkbox" class="CitiesList-input">',
@@ -36,23 +35,14 @@
 		},
 
 		onToggleClick: function(e) {
-			var activeItems = this.collection.activeItems.length > 0;
-			this.collection[activeItems ? 'deactivateAll' : 'activateAll']();
-			this.$('.CitiesList-toggle')
-				.text(activeItems ? 'Tout' : 'Rien')
-				.closest('.CitiesList-item').toggleClass('CitiesList-item--active', activeItems);
-
+			this.collection[this.collection.activeItems.length > 0 ? 'deactivateAll' : 'activateAll']();
 			this.updateView();
 		},
 
 		toggleCity: function(city) {
-			var that = this;
 			var cityId = city && city.attr('data-id');
-			if (cityId) {
+			if (cityId)
 				this.collection.toggle(cityId);
-				city.toggleClass('CitiesList-item--active', this.collection.isActive(cityId));
-			}
-
 			this.updateView();
 		},
 
@@ -60,8 +50,10 @@
 			var that = this;
 			this.$('.CitiesList-item').each(function(n, item) {
 				var $item = $(item);
+				var cityId = $item.attr('data-id');
 				var $inner = $item.find('.CitiesList-item-inner');
-				if ($item.hasClass('CitiesList-item--active') || (!$item.attr('data-id') && !that.$('.CitiesList-item--active').length)) {
+				var cityIsActive = that.collection.isActive(cityId);
+				if (cityIsActive) {
 					$inner.css({ 'color': 'white', 'background-color': $item.attr('data-color') });
 					$item.find('.CitiesList-input').prop('checked', true);
 				}
@@ -69,7 +61,13 @@
 					$inner.css({ 'color': $item.attr('data-color'), 'background-color': '' });
 					$item.find('.CitiesList-input').prop('checked', false);
 				}
+				$item.toggleClass('CitiesList-item--active', cityIsActive);
 			});
+
+			var activeItems = this.collection.activeItems.length > 0;
+			this.$('.CitiesList-toggle')
+				.text(activeItems && activeItems !== that.collection.length ? 'Rien' : 'Tout')
+				.closest('.CitiesList-item').toggleClass('CitiesList-item--active', activeItems);
 		}
 	});
 	return CitiesView;
