@@ -1730,8 +1730,7 @@ ul {
 /* line 82, ../bower_components/suit-utils-space/space.css */
 
 .u-marginBm,
-.Tabs-tabs,
-.TextChart {
+.Tabs-tabs {
   margin-bottom: 10px !important;
 }
 
@@ -2393,6 +2392,20 @@ ul {
   margin: 0 auto;
 }
 
+/* line 2, ../scss/_my-suit.scss */
+
+.Button {
+  border-radius: 3px;
+  border: none;
+  background: none;
+}
+
+/* line 10, ../scss/_my-suit.scss */
+
+.Grid-cell--sizeFit {
+  width: auto;
+}
+
 /* line 8, ../scss/_helpers.scss */
 
 .u-paddingButton {
@@ -2408,7 +2421,8 @@ ul {
 /* line 14, ../scss/_helpers.scss */
 
 .u-paddingButtonM,
-.Button {
+.Button,
+.TextChart-item {
   padding: 5px 10px;
 }
 
@@ -2416,14 +2430,6 @@ ul {
 
 .u-paddingButtonL {
   padding: 12px 24px;
-}
-
-/* line 2, ../scss/components/_button.scss */
-
-.Button {
-  border-radius: 3px;
-  border: none;
-  background: none;
 }
 
 /* line 12, ../scss/components/_tabs.scss */
@@ -2470,31 +2476,31 @@ ul {
 
 /* line 1, ../scss/components/_cities-list.scss */
 
-.CitiesList-item {
+.CitiesList {
   display: inline-block;
 }
 
 /* line 5, ../scss/components/_cities-list.scss */
+
+.CitiesList-item {
+  display: list-item;
+}
+
+/* line 9, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-item-inner {
   display: inline-block;
   text-align: left;
 }
 
-/* line 10, ../scss/components/_cities-list.scss */
-
-.CitiesList--Vleft .CitiesList-item {
-  display: list-item;
-}
-
-/* line 13, ../scss/components/_cities-list.scss */
+/* line 15, ../scss/components/_cities-list.scss */
 
 .CitiesList--Vleft .CitiesList-item .CitiesList-item-inner {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-/* line 21, ../scss/components/_cities-list.scss */
+/* line 23, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-input,
 .CitiesList-item .CitiesList-label,
@@ -2503,13 +2509,13 @@ ul {
   vertical-align: middle;
 }
 
-/* line 26, ../scss/components/_cities-list.scss */
+/* line 28, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-input {
   margin-right: 5px;
 }
 
-/* line 30, ../scss/components/_cities-list.scss */
+/* line 32, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-toggle {
   background: none;
@@ -2520,15 +2526,24 @@ ul {
   font-size: 14px;
 }
 
+/* line 5, ../scss/charts/_text.scss */
+
+.TextChart-item {
+  line-height: 39px;
+  display: inline-block;
+  vertical-align: middle;
+}
+
 /* line 1, ../scss/charts/_map.scss */
 
 .MapChart {
-  width: 600px;
-  height: 600px;
+  width: 700px;
+  height: 700px;
+  margin: 0 auto;
   position: relative;
 }
 
-/* line 5, ../scss/charts/_map.scss */
+/* line 6, ../scss/charts/_map.scss */
 
 .MapChart .hoverinfo {
   -webkit-box-shadow: none;
@@ -2603,4 +2618,10 @@ body {
   font-family: helvetica, arial, sans-serif;
   font-size: 1.6em;
   line-height: 1.5;
+}
+
+/* line 13, ../scss/_main.scss */
+
+.Data .Tabs-content {
+  min-width: 700px;
 }

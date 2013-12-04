@@ -1,39 +1,41 @@
-.CitiesList-item {
-
+.CitiesList {
 	display: inline-block;
+}
 
-	.CitiesList-item-inner {
-		display: inline-block;
-		text-align: left;
-	}
+	.CitiesList-item {
 
-	.CitiesList--Vleft & {
 		display: list-item;
 
 		.CitiesList-item-inner {
-			border-top-left-radius: 0;
-			border-bottom-left-radius: 0;
-		}
-	}
-
-		.CitiesList-input,
-		.CitiesList-label,
-		.CitiesList-toggle {
 			display: inline-block;
-			vertical-align: middle;
+			text-align: left;
 		}
 
-		.CitiesList-input {
-			margin-right: 5px;
+		.CitiesList--Vleft & {
+			.CitiesList-item-inner {
+				border-top-left-radius: 0;
+				border-bottom-left-radius: 0;
+			}
 		}
 
-		.CitiesList-toggle {
-			background: none;
-			border: none;
-			outline: 0;
-			padding: 0;
-			margin: 0;
-			font-size: 14px;
-		}
+			.CitiesList-input,
+			.CitiesList-label,
+			.CitiesList-toggle {
+				display: inline-block;
+				vertical-align: middle;
+			}
 
-}
+			.CitiesList-input {
+				margin-right: 5px;
+			}
+
+			.CitiesList-toggle {
+				background: none;
+				border: none;
+				outline: 0;
+				padding: 0;
+				margin: 0;
+				font-size: 14px;
+			}
+
+	}

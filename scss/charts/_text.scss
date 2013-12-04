@@ -1,4 +1,10 @@
 .TextChart {
 	@extend .u-inlineList;
-	@extend .u-marginBm;
+}
+
+.TextChart-item {
+	@extend .u-paddingButtonM;
+	line-height: 26px*1.5;
+	display: inline-block;
+	vertical-align: middle;
 }

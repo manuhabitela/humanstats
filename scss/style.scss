@@ -16,8 +16,8 @@
 $purple: #9467bd;
 $white: #fff;
 
+@import "my-suit";
 @import "helpers";
-@import "components/button";
 @import "components/tabs";
 @import "components/tooltips";
 @import "components/cities-list";

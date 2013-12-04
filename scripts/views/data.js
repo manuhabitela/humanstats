@@ -11,7 +11,6 @@ define(["backbone", "underscore", "tabs", "./data.info", "./data.cities", "./dat
 					'<li class="Tabs-tab"><a class="Tabs-link Button" href="#attendees">Les participants</a></li>',
 					'<li class="Tabs-tab"><a class="Tabs-link Button" href="#talks">Les talks</a></li>',
 				'</ul>',
-				'<ul id="info" class="TextChart"></ul>',
 				'<div class="Data Tabs-contents">',
 					'<div id="attendees" class="Tabs-content BubblesChart"></div>',
 					'<div id="cities" class="Tabs-content MapChart"></div>',

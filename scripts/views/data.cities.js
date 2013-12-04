@@ -13,20 +13,21 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 				fills: {
 					bubble: '#fff',
 					dot: '#ddd',
-					defaultFill: '#A688BC'
+					defaultFill: '#dedede'
 				},
 				geographyConfig: {
 					dataUrl: '/data/regions.topojson',
 					popupOnHover: false,
-					highlightOnHover: false
+					highlightOnHover: false,
+					borderColor: '#999'
 				},
 				scope: "france",
 				setProjection: function(element, options) {
 					var projection = d3.geo.albers()
 						.center([2, 46])
 						.rotate([-1, 0])
-						.translate([600/2, 600/2])
-						.scale(5400 * 600 / 1060);
+						.translate([700/2, 700/2])
+						.scale(5400 * 700 / 1060);
 
 					var path = d3.geo.path().projection(projection);
 					return { path: path, projection: projection};

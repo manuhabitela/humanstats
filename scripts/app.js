@@ -1,6 +1,6 @@
 define(
-	["backbone", "json!../data/all.json", "./models", "./views/cities", "./views/data"],
-	function(Backbone, originalData, models, CitiesView, DataView) {
+	["backbone", "json!../data/all.json", "./models", "./views/cities", "./views/data", "./views/data.info"],
+	function(Backbone, originalData, models, CitiesView, DataView, InfoView) {
 
 	var HumanStatistics = function(container) {
 		container = document.querySelector(container);
@@ -15,7 +15,11 @@ define(
 		});
 		this.dataView = new DataView({
 			data: this.data,
-			el: container.querySelector('.data-container')
+			el: container.querySelector('.tabbed-data-container')
+		});
+		this.infoView = new InfoView({
+			data: this.data,
+			el: container.querySelector('.info-container')
 		});
 	};
 

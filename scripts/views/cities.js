@@ -1,7 +1,7 @@
 	define(["jquery", "backbone", "underscore"], function($, Backbone, _) {
 	var CitiesView = Backbone.View.extend({
 		template: _.template([
-			'<ul class="CitiesList CitiesList--Vleft">',
+			'<ul class="CitiesList">',
 				'<li class="CitiesList-item" data-color="#000"><label class="CitiesList-item-inner Button">',
 					'<input type="checkbox" class="CitiesList-input u-isInvisible">',
 					'<button type="button" class="CitiesList-toggle">Tout</button>',

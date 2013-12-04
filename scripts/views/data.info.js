@@ -1,31 +1,47 @@
 define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone, _, d3, d3utils) {
 
 	var TextDataView = Backbone.View.extend({
-		className: 'TextChart',
 		templates: {
 			talks: '<span class="TextChart-number"><%- value %></span> <%- _("talk").pluralize(value) %>',
-			events: 'en <span class="TextChart-number"><%- value %></span> <%- _("évènement").pluralize(value) %>',
+			events: '<span class="TextChart-number"><%- value %></span> <%- _("évènement").pluralize(value) %>',
 			organizers: '<span class="TextChart-number"><%- value %></span> <%- _("organisateur").pluralize(value) %>',
 			talkers: '<span class="TextChart-number"><%- value %></span> <%- _("talker").pluralize(value) %>',
 			attendees: '<span class="TextChart-number"><%- value[0] %></span> <%- _("participant").pluralize(value) %> venus <span class="TextChart-number"><%- value[1] %></span> fois',
 		},
 
+		initialize: function(options) {
+			_.bindAll(this, 'render');
+
+			this.data = options.data;
+			this.data.on('filterData', this.render);
+			this.render();
+		},
+
 		render: function() {
 			if (!this.data) return false;
 
+			if (!this.$el.find('.TextChart').length)
+				this.$el.html('<ul class="TextChart"></ul>');
+
 			var that = this;
+			var appearances = _.reduce(this.data.filtered.events, function(memo, event) {
+				return memo + event.attendeeIds.length;
+			}, 0);
+			var maxAppearances = _.reduce(this.data.events.toJSON(), function(memo, event) {
+				return memo + event.attendeeIds.length;
+			}, 0);
 			var numberData = [
-				{ type: "talks", value: this.data.talks.length, tpl: this.templates.talks },
-				{ type: "events", value: this.data.events.length, tpl: this.templates.events },
-				{ type: "organizers", value: this.data.organizers.length, tpl: this.templates.organizers },
-				{ type: "talkers", value: this.data.talkers.length, tpl: this.templates.talkers },
-				{ type: "attendees", value: [this.data.attendees.length, this.data.appearances], tpl: this.templates.attendees },
+				{ type: "talks", maxValue: this.data.talks.toJSON().length, value: this.data.filtered.talks.length, tpl: this.templates.talks },
+				{ type: "events", maxValue: this.data.events.toJSON().length, value: this.data.filtered.events.length, tpl: this.templates.events },
+				{ type: "organizers", maxValue: this.data.organizers.toJSON().length, value: this.data.filtered.organizers.length, tpl: this.templates.organizers },
+				{ type: "talkers", maxValue: this.data.talkers.toJSON().length, value: this.data.filtered.talkers.length, tpl: this.templates.talkers },
+				{ type: "attendees", maxValue: [this.data.attendees.length, maxAppearances], value: [this.data.filtered.attendees.length, appearances], tpl: this.templates.attendees },
 			];
 
 			//update existing li with new data
-			var selection = d3.select(this.el).selectAll('li').data(numberData);
+			var selection = d3.select(this.el.querySelector('.TextChart')).selectAll('.TextChart-item').data(numberData);
 			//create missing li (at first start)
-			selection.enter().append('li');
+			selection.enter().append('li').attr('class', 'TextChart-item');
 			//put the templated data in the list
 			selection.html(function(d) {
 				return _.template(d.tpl, { value: d.value });
@@ -33,6 +49,10 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 			//visually increment/decrement numbers with new values
 			selection.transition()
 				.duration(750)
+				.style('font-size', function(d) {
+					var scale = d3.scale.linear().domain([1, _.isArray(d.maxValue) ? d.maxValue[0] : d.maxValue]).range([12, 26]);
+					return scale( (_.isArray(d.value) ? d.value[0] : d.value) ) + 'px';
+				})
 				.tween("text", function(d) {
 					var prevVal = that.numberData ? _(that.numberData).findWhere({ type: d.type }).value : 0;
 					var newVal;

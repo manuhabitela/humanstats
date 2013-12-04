@@ -10,8 +10,8 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			if (!this.data) return false;
 			var that = this;
 			var margin = {top: 20, right: 20, bottom: 30, left: 50},
-				width = 650 - margin.left - margin.right,
-				height = 500 - margin.top - margin.bottom;
+				width = 700 - margin.left - margin.right,
+				height = 600 - margin.top - margin.bottom;
 
 			var parseDate = d3.time.format("%Y-%m-%d").parse;
 
