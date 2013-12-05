@@ -8,7 +8,7 @@
  * Correct `block` display not defined in IE 8/9.
  */
 
-/* line 22, ../bower_components/normalize-css/normalize.css */
+/* line 11, ../bower_components/normalize-css/normalize.css */
 
 article,
 aside,
@@ -29,7 +29,7 @@ summary {
  * Correct `inline-block` display not defined in IE 8/9.
  */
 
-/* line 32, ../bower_components/normalize-css/normalize.css */
+/* line 30, ../bower_components/normalize-css/normalize.css */
 
 audio,
 canvas,
@@ -54,7 +54,7 @@ audio:not([controls]) {
  * Hide the `template` element in IE, Safari, and Firefox < 22.
  */
 
-/* line 52, ../bower_components/normalize-css/normalize.css */
+/* line 51, ../bower_components/normalize-css/normalize.css */
 
 [hidden],
 template {
@@ -120,7 +120,7 @@ a:focus {
  * Improve readability when focused and also mouse hovered in all browsers.
  */
 
-/* line 105, ../bower_components/normalize-css/normalize.css */
+/* line 104, ../bower_components/normalize-css/normalize.css */
 
 a:active,
 a:hover {
@@ -157,7 +157,7 @@ abbr[title] {
  * Address style set to `bolder` in Firefox 4+, Safari 5, and Chrome.
  */
 
-/* line 136, ../bower_components/normalize-css/normalize.css */
+/* line 135, ../bower_components/normalize-css/normalize.css */
 
 b,
 strong {
@@ -202,7 +202,7 @@ mark {
  * Correct font family set oddly in Safari 5 and Chrome.
  */
 
-/* line 174, ../bower_components/normalize-css/normalize.css */
+/* line 171, ../bower_components/normalize-css/normalize.css */
 
 code,
 kbd,
@@ -246,7 +246,7 @@ small {
  * Prevent `sub` and `sup` affecting `line-height` in all browsers.
  */
 
-/* line 208, ../bower_components/normalize-css/normalize.css */
+/* line 207, ../bower_components/normalize-css/normalize.css */
 
 sub,
 sup {
@@ -342,7 +342,7 @@ legend {
  * 3. Address margins set differently in Firefox 4+, Safari 5, and Chrome.
  */
 
-/* line 288, ../bower_components/normalize-css/normalize.css */
+/* line 285, ../bower_components/normalize-css/normalize.css */
 
 button,
 input,
@@ -361,7 +361,7 @@ textarea {
  * the UA stylesheet.
  */
 
-/* line 300, ../bower_components/normalize-css/normalize.css */
+/* line 299, ../bower_components/normalize-css/normalize.css */
 
 button,
 input {
@@ -375,7 +375,7 @@ input {
  * Correct `select` style inheritance in Firefox 4+ and Opera.
  */
 
-/* line 312, ../bower_components/normalize-css/normalize.css */
+/* line 311, ../bower_components/normalize-css/normalize.css */
 
 button,
 select {
@@ -390,7 +390,7 @@ select {
  *    `input` and others.
  */
 
-/* line 327, ../bower_components/normalize-css/normalize.css */
+/* line 324, ../bower_components/normalize-css/normalize.css */
 
 button,
 html input[type="button"],
@@ -406,7 +406,7 @@ input[type="submit"] {
  * Re-set default cursor for disabled elements.
  */
 
-/* line 337, ../bower_components/normalize-css/normalize.css */
+/* line 336, ../bower_components/normalize-css/normalize.css */
 
 button[disabled],
 html input[disabled] {
@@ -418,7 +418,7 @@ html input[disabled] {
  * 2. Remove excess padding in IE 8/9/10.
  */
 
-/* line 347, ../bower_components/normalize-css/normalize.css */
+/* line 346, ../bower_components/normalize-css/normalize.css */
 
 input[type="checkbox"],
 input[type="radio"] {
@@ -452,7 +452,7 @@ input[type="search"] {
  * on OS X.
  */
 
-/* line 371, ../bower_components/normalize-css/normalize.css */
+/* line 370, ../bower_components/normalize-css/normalize.css */
 
 input[type="search"]::-webkit-search-cancel-button,
 input[type="search"]::-webkit-search-decoration {
@@ -463,7 +463,7 @@ input[type="search"]::-webkit-search-decoration {
  * Remove inner padding and border in Firefox 4+.
  */
 
-/* line 380, ../bower_components/normalize-css/normalize.css */
+/* line 379, ../bower_components/normalize-css/normalize.css */
 
 button::-moz-focus-inner,
 input::-moz-focus-inner {
@@ -512,7 +512,7 @@ table {
  * appropriate elements.
  */
 
-/* line 23, ../bower_components/suit-base/base.css */
+/* line 13, ../bower_components/suit-base/base.css */
 
 blockquote,
 dl,
@@ -542,7 +542,7 @@ iframe {
   border: 0;
 }
 
-/* line 38, ../bower_components/suit-base/base.css */
+/* line 37, ../bower_components/suit-base/base.css */
 
 ol,
 ul {
@@ -574,7 +574,7 @@ ul {
  * Make an element shrink wrap its content.
  */
 
-/* line 13, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 12, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-sizeFit,
 .u-sizeFitAlt {
@@ -657,21 +657,21 @@ ul {
   width: 12.5% !important;
 }
 
-/* line 79, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 78, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size1of6,
 .u-size2of12 {
   width: 16.667% !important;
 }
 
-/* line 84, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 83, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size1of5,
 .u-size2of10 {
   width: 20% !important;
 }
 
-/* line 90, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 88, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size1of4,
 .u-size2of8,
@@ -685,7 +685,7 @@ ul {
   width: 30% !important;
 }
 
-/* line 100, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 98, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size1of3,
 .u-size2of6,
@@ -699,7 +699,7 @@ ul {
   width: 37.5% !important;
 }
 
-/* line 109, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 108, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size2of5,
 .u-size4of10 {
@@ -712,7 +712,7 @@ ul {
   width: 41.667% !important;
 }
 
-/* line 122, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 117, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size1of2,
 .u-size2of4,
@@ -729,7 +729,7 @@ ul {
   width: 58.333% !important;
 }
 
-/* line 131, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 130, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size3of5,
 .u-size6of10 {
@@ -742,7 +742,7 @@ ul {
   width: 62.5% !important;
 }
 
-/* line 141, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 139, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size2of3,
 .u-size4of6,
@@ -756,7 +756,7 @@ ul {
   width: 70% !important;
 }
 
-/* line 151, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 149, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size3of4,
 .u-size6of8,
@@ -764,14 +764,14 @@ ul {
   width: 75% !important;
 }
 
-/* line 156, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 155, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size4of5,
 .u-size8of10 {
   width: 80% !important;
 }
 
-/* line 161, ../bower_components/suit-utils-dimension/dimension.css */
+/* line 160, ../bower_components/suit-utils-dimension/dimension.css */
 
 .u-size5of6,
 .u-size10of12 {
@@ -884,7 +884,7 @@ ul {
  *    `:before` to contain the top-margins of child elements.
  */
 
-/* line 41, ../bower_components/suit-utils-layout/layout.css */
+/* line 40, ../bower_components/suit-utils-layout/layout.css */
 
 .u-cf:before,
 .u-cf:after {
@@ -980,7 +980,7 @@ ul {
  *    IE 8.
  */
 
-/* line 117, ../bower_components/suit-utils-layout/layout.css */
+/* line 116, ../bower_components/suit-utils-layout/layout.css */
 
 .u-objLeft img,
 .u-objRight img {
@@ -1002,7 +1002,7 @@ ul {
  * A link without any text-decoration at all.
  */
 
-/* line 16, ../bower_components/suit-utils-link/link.css */
+/* line 13, ../bower_components/suit-utils-link/link.css */
 
 .u-linkClean,
 .u-linkClean:hover,
@@ -1026,7 +1026,7 @@ ul {
  * </a>
  */
 
-/* line 38, ../bower_components/suit-utils-link/link.css */
+/* line 35, ../bower_components/suit-utils-link/link.css */
 
 .u-linkComplex,
 .u-linkComplex:hover,
@@ -1035,7 +1035,7 @@ ul {
   text-decoration: none !important;
 }
 
-/* line 44, ../bower_components/suit-utils-link/link.css */
+/* line 42, ../bower_components/suit-utils-link/link.css */
 
 .u-linkComplex:hover .u-linkComplex-target,
 .u-linkComplex:focus .u-linkComplex-target,
@@ -1049,7 +1049,7 @@ ul {
  * Combination of traits commonly used in vertical navigation lists.
  */
 
-/* line 57, ../bower_components/suit-utils-link/link.css */
+/* line 54, ../bower_components/suit-utils-link/link.css */
 
 .u-linkBlock,
 .u-linkBlock:hover,
@@ -1104,7 +1104,7 @@ ul {
   font: inherit;
 }
 
-/* line 107, ../bower_components/suit-utils-link/link.css */
+/* line 105, ../bower_components/suit-utils-link/link.css */
 
 .u-linkPseudo:hover,
 .u-linkPseudo:focus,
@@ -1144,21 +1144,21 @@ ul {
   margin-left: 12.5% !important;
 }
 
-/* line 27, ../bower_components/suit-utils-offset/offset.css */
+/* line 26, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before1of6,
 .u-before2of12 {
   margin-left: 16.667% !important;
 }
 
-/* line 32, ../bower_components/suit-utils-offset/offset.css */
+/* line 31, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before1of5,
 .u-before2of10 {
   margin-left: 20% !important;
 }
 
-/* line 38, ../bower_components/suit-utils-offset/offset.css */
+/* line 36, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before1of4,
 .u-before2of8,
@@ -1172,7 +1172,7 @@ ul {
   margin-left: 30% !important;
 }
 
-/* line 48, ../bower_components/suit-utils-offset/offset.css */
+/* line 46, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before1of3,
 .u-before2of6,
@@ -1186,7 +1186,7 @@ ul {
   margin-left: 37.5% !important;
 }
 
-/* line 57, ../bower_components/suit-utils-offset/offset.css */
+/* line 56, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before2of5,
 .u-before4of10 {
@@ -1199,7 +1199,7 @@ ul {
   margin-left: 41.667% !important;
 }
 
-/* line 70, ../bower_components/suit-utils-offset/offset.css */
+/* line 65, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before1of2,
 .u-before2of4,
@@ -1216,7 +1216,7 @@ ul {
   margin-left: 58.333% !important;
 }
 
-/* line 79, ../bower_components/suit-utils-offset/offset.css */
+/* line 78, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before3of5,
 .u-before6of10 {
@@ -1229,7 +1229,7 @@ ul {
   margin-left: 62.5% !important;
 }
 
-/* line 89, ../bower_components/suit-utils-offset/offset.css */
+/* line 87, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before2of3,
 .u-before4of6,
@@ -1243,7 +1243,7 @@ ul {
   margin-left: 70% !important;
 }
 
-/* line 99, ../bower_components/suit-utils-offset/offset.css */
+/* line 97, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before3of4,
 .u-before6of8,
@@ -1251,14 +1251,14 @@ ul {
   margin-left: 75% !important;
 }
 
-/* line 104, ../bower_components/suit-utils-offset/offset.css */
+/* line 103, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before4of5,
 .u-before8of10 {
   margin-left: 80% !important;
 }
 
-/* line 109, ../bower_components/suit-utils-offset/offset.css */
+/* line 108, ../bower_components/suit-utils-offset/offset.css */
 
 .u-before5of6,
 .u-before10of12 {
@@ -1310,21 +1310,21 @@ ul {
   margin-right: 12.5% !important;
 }
 
-/* line 147, ../bower_components/suit-utils-offset/offset.css */
+/* line 146, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after1of6,
 .u-after2of12 {
   margin-right: 16.667% !important;
 }
 
-/* line 152, ../bower_components/suit-utils-offset/offset.css */
+/* line 151, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after1of5,
 .u-after2of10 {
   margin-right: 20% !important;
 }
 
-/* line 158, ../bower_components/suit-utils-offset/offset.css */
+/* line 156, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after1of4,
 .u-after2of8,
@@ -1338,7 +1338,7 @@ ul {
   margin-right: 30% !important;
 }
 
-/* line 168, ../bower_components/suit-utils-offset/offset.css */
+/* line 166, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after1of3,
 .u-after2of6,
@@ -1352,7 +1352,7 @@ ul {
   margin-right: 37.5% !important;
 }
 
-/* line 177, ../bower_components/suit-utils-offset/offset.css */
+/* line 176, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after2of5,
 .u-after4of10 {
@@ -1365,7 +1365,7 @@ ul {
   margin-right: 41.667% !important;
 }
 
-/* line 190, ../bower_components/suit-utils-offset/offset.css */
+/* line 185, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after1of2,
 .u-after2of4,
@@ -1382,7 +1382,7 @@ ul {
   margin-right: 58.333% !important;
 }
 
-/* line 199, ../bower_components/suit-utils-offset/offset.css */
+/* line 198, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after3of5,
 .u-after6of10 {
@@ -1395,7 +1395,7 @@ ul {
   margin-right: 62.5% !important;
 }
 
-/* line 209, ../bower_components/suit-utils-offset/offset.css */
+/* line 207, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after2of3,
 .u-after4of6,
@@ -1409,7 +1409,7 @@ ul {
   margin-right: 70% !important;
 }
 
-/* line 219, ../bower_components/suit-utils-offset/offset.css */
+/* line 217, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after3of4,
 .u-after6of8,
@@ -1417,14 +1417,14 @@ ul {
   margin-right: 75% !important;
 }
 
-/* line 224, ../bower_components/suit-utils-offset/offset.css */
+/* line 223, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after4of5,
 .u-after8of10 {
   margin-right: 80% !important;
 }
 
-/* line 229, ../bower_components/suit-utils-offset/offset.css */
+/* line 228, ../bower_components/suit-utils-offset/offset.css */
 
 .u-after5of6,
 .u-after10of12 {
@@ -1729,8 +1729,7 @@ ul {
 
 /* line 82, ../bower_components/suit-utils-space/space.css */
 
-.u-marginBm,
-.Tabs-tabs {
+.u-marginBm {
   margin-bottom: 10px !important;
 }
 
@@ -1989,7 +1988,7 @@ ul {
  * Inherit the ancestor's text color for all states.
  */
 
-/* line 66, ../bower_components/suit-utils-text/text.css */
+/* line 63, ../bower_components/suit-utils-text/text.css */
 
 .u-textInheritAllColor,
 .u-textInheritAllColor:hover,
@@ -2072,7 +2071,7 @@ ul {
  * 2. All cells are top-aligned by default
  */
 
-/* line 68, ../bower_components/suit-arrange/arrange.css */
+/* line 67, ../bower_components/suit-arrange/arrange.css */
 
 .Arrange-sizeFill,
 .Arrange-sizeFit {
@@ -2125,14 +2124,14 @@ ul {
 /* Vertical alignment modifiers
    ========================================================================== */
 
-/* line 111, ../bower_components/suit-arrange/arrange.css */
+/* line 110, ../bower_components/suit-arrange/arrange.css */
 
 .Arrange--middle .Arrange-sizeFill,
 .Arrange--middle .Arrange-sizeFit {
   vertical-align: middle;
 }
 
-/* line 116, ../bower_components/suit-arrange/arrange.css */
+/* line 115, ../bower_components/suit-arrange/arrange.css */
 
 .Arrange--bottom .Arrange-sizeFill,
 .Arrange--bottom .Arrange-sizeFit {
@@ -2161,7 +2160,7 @@ ul {
  * Their inner images will automatically be responsive.
  */
 
-/* line 141, ../bower_components/suit-arrange/arrange.css */
+/* line 140, ../bower_components/suit-arrange/arrange.css */
 
 .Arrange--equal > .Arrange-sizeFill,
 .Arrange--equal > .Arrange-sizeFit {
@@ -2242,7 +2241,7 @@ ul {
  * UI states
  */
 
-/* line 65, ../bower_components/suit-button/button.css */
+/* line 63, ../bower_components/suit-button/button.css */
 
 .Button:hover,
 .Button:focus,
@@ -2250,7 +2249,7 @@ ul {
   text-decoration: none;
 }
 
-/* line 70, ../bower_components/suit-button/button.css */
+/* line 69, ../bower_components/suit-button/button.css */
 
 .Button:disabled,
 .Button.is-disabled {
@@ -2323,7 +2322,7 @@ ul {
 
 /* Opera hack */
 
-/* line 52, ../bower_components/suit-grid/grid.css */
+/* line 51, ../bower_components/suit-grid/grid.css */
 
 .opera:-o-prefocus,
 .Grid {
@@ -2432,7 +2431,7 @@ ul {
   padding: 12px 24px;
 }
 
-/* line 12, ../scss/components/_tabs.scss */
+/* line 10, ../scss/components/_tabs.scss */
 
 .Tabs-link:hover,
 .Tabs-link:focus {
@@ -2440,20 +2439,20 @@ ul {
   color: white;
 }
 
-/* line 16, ../scss/components/_tabs.scss */
+/* line 15, ../scss/components/_tabs.scss */
 
 .Tabs-link:active {
   background: #613a84;
 }
 
-/* line 19, ../scss/components/_tabs.scss */
+/* line 18, ../scss/components/_tabs.scss */
 
 .Tabs-tab--active .Tabs-link {
   background: #9467bd;
   color: white;
 }
 
-/* line 25, ../scss/components/_tabs.scss */
+/* line 24, ../scss/components/_tabs.scss */
 
 .Tabs-content--hidden {
   display: none;
@@ -2462,16 +2461,31 @@ ul {
 /* line 1, ../scss/components/_tooltips.scss */
 
 .ChartTooltip {
-  pointer-events: none;
+  pointer-events: none !important;
+  padding-bottom: 3px;
 }
 
-/* line 5, ../scss/components/_tooltips.scss */
+/* line 6, ../scss/components/_tooltips.scss */
 
 .ChartTooltip-inner {
   padding: 3px 6px;
   border-radius: 3px;
   color: white;
   border: 1px solid rgba(125, 125, 125, 0.3);
+}
+
+/* line 13, ../scss/components/_tooltips.scss */
+
+.ChartTooltip-inner--withImg {
+  height: 30px;
+}
+
+/* line 17, ../scss/components/_tooltips.scss */
+
+.ChartTooltip-img {
+  height: 30px;
+  width: 30px;
+  margin-left: 6px;
 }
 
 /* line 1, ../scss/components/_cities-list.scss */
@@ -2484,23 +2498,24 @@ ul {
 
 .CitiesList-item {
   display: list-item;
+  margin-bottom: 5px;
 }
 
-/* line 9, ../scss/components/_cities-list.scss */
+/* line 10, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-item-inner {
-  display: inline-block;
+  display: block;
   text-align: left;
 }
 
-/* line 15, ../scss/components/_cities-list.scss */
+/* line 16, ../scss/components/_cities-list.scss */
 
 .CitiesList--Vleft .CitiesList-item .CitiesList-item-inner {
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }
 
-/* line 23, ../scss/components/_cities-list.scss */
+/* line 22, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-input,
 .CitiesList-item .CitiesList-label,
@@ -2509,13 +2524,13 @@ ul {
   vertical-align: middle;
 }
 
-/* line 28, ../scss/components/_cities-list.scss */
+/* line 29, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-input {
   margin-right: 5px;
 }
 
-/* line 32, ../scss/components/_cities-list.scss */
+/* line 33, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-toggle {
   background: none;
@@ -2532,6 +2547,8 @@ ul {
   line-height: 39px;
   display: inline-block;
   vertical-align: middle;
+  -webkit-transition: font 0.750s linear;
+  transition: font 0.750s linear;
 }
 
 /* line 1, ../scss/charts/_map.scss */
@@ -2552,22 +2569,28 @@ ul {
   padding: 10px;
 }
 
-/* line 2, ../scss/charts/_lines.scss */
-
-.LinesChart-axis path,
-.LinesChart-axis line {
-  fill: none;
-  stroke-width: 0;
-  shape-rendering: crispEdges;
-}
-
-/* line 8, ../scss/charts/_lines.scss */
+/* line 3, ../scss/charts/_lines.scss */
 
 .LinesChart-axis--x {
   font-size: 10px;
 }
 
-/* line 12, ../scss/charts/_lines.scss */
+/* line 7, ../scss/charts/_lines.scss */
+
+.LinesChart-axis path,
+.LinesChart-axis line {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+
+/* line 14, ../scss/charts/_lines.scss */
+
+.LinesChart-axis text {
+  fill: #999;
+}
+
+/* line 18, ../scss/charts/_lines.scss */
 
 .LinesChart-line {
   fill: none;
@@ -2577,31 +2600,8 @@ ul {
 
 /* line 1, ../scss/charts/_bubbles.scss */
 
-.BubblesChart-slider {
-  position: relative;
-  margin-bottom: 30px;
-  margin: 0 auto;
-  width: 300px;
-}
-
-/* line 9, ../scss/charts/_bubbles.scss */
-
-.BubblesChart-slider-min,
-.BubblesChart-slider-max {
-  position: absolute;
-  top: 100%;
-}
-
-/* line 14, ../scss/charts/_bubbles.scss */
-
-.BubblesChart-slider-min {
-  left: 0;
-}
-
-/* line 18, ../scss/charts/_bubbles.scss */
-
-.BubblesChart-slider-max {
-  right: 0;
+.BubblesChart {
+  margin-top: 35px;
 }
 
 /* line 1, ../scss/_main.scss */
@@ -2617,7 +2617,7 @@ body {
   color: #000;
   font-family: helvetica, arial, sans-serif;
   font-size: 1.6em;
-  line-height: 1.5;
+  line-height: normal;
 }
 
 /* line 13, ../scss/_main.scss */
