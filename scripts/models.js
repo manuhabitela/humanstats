@@ -197,14 +197,13 @@ define(function (require, exports, module) {
 		},
 
 		filterByCities: function(cities) {
-			var data;
+			var data = [];
 			var cityIds = cities.pluck('id');
 			if (cityIds) {
 				data = this.filter(function(event) {
 					return _(cityIds).contains(event.get('city'));
 				});
-			} else
-				data = this.models;
+			}
 			this.activeItems.reset(data);
 			return this.activeItems.toJSON();
 		}
@@ -225,14 +224,13 @@ define(function (require, exports, module) {
 		},
 
 		filterByCities: function(cities) {
-			var data;
+			var data = [];
 			var cityIds = cities.pluck('id');
 			if (cityIds) {
 				data = this.filter(function(talk) {
 					return _(cityIds).contains(talk.get('city'));
 				});
-			} else
-				data = this.models;
+			}
 			this.activeItems.reset(data);
 			return this.activeItems.toJSON();
 		}
@@ -327,7 +325,7 @@ define(function (require, exports, module) {
 			this.trigger('handledDuplicates');
 		},
 		filterOrganizersByCities: function(cities) {
-			var data;
+			var data = [];
 			var organizerIds = cities && cities.length ?
 				_.uniq( _.flatten( cities.pluck('organizerIds') ) ) :
 				null;
@@ -335,25 +333,23 @@ define(function (require, exports, module) {
 				data = this.filter(function(user) {
 					return _(organizerIds).contains(user.id);
 				});
-			} else
-				data = this.models;
+			}
 			this.activeItems.reset(data);
 			return this.activeItems.toJSON();
 		},
 		filterTalkersByTalks: function(talks) {
-			var data;
+			var data = [];
 			var talkers = talks.pluck('authorId');
 			if (talkers) {
 				data = this.filter(function(user) {
 					return _(talkers).contains(user.id);
 				});
-			} else
-				data = this.models;
+			}
 			this.activeItems.reset(data);
 			return this.activeItems.toJSON();
 		},
 		filterAttendeesByEvents: function(events) {
-			var data;
+			var data = [];
 			var attendeeIds = events && events.length ?
 				_.uniq( _.flatten( events.pluck('attendeeIds') ) ) :
 				null;
@@ -361,8 +357,7 @@ define(function (require, exports, module) {
 				data = this.filter(function(user) {
 					return _(attendeeIds).contains(user.id);
 				});
-			} else
-				data = this.models;
+			}
 			this.activeItems.reset(data);
 			return this.activeItems.toJSON();
 		}
