@@ -13,11 +13,36 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 
 		initialize: function(options) {
 			this.data = options.data;
+
 			_.bindAll(this, 'onSliderChange', 'onSliderMouseup', 'render');
+
+			var that = this;
+			this.attendees = [];
+			this.diameter = 700;
+			this.tip = d3.tip()
+				.attr('class', 'ChartTooltip')
+				.html(function(d) {
+					return [
+						'<div class="ChartTooltip-inner" style="background-color: ',
+						that.data.cities.findWhere({ id: d.mainCity }).get('color'),
+						'">',
+							'<span class="ChartTooltip-attendee">',
+								d.name,
+							'</span> ',
+						'</div>'
+					].join('');
+				});
+			this.bubble = d3.layout.pack()
+				.sort(null)
+				.size([this.diameter, this.diameter])
+				.padding(4)
+				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*(that.attendees.length > 500 ? 2 : 4) : 1; })
+				.radius(function(d) { return that.attendees.length > 500 ? 6 + d : 12 + d; });
 		},
 
 		render: function(attendees) {
 			if (!this.data) return false;
+			var that = this;
 
 			if (!this.$el.children().length) {
 				this.$el.html( this.template );
@@ -31,47 +56,24 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				this.$slider.input.on('mouseup', this.onSliderMouseup);
 			}
 
+			this.attendees = _(attendees || this.data.filtered.attendees).shuffle();
 
-			attendees = _(attendees || this.data.filtered.attendees).shuffle();
-
-			this.$slider.input.attr('max', this.data.filtered.cities.length > 1 ? _(attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.length; }).max().value() : this.data.filtered.events.length);
+			this.$slider.input.attr('max', this.data.filtered.cities.length > 1 ? _(this.attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.length; }).max().value() : this.data.filtered.events.length);
 			this.$slider.max.text( this.$slider.input.attr('max') );
-			if (!attendees)
+			if (!this.attendees)
 				this.$slider.input.val(1);
 
-			var that = this;
-			var diameter = 700;
 
-			var tip = d3.tip()
-				.attr('class', 'ChartTooltip')
-				.html(function(d) {
-					return [
-						'<div class="ChartTooltip-inner" style="background-color: ',
-						that.data.cities.findWhere({ id: d.mainCity }).get('color'),
-						'">',
-							'<span class="ChartTooltip-attendee">',
-								d.name,
-							'</span> ',
-						'</div>'
-					].join('');
-				});
-			var tooltipTimeout = null;
+			if (!this.svg) {
+				this.svg = d3.select(this.el.querySelector('svg'))
+					.attr("width", this.diameter)
+					.attr("height", this.diameter)
+					.attr("class", "BubblesChart-bubble");
+				this.svg.call(this.tip);
+			}
 
-			var bubble = d3.layout.pack()
-				.sort(null)
-				.size([diameter, diameter])
-				.padding(4)
-				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*(attendees.length > 500 ? 2 : 4) : 1; })
-				.radius(function(d) { return attendees.length > 500 ? 6 + d : 12 + d; });
-
-			var svg = d3.select(this.el.querySelector('svg'))
-				.attr("width", diameter)
-				.attr("height", diameter)
-				.attr("class", "BubblesChart-bubble");
-			svg.call(tip);
-
-			var node = svg.selectAll(".BubblesChart-node")
-				.data(bubble.nodes({ children: attendees}).filter(function(d) { return !d.children; }));
+			var node = this.svg.selectAll(".BubblesChart-node")
+				.data(this.bubble.nodes({ children: this.attendees}).filter(function(d) { return !d.children; }));
 
 			node.enter().append("g").attr("class", "BubblesChart-node").append("circle").attr('class', 'BubblesChart-node-circle').style("fill", function(d) { return "#fff"; });
 
@@ -85,14 +87,17 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.attr("r", function(d) { return d.id ? d.r : 0; })
 				.style("fill", function(d) { return d.id ? that.data.cities.findWhere({ id: d.mainCity }).get('color') : ''; });
 
+			var tooltipTimeout = null;
 			node
+				.on('.mouseover', null)
+				.on('.mouseout', null)
 				.on('mouseover', function(d) {
 					clearTimeout(tooltipTimeout);
-					tip.show(d);
+					that.tip.show(d);
 				})
 				.on('mouseout', function() {
 					clearTimeout(tooltipTimeout);
-					tooltipTimeout = setTimeout(tip.hide, 500);
+					tooltipTimeout = setTimeout(that.tip.hide, 500);
 				});
 
 			node.exit().remove();
