@@ -1,4 +1,4 @@
-define(["backbone", "underscore", "tabs", "./data.info", "./data.cities", "./data.events", "./data.attendees"],
+define(["backbone", "underscore", "tabs", "./data.info", "./data.map", "./data.lines", "./data.bubbles"],
 	function(Backbone, _, tabs, TextDataView, MapDataView, LinesChartDataView, BubblesChartDataView) {
 
 	var DataView = Backbone.View.extend({
