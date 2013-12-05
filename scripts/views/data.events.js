@@ -1,29 +1,31 @@
 define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"], function(Backbone, _, d3, d3utils, moment) {
 	moment.lang('fr');
 
+	//simple lines chart, code mostly taken from a few mike bostock's blocks:
+	//http://bl.ocks.org/mbostock/3883245 Line Chart
+	//http://bl.ocks.org/mbostock/3884955 Multi-Series Line Chart
+	//http://bl.ocks.org/mbostock/1642874 Line Transition
 	var LinesChartDataView = Backbone.View.extend({
 		className: 'LinesChart',
 		initialize: function(options) {
-			this.data = options.data;
-		},
-		render: function() {
-			if (!this.data) return false;
 			var that = this;
-			var margin = {top: 20, right: 20, bottom: 30, left: 50},
-				width = 700 - margin.left - margin.right,
-				height = 600 - margin.top - margin.bottom;
+			this.data = options.data;
 
-			var parseDate = d3.time.format("%Y-%m-%d").parse;
+			this.margin = { top: 20, right: 20, bottom: 30, left: 50 };
+			this.width = 700 - this.margin.left - this.margin.right;
+			this.height = 600 - this.margin.top - this.margin.bottom;
 
-			var x = d3.time.scale()
+			this.parseDate = d3.time.format("%Y-%m-%d").parse;
+
+			this.x = d3.time.scale()
 				.nice(d3.time.month)
-				.range([0, width]);
+				.range([0, this.width]);
 
-			var y = d3.scale.linear()
-				.range([height, 0]);
+			this.y = d3.scale.linear()
+				.range([this.height, 0]);
 
-			var xAxis = d3.svg.axis()
-				.scale(x)
+			this.xAxis = d3.svg.axis()
+				.scale(this.x)
 				.orient("bottom")
 				.ticks(d3.time.month, 1)
 				.tickFormat(function(date, i) {
@@ -32,18 +34,18 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 					return date.format(format);
 				});
 
-			var yAxis = d3.svg.axis()
-				.scale(y)
+			this.yAxis = d3.svg.axis()
+				.scale(this.y)
 				.orient("left");
 
-			var line = d3.svg.line()
+			this.line = d3.svg.line()
 				.interpolate('cardinal')
-				.x(function(d) { return x(d.axisDate); })
-				.y(function(d) { return y(d.attendees); });
+				.x(function(d) { return that.x(d.axisDate); })
+				.y(function(d) { return that.y(d.attendees); });
 
-			var dotsScale = d3.scale.linear().domain([1, that.data.cities.length]).range([5, 3.5]);
+			this.dotsScale = d3.scale.linear().domain([1, that.data.cities.length]).range([5, 3.5]);
 
-			var tip = d3.tip()
+			this.tip = d3.tip()
 				.attr('class', 'ChartTooltip')
 				.html(function(d) {
 					var currentYear = moment().year(),
@@ -64,16 +66,20 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 						'</div>'
 					].join('');
 				});
+		},
 
+		render: function() {
+			if (!this.data) return false;
+			var that = this;
 
 			var data = _(this.data.filtered.events).map(function(d) {
 				var obj = {
-					date: parseDate(d.date),
+					date: that.parseDate(d.date),
 					attendees: d.attendeeIds.length,
 					city: d.city,
 				};
 				//i'm sure there's a better way but we set day of month to 1 to align values to axis...
-				obj.axisDate = moment( obj.date).date(1).toDate();
+				obj.axisDate = moment(obj.date).date(1).toDate();
 				return obj;
 			});
 
@@ -85,32 +91,28 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				};
 			});
 
-			var chart;
-			if (!this.el.querySelector('svg'))
-				chart = d3.select(this.el).append('svg').attr("width", width + margin.left + margin.right).attr("height", height + margin.top + margin.bottom);
-			else
-				chart = d3.select(this.el.querySelector('svg'));
-			if (!this.el.querySelector('g.LinesChart-container')) {
-				chart = chart
-					.append("g")
-					.attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-					.attr("class", "LinesChart-container");
-			} else {
-				chart = chart.select('g.LinesChart-container');
+			if (!this.chart) {
+				this.chart = d3.select(this.el)
+					.append('svg')
+						.attr("width", this.width + this.margin.left + this.margin.right).attr("height", this.height + this.margin.top + this.margin.bottom)
+						.append("g")
+							.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")")
+							.attr("class", "LinesChart-container");
+
+				this.chart.call(this.tip);
 			}
 
-			chart.call(tip);
 
-			x.domain(d3.extent(data, function(d) { return d.axisDate; }));
-			y.domain([0, d3.max(data, function(d) { return d.attendees; })+10]);
+			this.x.domain(d3.extent(data, function(d) { return d.axisDate; }));
+			this.y.domain([0, d3.max(data, function(d) { return d.attendees; })+10]);
 
 			if (!this.el.querySelector('.LinesChart-axis--x')) {
-				chart.append("g")
+				this.chart.append("g")
 					.attr("class", "LinesChart-axis LinesChart-axis--x")
-					.attr("transform", "translate(0," + height + ")");
+					.attr("transform", "translate(0," + this.height + ")");
 			}
 			if (!this.el.querySelector('.LinesChart-axis--y')) {
-				chart.append("g")
+				this.chart.append("g")
 					.attr("class", "LinesChart-axis LinesChart-axis--y")
 					.append("text")
 						.attr("transform", "rotate(-90)")
@@ -120,36 +122,38 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 						.text("Participants");
 			}
 
-			chart.select('.LinesChart-axis--x').transition().call(xAxis);
-			chart.select('.LinesChart-axis--y').transition().call(yAxis);
+			this.chart.select('.LinesChart-axis--x').transition().call(this.xAxis);
+			this.chart.select('.LinesChart-axis--y').transition().call(this.yAxis);
 
-
-			var chartCities = chart.selectAll(".LinesChart-city").data(cities);
+			var chartCities = this.chart.selectAll(".LinesChart-city").data(cities);
 			chartCities.enter().append("g").attr("class", "LinesChart-city").append("path").attr("class", "LinesChart-line");
 
-			chart.selectAll('.LinesChart-line').data(cities)
+			this.chart.selectAll('.LinesChart-line').data(cities)
 				.transition()
-					.attr("d", function(d) { return line(d.values); })
+					.attr("d", function(d) { return that.line(d.values); })
 					.style("stroke", function(d) { return that.data.cities.findWhere({ id: d.name }).get('color'); });
 
 			chartCities.exit().remove();
-			var chartDots = chart.selectAll(".LinesChart-dot").data(data);
+
+			var chartDots = this.chart.selectAll(".LinesChart-dot").data(data);
 			chartDots.enter().append("circle").attr("class", "LinesChart-dot");
 
 			var tooltipTimeout = null;
-			chart.selectAll(".LinesChart-dot")
+			this.chart.selectAll(".LinesChart-dot")
+				.on('.mouseover', null)
+				.on('.mouseout', null)
 				.on('mouseover', function(d) {
 					clearTimeout(tooltipTimeout);
-					tip.show(d);
+					that.tip.show(d);
 				})
 				.on('mouseout', function() {
 					clearTimeout(tooltipTimeout);
-					tooltipTimeout = setTimeout(tip.hide, 500);
+					tooltipTimeout = setTimeout(that.tip.hide, 500);
 				})
 				.transition()
-					.attr("r", dotsScale(cities.length))
-					.attr("cx", function(d) { return x(d.axisDate); })
-					.attr("cy", function(d) { return y(d.attendees); })
+					.attr("r", this.dotsScale(cities.length))
+					.attr("cx", function(d) { return that.x(d.axisDate); })
+					.attr("cy", function(d) { return that.y(d.attendees); })
 					.style("fill", function(d) { return that.data.cities.findWhere({ id: d.city }).get('color'); });
 
 			chartDots.exit().remove();
