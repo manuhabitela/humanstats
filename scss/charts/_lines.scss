@@ -1,13 +1,19 @@
-.LinesChart-axis path,
-.LinesChart-axis line {
-	fill: none;
-	stroke-width: 0;
-	shape-rendering: crispEdges;
-}
+
 
 .LinesChart-axis--x {
 	font-size: 10px;
 }
+
+	.LinesChart-axis path,
+	.LinesChart-axis line {
+		fill: none;
+		stroke: #ccc;
+		shape-rendering: crispEdges;
+	}
+
+	.LinesChart-axis text {
+		fill: #999;
+	}
 
 .LinesChart-line {
 	fill: none;
