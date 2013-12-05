@@ -304,6 +304,10 @@ define(function (require, exports, module) {
 			}, this);
 		},
 		handleDuplicates: function(addedUser) {
+			//dont try to merge if the name has no space in it (it could be just a firstname that several different people can have)
+			//yeah this stuff is not that good but whatever
+			if (addedUser.get('name').indexOf(' ') === -1)
+				return false;
 			var existings = this.filter(function(model) {
 				return model.get('name') === addedUser.get('name') && model.id !== addedUser.id;
 			}, this);
