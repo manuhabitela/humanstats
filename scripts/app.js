@@ -35,6 +35,8 @@ define(
 		this.data.events.removeUpcomings();
 		this.data.events.removeEmpty();
 
+		this.data.cities.setAttendeesCount(this.data.events);
+
 		this.data.talks = new models.Talks(data.talks);
 
 		this.data.users = new models.Users(data.users);

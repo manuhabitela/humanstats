@@ -131,6 +131,19 @@ define(function (require, exports, module) {
 				if (i >= colors.length-1) i = 0;
 				else i++;
 			});
+		},
+
+		setAttendeesCount: function(events) {
+			this.each(function(city) {
+				var attendeeIds = [];
+				events.each(function(event) {
+					if (event.get('city') && event.get('city') === city.id && event.get('attendeeIds')) {
+						attendeeIds = attendeeIds.concat(event.get('attendeeIds'));
+					}
+				}, this);
+				city.set('attendeesCount', _(attendeeIds).uniq().length);
+				city.set('appearancesCount', attendeeIds.length);
+			}, this);
 		}
 	});
 
