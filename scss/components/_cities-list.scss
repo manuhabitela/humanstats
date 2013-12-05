@@ -5,9 +5,10 @@
 	.CitiesList-item {
 
 		display: list-item;
+		margin-bottom: 5px;
 
 		.CitiesList-item-inner {
-			display: inline-block;
+			display: block;
 			text-align: left;
 		}
 

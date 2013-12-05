@@ -1,7 +1,7 @@
 define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"], function(Backbone, _, d3, d3utils, moment) {
 	moment.lang('fr');
 
-	//simple lines chart, code mostly taken from a few mike bostock's blocks:
+	//simple lines chart, code based an mike bostock's blocks:
 	//http://bl.ocks.org/mbostock/3883245 Line Chart
 	//http://bl.ocks.org/mbostock/3884955 Multi-Series Line Chart
 	//http://bl.ocks.org/mbostock/1642874 Line Transition

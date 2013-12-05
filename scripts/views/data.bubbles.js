@@ -1,20 +1,29 @@
 define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"], function(Backbone, _, d3, d3utils, moment) {
 	moment.lang('fr');
 
+	//bubbles chart, code based on http://bl.ocks.org/mbostock/4063269 Bubble Chart
 	var BubblesChartDataView = Backbone.View.extend({
 		className: 'BubblesChart',
-		template: ['<svg class="BubblesChart-chart"></svg>',
-			'<div class="BubblesChart-slider">',
-				'<output class="BubblesChart-slider-min">1</output>',
-				'<input class="BubblesChart-slider-input" name="BubblesChart-slider" type="range" min="1" step="1" value="1">',
-				'<output class="BubblesChart-slider-max"></output>',
-				'<output class="BubblesChart-slider-value"></output>',
-			'</div>'].join(''),
+		template: [
+			'<div class="BubblesChart-info u-marginBl">',
+				'<div class="BubblesChart-slider Grid Grid--center u-paddingButtonM u-marginBs">',
+					'<output class="BubblesChart-slider-min Grid-cell Grid-cell--sizeFit">1</output>',
+					'<input class="BubblesChart-slider-input Grid-cell Grid-cell--sizeFit" name="BubblesChart-slider" type="range" min="1" step="1" value="1">',
+					'<output class="BubblesChart-slider-max Grid-cell Grid-cell--sizeFit"></output>',
+				'</div>',
+				'<div class="BubblesChart-text u-textCenter u-paddingButtonM">',
+					'<p>',
+						'<output class="BubblesChart-attendeesCount"></output> <output class="BubblesChart-slider-value">1</output> fois',
+					'</p>',
+				'</div>',
+			'</div>',
+			'<svg class="BubblesChart-chart"></svg>'
+		].join(''),
 
 		initialize: function(options) {
 			this.data = options.data;
 
-			_.bindAll(this, 'onSliderChange', 'onSliderMouseup', 'render');
+			_.bindAll(this, 'onSliderChange', 'onSliderMouseup', 'render', 'updateFilteredData', 'updateInfoView');
 
 			var that = this;
 			this.attendees = [];
@@ -23,12 +32,13 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.attr('class', 'ChartTooltip')
 				.html(function(d) {
 					return [
-						'<div class="ChartTooltip-inner" style="background-color: ',
+						'<div class="ChartTooltip-inner ChartTooltip-inner--withImg Grid" style="background-color: ',
 						that.data.cities.findWhere({ id: d.mainCity }).get('color'),
 						'">',
-							'<span class="ChartTooltip-attendee">',
+							'<span class="ChartTooltip-text Grid-cell Grid-cell--sizeFit u-alignMiddle">',
 								d.name,
 							'</span> ',
+							'<img class="ChartTooltip-img Grid-cell Grid-cell--sizeFit u-alignMiddle" src="' + d.img + '">',
 						'</div>'
 					].join('');
 				});
@@ -40,7 +50,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.radius(function(d) { return that.attendees.length > 500 ? 6 + d : 12 + d; });
 		},
 
-		render: function(attendees) {
+		render: function() {
 			if (!this.data) return false;
 			var that = this;
 
@@ -50,13 +60,18 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 					min: this.$('.BubblesChart-slider-min'),
 					input: this.$('.BubblesChart-slider-input'),
 					value: this.$('.BubblesChart-slider-value'),
-					max: this.$('.BubblesChart-slider-max')
+					max: this.$('.BubblesChart-slider-max'),
+					attendeesCount: this.$('.BubblesChart-attendeesCount')
 				};
 				this.$slider.input.on('change', this.onSliderChange);
 				this.$slider.input.on('mouseup', this.onSliderMouseup);
+
 			}
 
-			this.attendees = _(attendees || this.data.filtered.attendees).shuffle();
+			this.updateFilteredData();
+			this.updateInfoView();
+
+			this.attendees = _(this.data.filtered.filteredAttendees).shuffle();
 
 			this.$slider.input.attr('max', this.data.filtered.cities.length > 1 ? _(this.attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.length; }).max().value() : this.data.filtered.events.length);
 			this.$slider.max.text( this.$slider.input.attr('max') );
@@ -104,13 +119,19 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 		},
 
 		onSliderChange: function(e) {
+			this.render();
+		},
+
+		updateFilteredData: function() {
 			this.data.filtered.filteredAttendees = _(this.data.filtered.attendees).filter(function(user) {
 				return user.attendedEventIds && user.attendedEventIds.length >= Math.round(this.$slider.input.val());
 			}, this);
+		},
 
+		updateInfoView: function() {
 			this.$slider.value.text( this.$slider.input.val() );
-
-			this.render(this.data.filtered.filteredAttendees);
+			var tpl = '<%- attendees %> <%= _.pluralize("personne", attendees) %> <%= _.pluralize("venue", attendees) %>';
+			this.$slider.attendeesCount.text( _.template(tpl, { attendees: this.data.filtered.filteredAttendees.length } ) );
 		},
 
 		onSliderMouseup: function(e) {
