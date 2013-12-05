@@ -31,11 +31,11 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 				return memo + event.attendeeIds.length;
 			}, 0);
 			var numberData = [
-				{ type: "talks", maxValue: this.data.talks.toJSON().length, value: this.data.filtered.talks.length, tpl: this.templates.talks },
 				{ type: "events", maxValue: this.data.events.toJSON().length, value: this.data.filtered.events.length, tpl: this.templates.events },
-				{ type: "organizers", maxValue: this.data.organizers.toJSON().length, value: this.data.filtered.organizers.length, tpl: this.templates.organizers },
+				{ type: "talks", maxValue: this.data.talks.toJSON().length, value: this.data.filtered.talks.length, tpl: this.templates.talks },
 				{ type: "talkers", maxValue: this.data.talkers.toJSON().length, value: this.data.filtered.talkers.length, tpl: this.templates.talkers },
 				{ type: "attendees", maxValue: [this.data.attendees.length, maxAppearances], value: [this.data.filtered.attendees.length, appearances], tpl: this.templates.attendees },
+				{ type: "organizers", maxValue: this.data.organizers.toJSON().length, value: this.data.filtered.organizers.length, tpl: this.templates.organizers },
 			];
 
 			//update existing li with new data
@@ -47,12 +47,13 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 				return _.template(d.tpl, { value: d.value });
 			});
 			//visually increment/decrement numbers with new values
-			selection.transition()
-				.duration(750)
+			selection
 				.style('font-size', function(d) {
-					var scale = d3.scale.linear().domain([1, _.isArray(d.maxValue) ? d.maxValue[0] : d.maxValue]).range([12, 26]);
+					var scale = d3.scale.linear().domain([0, _.isArray(d.maxValue) ? d.maxValue[0] : d.maxValue]).range([12, 26]);
 					return scale( (_.isArray(d.value) ? d.value[0] : d.value) ) + 'px';
 				})
+				.transition()
+				.duration(750)
 				.tween("text", function(d) {
 					var prevVal = that.numberData ? _(that.numberData).findWhere({ type: d.type }).value : 0;
 					var newVal;
