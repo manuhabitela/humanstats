@@ -13,7 +13,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				'</div>',
 				'<div class="BubblesChart-text u-textCenter u-paddingButtonM">',
 					'<p>',
-						'<output class="BubblesChart-attendeesCount"></output> <output class="BubblesChart-slider-value">1</output> fois',
+						'<output class="BubblesChart-attendeesCount"></output> <output class="BubblesChart-slider-value">1</output> fois <output class="BubblesChart-city"></output>',
 					'</p>',
 				'</div>',
 			'</div>',
@@ -61,7 +61,8 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 					input: this.$('.BubblesChart-slider-input'),
 					value: this.$('.BubblesChart-slider-value'),
 					max: this.$('.BubblesChart-slider-max'),
-					attendeesCount: this.$('.BubblesChart-attendeesCount')
+					attendeesCount: this.$('.BubblesChart-attendeesCount'),
+					city: this.$('.BubblesChart-city'),
 				};
 				this.$slider.input.on('change', this.onSliderChange);
 				this.$slider.input.on('mouseup', this.onSliderMouseup);
@@ -127,7 +128,13 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 
 		updateFilteredData: function() {
 			this.data.filtered.filteredAttendees = _(this.data.filtered.attendees).filter(function(user) {
-				return user.attendedEventIds && user.attendedEventIds.all.length >= Math.round(this.$slider.input.val());
+				if (user.attendedEventIds) {
+					var city = this.data.filtered.cities.length > 1 || !this.data.filtered.cities.length ? 'all' : this.data.filtered.cities[0].id;
+					if (user.attendedEventIds[city])
+						return user.attendedEventIds[city].length >= Math.round(this.$slider.input.val());
+					return false;
+				}
+				return false;
 			}, this);
 		},
 
@@ -135,6 +142,10 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			this.$slider.value.text( this.$slider.input.val() );
 			var tpl = '<%- attendees %> <%= _.pluralize("personne", attendees) %> <%= _.pluralize("venue", attendees) %>';
 			this.$slider.attendeesCount.text( _.template(tpl, { attendees: this.data.filtered.filteredAttendees.length } ) );
+			this.$slider.city.text( this.data.filtered.cities.length > 1 || !this.data.filtered.cities.length ?
+				'aux Human Talks' :
+				'à ' + this.data.filtered.cities[0].name
+			);
 		},
 
 		onSliderMouseup: function(e) {
