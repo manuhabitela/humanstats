@@ -267,14 +267,20 @@ define(function (require, exports, module) {
 			if (talkIds.length)
 				this.set('talkIds', talkIds);
 		},
-		setMainCity: function(events) {
+		setMainCities: function(events) {
 			var attended = this.get('attendedEventIds');
 			var cities = _(attended).chain().map(function(eventId) {
 				var event = events.get(eventId) ? events.get(eventId).toJSON() : null;
 				return event ? event.city : null;
 			}).filter(function(city) { return !!city; }).value();
-			//http://stackoverflow.com/questions/18878571/underscore-js-find-the-most-frequently-occurring-value-in-an-array
-			this.set('mainCity', _(cities).chain().countBy().pairs().max(_.last).head().value());
+			//array of all the cities the user has been to, in order from most gone to to least gone to
+			this.set('mainCities', _(cities).chain()
+				.countBy()
+				.pairs()
+				.sortBy(function(item) { return item[1]*-1; })
+				.map(function(item) { return item[0]; })
+				.value()
+			);
 		}
 	});
 	var Users = models.Users = BaseCollection.extend({
@@ -300,7 +306,7 @@ define(function (require, exports, module) {
 		setMainCities: function(events) {
 			_(this.models).each(function(user) {
 				if (user.get('id') !== undefined)
-					user.setMainCity(events);
+					user.setMainCities(events);
 			}, this);
 		},
 		handleDuplicates: function(addedUser) {

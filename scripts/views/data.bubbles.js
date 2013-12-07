@@ -33,7 +33,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.html(function(d) {
 					return [
 						'<div class="ChartTooltip-inner ChartTooltip-inner--withImg Grid" style="background-color: ',
-						that.data.cities.findWhere({ id: d.mainCity }).get('color'),
+						that.data.cities.findWhere({ id: d.mainCities[0] }).get('color'),
 						'">',
 							'<span class="ChartTooltip-text Grid-cell Grid-cell--sizeFit u-alignMiddle">',
 								d.name,
@@ -100,7 +100,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.transition()
 				.duration(500)
 				.attr("r", function(d) { return d.id ? d.r : 0; })
-				.style("fill", function(d) { return d.id ? that.data.cities.findWhere({ id: d.mainCity }).get('color') : ''; });
+				.style("fill", function(d) { console.log(d); return d.id ? that.data.cities.findWhere({ id: d.mainCities[0] }).get('color') : ''; });
 
 			var tooltipTimeout = null;
 			node
