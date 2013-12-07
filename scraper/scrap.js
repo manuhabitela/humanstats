@@ -34,13 +34,14 @@ casper.on("resource.requested", function(res, req) {
 
 geocoder.key = apiKeys.bing;
 
-var cities = new models.Cities(IO.getDataFromJSON('./data/cities.json')),
-	events = new models.Events(IO.getDataFromJSON('./data/events.json')),
-	talks = new models.Talks(IO.getDataFromJSON('./data/talks.json')),
-	users = new models.Users(IO.getDataFromJSON('./data/users.json')),
+var cities = new models.Cities(),
+	events = new models.Events(),
+	talks = new models.Talks(),
+	users = new models.Users(),
 	meetups = IO.getDataFromJSON('./data/meetups.json'),
 	humantalks = new HumanTalks({ casper: casper }),
 	meetup = new Meetup({ casper: casper });
+models.Users.firstnames = IO.getDataFromJSON('./data/firstnames.json');
 
 function saveAll() {
 	var all = {
@@ -69,6 +70,8 @@ casper
 				city.set({ coords: coords }, { silent: true });
 			});
 		});
+
+		cities.setColors();
 	})
 	.then(function saveCities() {
 		saveAll();
@@ -77,6 +80,7 @@ casper
 		cities.each(function(city) {
 			casper.thenOpen(city.getURL(), function openedCityPage() {
 				events.add(humantalks.events());
+				events.removeUpcomings();
 
 				var organizers = humantalks.organizers();
 				city.set('organizerIds', _(organizers).pluck('id'));
@@ -149,6 +153,9 @@ casper
 	.then(function updateUsers() {
 		users.setAttendance(events);
 		users.setTalks(talks);
+		users.setMainCities(events);
+		events.removeEmpty();
+		cities.setAttendeesCount(events);
 		saveAll();
 	})
 	.run();

@@ -28,19 +28,13 @@ define(
 		_(this.data).extend(Backbone.Events);
 
 		this.data.cities = new models.Cities(data.cities);
-		this.data.cities.setColors();
 		this.data.cities.activateAll();
 
 		this.data.events = new models.Events(data.events);
-		this.data.events.removeUpcomings();
-		this.data.events.removeEmpty();
-
-		this.data.cities.setAttendeesCount(this.data.events);
 
 		this.data.talks = new models.Talks(data.talks);
 
 		this.data.users = new models.Users(data.users);
-		this.data.users.setMainCities(this.data.events);
 
 		var attendees = this.data.users.filter(function(user) {
 			return !!(user.get('attendedEventIds') && user.get('attendedEventIds').length);
