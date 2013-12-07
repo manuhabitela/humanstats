@@ -151,10 +151,10 @@ casper
 		});
 	})
 	.then(function updateUsers() {
+		events.removeEmpty();
 		users.setAttendance(events);
 		users.setTalks(talks);
 		users.setMainCities(events);
-		events.removeEmpty();
 		cities.setAttendeesCount(events);
 		saveAll();
 	})

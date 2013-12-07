@@ -246,14 +246,18 @@ define(function (require, exports, module) {
 			return _.template(this.htURL, { id: this.get('id'), slug: this.get('slug') });
 		},
 		setAttendance: function(events) {
-			var attendedEventIds = [];
+			var attendedEventIds = { all: [] };
 			var id = this.get('id');
 			events.each(function(event) {
 				if ( id && _(event.get('attendeeIds')).contains(id) ) {
-					attendedEventIds.push(event.get('id'));
+					attendedEventIds.all.push(event.id);
+					if (attendedEventIds[event.get('city')])
+						attendedEventIds[event.get('city')].push(event.id);
+					else
+						attendedEventIds[event.get('city')] = [event.id];
 				}
 			}, this);
-			if (attendedEventIds.length)
+			if (attendedEventIds.all.length)
 				this.set('attendedEventIds', attendedEventIds);
 		},
 		setTalks: function(talks) {
@@ -268,7 +272,7 @@ define(function (require, exports, module) {
 				this.set('talkIds', talkIds);
 		},
 		setMainCities: function(events) {
-			var attended = this.get('attendedEventIds');
+			var attended = this.get('attendedEventIds') ? this.get('attendedEventIds').all : null;
 			var cities = _(attended).chain().map(function(eventId) {
 				var event = events.get(eventId) ? events.get(eventId).toJSON() : null;
 				return event ? event.city : null;

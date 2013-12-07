@@ -73,7 +73,10 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 
 			this.attendees = _(this.data.filtered.filteredAttendees).shuffle();
 
-			this.$slider.input.attr('max', this.data.filtered.cities.length > 1 ? _(this.attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.length; }).max().value() : this.data.filtered.events.length);
+			this.$slider.input.attr('max', this.data.filtered.cities.length > 1 ?
+				_(this.attendees).chain().pluck('attendedEventIds').map(function (attended) { return attended.all.length; }).max().value() :
+				this.data.filtered.events.length
+			);
 			this.$slider.max.text( this.$slider.input.attr('max') );
 			if (!this.attendees)
 				this.$slider.input.val(1);
@@ -100,7 +103,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.transition()
 				.duration(500)
 				.attr("r", function(d) { return d.id ? d.r : 0; })
-				.style("fill", function(d) { console.log(d); return d.id ? that.data.cities.findWhere({ id: d.mainCities[0] }).get('color') : ''; });
+				.style("fill", function(d) { return d.id ? that.data.cities.findWhere({ id: d.mainCities[0] }).get('color') : ''; });
 
 			var tooltipTimeout = null;
 			node
@@ -124,7 +127,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 
 		updateFilteredData: function() {
 			this.data.filtered.filteredAttendees = _(this.data.filtered.attendees).filter(function(user) {
-				return user.attendedEventIds && user.attendedEventIds.length >= Math.round(this.$slider.input.val());
+				return user.attendedEventIds && user.attendedEventIds.all.length >= Math.round(this.$slider.input.val());
 			}, this);
 		},
 

@@ -37,7 +37,7 @@ define(
 		this.data.users = new models.Users(data.users);
 
 		var attendees = this.data.users.filter(function(user) {
-			return !!(user.get('attendedEventIds') && user.get('attendedEventIds').length);
+			return !!(user.get('attendedEventIds') && user.get('attendedEventIds').all && user.get('attendedEventIds').all.length);
 		});
 		this.data.attendees = new models.Users(attendees);
 
