@@ -6,6 +6,12 @@
 
 		display: list-item;
 		margin-bottom: 5px;
+		&:first-child {
+			margin-bottom: 10px;
+		}
+		&:last-child {
+			margin-bottom: 0;
+		}
 
 		.CitiesList-item-inner {
 			display: block;
@@ -26,8 +32,9 @@
 				vertical-align: middle;
 			}
 
-			.CitiesList-input {
-				margin-right: 5px;
+			.CitiesList-input + .CitiesList-label,
+			.CitiesList-label + .CitiesList-input {
+				margin-left: 5px;
 			}
 
 			.CitiesList-toggle {

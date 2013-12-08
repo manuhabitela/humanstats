@@ -5,8 +5,13 @@
 	border-radius: 3px;
 	border: none;
 	background: none;
+	line-height: inherit;
 }
 
 .Grid-cell--sizeFit {
 	width: auto;
+}
+
+.Grid, .Grid-cell, .userInfo-container {
+	transition: all 0.25s linear;
 }

@@ -16,7 +16,7 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 					defaultFill: '#dedede'
 				},
 				geographyConfig: {
-					dataUrl: '/data/regions.topojson',
+					dataUrl: 'data/regions.topojson',
 					popupOnHover: false,
 					highlightOnHover: false,
 					borderColor: '#999'
@@ -64,7 +64,7 @@ define(["jquery", "backbone", "underscore", "d3", "topojson", "datamaps"], funct
 				popupTemplate: function (geography, data) {
 					return ['<div class="hoverinfo"><strong>' +  data.name + '</strong>',
 					'<br/>' + data.eventIds.length + ' évènements',
-					'<br/>' + data.attendeesCount + ' participants venus ' + data.appearancesCount + ' fois',
+					'<br/>' + data.attendeesCount + ' participants accueillies ' + data.appearancesCount + ' fois',
 					'</div>'].join('');
 				},
 				borderWidth: 1,

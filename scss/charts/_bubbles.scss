@@ -1,5 +1,6 @@
 .BubblesChart {
-	margin-top: 35px;
+	margin-top: 13px;
+	position: relative;
 }
 
 	.BubblesChart-info {
@@ -8,8 +9,34 @@
 		.BubblesChart-slider-input {
 		}
 
-		.BubblesChart-slider-min {
+		.BubblesChart-slider-min,
+		.BubblesChart-slider-max {
+			opacity: 0.5;
 		}
 
-		.BubblesChart-slider-max {
-		}
+	.BubblesChart-node-circle {
+		cursor: pointer;
+	}
+
+.BubblesChart-userInfo {
+	width: 500px;
+	background: rgba(255, 246, 142, 0.95);
+	border-radius: 3px;
+	padding: 10px;
+	ul {
+		list-style-type: disc;
+		padding-left: 40px;
+	}
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	bottom: 0;
+}
+
+.BubblesChart-userInfo-content {
+	margin-bottom: 5px;
+	&:last-child {
+		margin-bottom: 0;
+	}
+}

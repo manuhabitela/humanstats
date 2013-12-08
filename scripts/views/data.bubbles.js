@@ -4,26 +4,64 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 	//bubbles chart, code based on http://bl.ocks.org/mbostock/4063269 Bubble Chart
 	var BubblesChartDataView = Backbone.View.extend({
 		className: 'BubblesChart',
-		template: [
-			'<div class="BubblesChart-info u-marginBl">',
-				'<div class="BubblesChart-slider Grid Grid--center u-paddingButtonM u-marginBs">',
+		tpl: [
+			'<div class="BubblesChart-info">',
+				'<div class="BubblesChart-slider Grid u-paddingButtonM">',
 					'<output class="BubblesChart-slider-min Grid-cell Grid-cell--sizeFit">1</output>',
 					'<input class="BubblesChart-slider-input Grid-cell Grid-cell--sizeFit" name="BubblesChart-slider" type="range" min="1" step="1" value="1">',
 					'<output class="BubblesChart-slider-max Grid-cell Grid-cell--sizeFit"></output>',
-				'</div>',
-				'<div class="BubblesChart-text u-textCenter u-paddingButtonM">',
-					'<p>',
+					'<p class="BubblesChart-text Grid-cell Grid-cell--sizeFit u-marginLl">',
 						'<output class="BubblesChart-attendeesCount"></output> <output class="BubblesChart-slider-value">1</output> fois <output class="BubblesChart-city"></output>',
 					'</p>',
 				'</div>',
+				'<p class="BubblesChart-golden u-paddingButtonM u-marginTs u-isHidden">Hey, ces gens sont venus à tous les Human Talks de leur ville !</p>',
 			'</div>',
-			'<svg class="BubblesChart-chart"></svg>'
+			'<svg class="BubblesChart-chart"></svg>',
+			'<div class="BubblesChart-userInfo u-closable u-isHidden"></div>'
+		].join(''),
+
+		userInfoTpl: [
+			'<button type="button" class="u-closable-close">&times;</button>',
+			'<p class="BubblesChart-userInfo-content">',
+				'<a href="<%= data.users.get(user.id).getURL() %>" target="_blank"><%= user.name %></a> ',
+				'<% if (user.attendedEventIds.all.length === 1) { %>',
+					'est venu(e) une fois à <%= _(user.mainCities[0]).capitalize() %>',
+					'<% if (typeof user.talkIds === "undefined" || !user.talkIds.length) { %>, comme ça, pour voir<% } %>',
+					'. ',
+				'<% } else if (user.attendedEventIds[ user.mainCities[0] ].length === (data.cities.get( user.mainCities[0] ).get("eventIds").length) ) { %>',
+					'a assisté à <strong>tous les Human Talks <%= _(user.mainCities[0]).capitalize() %></strong> ! Gros respect. ',
+				'<% } else if (user.attendedEventIds[ user.mainCities[0] ].length >= (data.cities.get( user.mainCities[0] ).get("eventIds").length*0.6) ) { %>',
+					'est un(e) grand(e) habitué(e) des Human Talks <%= _(user.mainCities[0]).capitalize() %>. ',
+				'<% } else { %>',
+					'est venu(e) plusieurs fois à <%= _(user.mainCities[0]).capitalize() %>. ',
+				'<% } %>',
+			'</p>',
+			'<% if (user.mainCities.length > 1) { %>',
+				'<p class="BubblesChart-userInfo-content">',
+					'Il/elle est aussi passé par ',
+					'<%= _( _(user.mainCities.slice(1)).map(function(city) { return _(city).capitalize(); }) ).toSentence(", ", " et ") %>. ',
+				'</p>',
+			'<% } %>',
+			'<% if (typeof user.talkIds !== "undefined" && user.talkIds.length > 0) { %>',
+				'<p class="BubblesChart-userInfo-content">',
+					"C'est l'auteur de ",
+					'<% if (user.talkIds.length === 1) { %>',
+						'<a href="<%= data.talks.get(user.talkIds[0]).getURL() %>" target="_blank"><%= data.talks.get(user.talkIds[0]).get("name") %></a>.',
+					'<% } else { %> : ',
+						'<ul><% _(user.talkIds).each(function(talkId) { %>',
+							'<li><a href="<%= data.talks.get(talkId).getURL() %>" target="_blank"><%= data.talks.get(talkId).get("name") %></a>',
+						'<% }) %></ul>',
+					'<% } %>',
+				'</p>',
+			'<% } %>'
 		].join(''),
 
 		initialize: function(options) {
+			this.options = options;
 			this.data = options.data;
 
 			_.bindAll(this, 'onSliderChange', 'onSliderMouseup', 'render', 'updateFilteredData', 'updateInfoView');
+
 
 			var that = this;
 			this.attendees = [];
@@ -35,19 +73,22 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 						'<div class="ChartTooltip-inner ChartTooltip-inner--withImg Grid" style="background-color: ',
 						that.data.cities.findWhere({ id: d.mainCities[0] }).get('color'),
 						'">',
-							'<span class="ChartTooltip-text Grid-cell Grid-cell--sizeFit u-alignMiddle">',
+							'<span class="ChartTooltip-text Grid-cell Grid-cell--sizeFit u-alignMiddle u-textTruncate">',
 								d.name,
 							'</span> ',
 							'<img class="ChartTooltip-img Grid-cell Grid-cell--sizeFit u-alignMiddle" src="' + d.img + '">',
 						'</div>'
 					].join('');
 				});
+			this.radiusScale = d3.scale.linear().domain([1, this.data.attendees.length]).range([12, 6]);
 			this.bubble = d3.layout.pack()
 				.sort(null)
 				.size([this.diameter, this.diameter])
 				.padding(4)
 				.value(function(d) { return d.talkIds && d.talkIds.length ? d.talkIds.length*(that.attendees.length > 500 ? 2 : 4) : 1; })
-				.radius(function(d) { return that.attendees.length > 500 ? 6 + d : 12 + d; });
+				.radius(function(d) { return that.radiusScale(that.attendees.length) + d; });
+
+			this.userInfoTemplate = _.template(this.userInfoTpl);
 		},
 
 		render: function() {
@@ -55,7 +96,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			var that = this;
 
 			if (!this.$el.children().length) {
-				this.$el.html( this.template );
+				this.$el.html( this.tpl );
 				this.$slider = {
 					min: this.$('.BubblesChart-slider-min'),
 					input: this.$('.BubblesChart-slider-input'),
@@ -63,6 +104,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 					max: this.$('.BubblesChart-slider-max'),
 					attendeesCount: this.$('.BubblesChart-attendeesCount'),
 					city: this.$('.BubblesChart-city'),
+					golden: this.$('.BubblesChart-golden')
 				};
 				this.$slider.input.on('change', this.onSliderChange);
 				this.$slider.input.on('mouseup', this.onSliderMouseup);
@@ -70,8 +112,6 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			}
 
 			this.updateFilteredData();
-			this.updateInfoView();
-
 			this.attendees = _(this.data.filtered.filteredAttendees).shuffle();
 
 			this.$slider.input.attr('max', this.data.filtered.cities.length > 1 ?
@@ -81,7 +121,12 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			this.$slider.max.text( this.$slider.input.attr('max') );
 			if (!this.attendees)
 				this.$slider.input.val(1);
+			if (this.$slider.input.val() > this.$slider.input.attr('max'))
+				this.$slider.input.val(this.$slider.input.attr('max'));
 
+			this.updateFilteredData();
+			this.attendees = _(this.data.filtered.filteredAttendees).shuffle();
+			this.updateInfoView();
 
 			if (!this.svg) {
 				this.svg = d3.select(this.el.querySelector('svg'))
@@ -110,6 +155,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			node
 				.on('.mouseover', null)
 				.on('.mouseout', null)
+				.on('.click', null)
 				.on('mouseover', function(d) {
 					clearTimeout(tooltipTimeout);
 					that.tip.show(d);
@@ -117,6 +163,10 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.on('mouseout', function() {
 					clearTimeout(tooltipTimeout);
 					tooltipTimeout = setTimeout(that.tip.hide, 500);
+				})
+				.on('click', function(d) {
+					that.$el.find('.BubblesChart-userInfo').html( that.userInfoTemplate({ user: d, data: that.data }) );
+					that.$el.find('.BubblesChart-userInfo').removeClass('u-isHidden');
 				});
 
 			node.exit().remove();
@@ -146,6 +196,10 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				'aux Human Talks' :
 				'à ' + this.data.filtered.cities[0].name
 			);
+			var goldenAttendees = (this.data.filtered.cities.length === 1 &&
+				this.$slider.input.val()*1 === this.$slider.input.attr('max')*1 &&
+				this.data.filtered.filteredAttendees.length > 0);
+			this.$slider.golden.toggleClass('u-isHidden', !goldenAttendees);
 		},
 
 		onSliderMouseup: function(e) {

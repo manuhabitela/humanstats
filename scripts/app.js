@@ -1,5 +1,5 @@
 define(
-	["backbone", "json!../data/all.json", "./models", "./views/cities", "./views/data", "./views/data.info"],
+	["backbone", "json!../data/all.json", "./models", "./views/cities", "./views/data", "./views/data.info", "closable"],
 	function(Backbone, originalData, models, CitiesView, DataView, InfoView) {
 
 	var HumanStatistics = function(container) {

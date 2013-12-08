@@ -239,10 +239,14 @@ define(function (require, exports, module) {
 
 	var User = models.User = BaseModel.extend({
 		htURL: 'http://news.humancoders.com/users/<%= id %>-<%= slug %>',
+		meetupURL: 'http://www.meetup.com/<%= group %>/members/<%= id %>/',
 		parse: function(res) {
 			return res.id ? res : false;
 		},
 		getURL: function() {
+			if ((this.id + "").substr(0, 2) === "m_") {
+				return _.template(this.meetupURL, { id: this.id.substr(2), group: this.get('group') });
+			}
 			return _.template(this.htURL, { id: this.get('id'), slug: this.get('slug') });
 		},
 		setAttendance: function(events) {

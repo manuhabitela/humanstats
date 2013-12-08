@@ -2,6 +2,7 @@
 	li {
 		@extend .u-inlineBlock;
 		@extend .u-marginRm;
+		vertical-align: middle;
 	}
 }
 
@@ -17,3 +18,26 @@
 .u-paddingButtonL {
 	padding: 12px 24px;
 }
+
+.u-closable {
+	padding-right: 35px !important;
+}
+
+	.u-closable-close {
+		float: right;
+		font-size: 21px;
+		line-height: 1;
+		padding: 0;
+		cursor: pointer;
+		border: 0;
+		background: 0;
+		-webkit-appearance: none;
+		position: relative;
+		top: 0;
+		right: -24px;
+		color: inherit;
+		opacity: 0.6;
+		&:hover, &:focus {
+			opacity: 1;
+		}
+	}

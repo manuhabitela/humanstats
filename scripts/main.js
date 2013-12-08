@@ -35,6 +35,7 @@ require.config({
 		text: '../bower_components/requirejs-plugins/lib/text',
 		json: '../bower_components/requirejs-plugins/src/json',
 		tabs: '../lib/tabs',
+		closable: '../lib/closable',
 		moment: '../bower_components/momentjs/min/moment-with-langs.min',
 	}
 });
