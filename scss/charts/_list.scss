@@ -1,0 +1,65 @@
+.ListChart {
+	margin-top: 17px;
+}
+
+	.ListChart-filter {
+		margin-bottom: 16px;
+		label {
+			padding: 5px 10px;
+			&:first-child {
+				padding-left: 0;
+			}
+			&:last-child {
+				padding-right: 0;
+			}
+			input[type="checkbox"] {
+				margin-right: 5px;
+				vertical-align: middle;
+			}
+		}
+	}
+
+	.ListChart-listWrapper {
+		position: relative;
+	}
+
+		.ListChart-list {
+			font-size: 14px;
+			text-align: justify;
+			// padding-left: 20px;
+		}
+
+			.ListChart-item {
+				display: inline;
+				margin-right: 3px;
+			}
+
+				.ListChart-itemName {
+					text-decoration: none;
+					&:hover, &:focus {
+						text-decoration: underline;
+					}
+				}
+
+		.ListChart-chart {
+			pointer-events: none;
+			position: absolute;
+			top: 0;
+			left: 0;
+			margin: auto;
+		}
+
+			.ListChart-axis path,
+			.ListChart-axis line {
+				display: none;
+			}
+
+			.ListChart-axis line {
+				fill: none;
+				stroke: #ccc;
+				shape-rendering: crispEdges;
+			}
+
+			.ListChart-axis text {
+				fill: #999;
+			}

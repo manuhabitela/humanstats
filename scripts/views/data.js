@@ -1,5 +1,5 @@
-define(["backbone", "underscore", "tabs", "./data.info", "./data.map", "./data.lines", "./data.bubbles"],
-	function(Backbone, _, tabs, TextDataView, MapDataView, LinesChartDataView, BubblesChartDataView) {
+define(["backbone", "underscore", "tabs", "./data.info", "./data.map", "./data.lines", "./data.bubbles", "./data.list"],
+	function(Backbone, _, tabs, TextDataView, MapDataView, LinesChartDataView, BubblesChartDataView, ListChartDataView) {
 
 	var DataView = Backbone.View.extend({
 
@@ -15,6 +15,7 @@ define(["backbone", "underscore", "tabs", "./data.info", "./data.map", "./data.l
 					'<div id="attendees" class="Tabs-content BubblesChart"></div>',
 					'<div id="cities" class="Tabs-content MapChart"></div>',
 					'<div id="events" class="Tabs-content LinesChart"></div>',
+					'<div id="talks" class="Tabs-content ListChart"></div>',
 				'</div>',
 			'</div>'
 		].join(''),
@@ -28,7 +29,8 @@ define(["backbone", "underscore", "tabs", "./data.info", "./data.map", "./data.l
 			this.subViews = {
 				"attendees": new BubblesChartDataView( _.extend(subViewOpts, { el: this.$('.BubblesChart') }) ),
 				"cities": new MapDataView( _.extend(subViewOpts, { el: this.$('.MapChart') }) ),
-				"events": new LinesChartDataView( _.extend(subViewOpts, { el: this.$('.LinesChart') }) )
+				"events": new LinesChartDataView( _.extend(subViewOpts, { el: this.$('.LinesChart') }) ),
+				"talks": new ListChartDataView( _.extend(subViewOpts, { el: this.$('.ListChart') }) )
 			};
 
 			_.bindAll(this, 'render');

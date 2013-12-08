@@ -2460,15 +2460,15 @@ ul {
 .u-closable-close {
   float: right;
   font-size: 21px;
-  line-height: 1;
-  padding: 0;
+  line-height: 10px;
+  padding: 10px;
   cursor: pointer;
   border: 0;
   background: 0;
   -webkit-appearance: none;
   position: relative;
-  top: 0;
-  right: -24px;
+  top: -10px;
+  right: -35px;
   color: inherit;
   opacity: 0.6;
 }
@@ -2597,6 +2597,46 @@ ul {
   font-size: 14px;
 }
 
+@font-face {
+  font-family: 'icons';
+  src: url("fonts/icons.eot");
+}
+
+@font-face {
+  font-family: 'icons';
+  src: url(data:application/x-font-ttf;charset=utf-8;base64,AAEAAAALAIAAAwAwT1MvMg6xAysAAAC8AAAAYGNtYXDL8hqdAAABHAAAADxnYXNwAAAAEAAAAVgAAAAIZ2x5ZgqWXxcAAAFgAAABXGhlYWQAs7FnAAACvAAAADZoaGVhB8IDxQAAAvQAAAAkaG10eAoAAA0AAAMYAAAAEGxvY2EAuABmAAADKAAAAAptYXhwAAgAPAAAAzQAAAAgbmFtZbxOH+UAAANUAAABJ3Bvc3QAAwAAAAAEfAAAACAAAwQAAZAABQAAApkCzAAAAI8CmQLMAAAB6wAzAQkAAAAAAAAAAAAAAAAAAAABEAAAAAAAAAAAAAAAAAAAAABAACDmAQPA/8D/wAPAAEAAAAAAAAAAAAAAAAAAAAAgAAAAAAACAAAAAwAAABQAAwABAAAAFAAEACgAAAAGAAQAAQACACDmAf//AAAAIOYA////4RoCAAEAAAAAAAAAAQAB//8ADwABAAAAAAAAAAAAAgAANzkBAAAAAAMAA//NBAADlwAXADAAOQAAAQMuAwcFDgIUFxM1ND4CNxc3FzcXJQ4DFREUHgIXJRY+AjURNC4CBwMFNTcXPwEXFQNtaQMLDRAI/UgHDAYDbhUjMBu4239nbP0bCA4LBgYLDggC5QgOCwYGCw4IOf2aX46FqkoCXgEhBw0GAgT9BAkQDwn+0aIdLyYUAQGbmwFeAQEFDA4K/h8KDgwFAQEBBwoQCAHjCBAKBwH+MwFZ26+IPqakAAACAAoAZgP2AzMAMAA0AAABNTQuAiMhIg4CHQEzFSMVMxUjFTMVIxUUHgIzITI+Aj0BIzUzNSM1MzUjNTMBEQ0BA/YHCw8I/GYIDwsHZ2dnZ2dnBwsPCAOaCA8LB2dnZ2dnZ/2ZAQD/AALNPQkPCwYGCw8JPWdmZmdmPggPCwcHCw8IPmZnZmZn/mYBM5maAAABAAAAAQAA1LV07l8PPPUACwQAAAAAAM7KNoMAAAAAzso2gwAA/80EAAOXAAAACAACAAAAAAAAAAEAAAPA/8AAAAQAAAAAAAQAAAEAAAAAAAAAAAAAAAAAAAAEAAAAAAIAAAAEAAADBAAACgAAAAAACgBmAK4AAAABAAAABAA6AAMAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAADgCuAAEAAAAAAAEACgAAAAEAAAAAAAIADgA5AAEAAAAAAAMACgAgAAEAAAAAAAQACgBHAAEAAAAAAAUAFgAKAAEAAAAAAAYABQAqAAEAAAAAAAoAKABRAAMAAQQJAAEACgAAAAMAAQQJAAIADgA5AAMAAQQJAAMACgAgAAMAAQQJAAQACgBHAAMAAQQJAAUAFgAKAAMAAQQJAAYACgAvAAMAAQQJAAoAKABRAGkAYwBvAG4AcwBWAGUAcgBzAGkAbwBuACAAMAAuADAAaQBjAG8AbgBzaWNvbnMAaQBjAG8AbgBzAFIAZQBnAHUAbABhAHIAaQBjAG8AbgBzAEcAZQBuAGUAcgBhAHQAZQBkACAAYgB5ACAASQBjAG8ATQBvAG8AbgAAAwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==) format("truetype"), url(data:application/font-woff;charset=utf-8;base64,d09GRgABAAAAAAToAAsAAAAABJwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABPUy8yAAABCAAAAGAAAABgDrEDK2NtYXAAAAFoAAAAPAAAADzL8hqdZ2FzcAAAAaQAAAAIAAAACAAAABBnbHlmAAABrAAAAVwAAAFcCpZfF2hlYWQAAAMIAAAANgAAADYAs7FnaGhlYQAAA0AAAAAkAAAAJAfCA8VobXR4AAADZAAAABAAAAAQCgAADWxvY2EAAAN0AAAACgAAAAoAuABmbWF4cAAAA4AAAAAgAAAAIAAIADxuYW1lAAADoAAAAScAAAEnvE4f5XBvc3QAAATIAAAAIAAAACAAAwAAAAMEAAGQAAUAAAKZAswAAACPApkCzAAAAesAMwEJAAAAAAAAAAAAAAAAAAAAARAAAAAAAAAAAAAAAAAAAAAAQAAg5gEDwP/A/8ADwABAAAAAAAAAAAAAAAAAAAAAIAAAAAAAAgAAAAMAAAAUAAMAAQAAABQABAAoAAAABgAEAAEAAgAg5gH//wAAACDmAP///+EaAgABAAAAAAAAAAEAAf//AA8AAQAAAAAAAAAAAAIAADc5AQAAAAADAAP/zQQAA5cAFwAwADkAAAEDLgMHBQ4CFBcTNTQ+AjcXNxc3FyUOAxURFB4CFyUWPgI1ETQuAgcDBTU3Fz8BFxUDbWkDCw0QCP1IBwwGA24VIzAbuNt/Z2z9GwgOCwYGCw4IAuUIDgsGBgsOCDn9ml+OhapKAl4BIQcNBgIE/QQJEA8J/tGiHS8mFAEBm5sBXgEBBQwOCv4fCg4MBQEBAQcKEAgB4wgQCgcB/jMBWduviD6mpAAAAgAKAGYD9gMzADAANAAAATU0LgIjISIOAh0BMxUjFTMVIxUzFSMVFB4CMyEyPgI9ASM1MzUjNTM1IzUzARENAQP2BwsPCPxmCA8LB2dnZ2dnZwcLDwgDmggPCwdnZ2dnZ2f9mQEA/wACzT0JDwsGBgsPCT1nZmZnZj4IDwsHBwsPCD5mZ2ZmZ/5mATOZmgAAAQAAAAEAANS1dO5fDzz1AAsEAAAAAADOyjaDAAAAAM7KNoMAAP/NBAADlwAAAAgAAgAAAAAAAAABAAADwP/AAAAEAAAAAAAEAAABAAAAAAAAAAAAAAAAAAAABAAAAAACAAAABAAAAwQAAAoAAAAAAAoAZgCuAAAAAQAAAAQAOgADAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA4ArgABAAAAAAABAAoAAAABAAAAAAACAA4AOQABAAAAAAADAAoAIAABAAAAAAAEAAoARwABAAAAAAAFABYACgABAAAAAAAGAAUAKgABAAAAAAAKACgAUQADAAEECQABAAoAAAADAAEECQACAA4AOQADAAEECQADAAoAIAADAAEECQAEAAoARwADAAEECQAFABYACgADAAEECQAGAAoALwADAAEECQAKACgAUQBpAGMAbwBuAHMAVgBlAHIAcwBpAG8AbgAgADAALgAwAGkAYwBvAG4Ac2ljb25zAGkAYwBvAG4AcwBSAGUAZwB1AGwAYQByAGkAYwBvAG4AcwBHAGUAbgBlAHIAYQB0AGUAZAAgAGIAeQAgAEkAYwBvAE0AbwBvAG4AAAMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=) format("woff");
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* line 13, ../scss/components/_icons.scss */
+
+[class^="u-icon-"],
+[class*=" u-icon-"] {
+  font-family: 'icons';
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* line 27, ../scss/components/_icons.scss */
+
+.u-icon-pictures:before {
+  content: "\e600";
+}
+
+/* line 30, ../scss/components/_icons.scss */
+
+.u-icon-video:before {
+  content: "\e601";
+}
+
 /* line 5, ../scss/charts/_text.scss */
 
 .TextChart-item {
@@ -2654,6 +2694,12 @@ ul {
   stroke-width: 1.5px;
 }
 
+/* line 24, ../scss/charts/_lines.scss */
+
+.LinesChart-dot {
+  cursor: pointer;
+}
+
 /* line 1, ../scss/charts/_bubbles.scss */
 
 .BubblesChart {
@@ -2670,11 +2716,17 @@ ul {
 
 /* line 17, ../scss/charts/_bubbles.scss */
 
+.BubblesChart-chartWrapper {
+  position: relative;
+}
+
+/* line 21, ../scss/charts/_bubbles.scss */
+
 .BubblesChart-node-circle {
   cursor: pointer;
 }
 
-/* line 21, ../scss/charts/_bubbles.scss */
+/* line 25, ../scss/charts/_bubbles.scss */
 
 .BubblesChart-userInfo {
   width: 500px;
@@ -2685,26 +2737,127 @@ ul {
   left: 0;
   right: 0;
   margin: auto;
-  bottom: 0;
+  top: 0;
 }
 
-/* line 26, ../scss/charts/_bubbles.scss */
+/* line 30, ../scss/charts/_bubbles.scss */
 
 .BubblesChart-userInfo ul {
   list-style-type: disc;
   padding-left: 40px;
 }
 
-/* line 37, ../scss/charts/_bubbles.scss */
+/* line 41, ../scss/charts/_bubbles.scss */
 
 .BubblesChart-userInfo-content {
   margin-bottom: 5px;
 }
 
-/* line 39, ../scss/charts/_bubbles.scss */
+/* line 43, ../scss/charts/_bubbles.scss */
 
 .BubblesChart-userInfo-content:last-child {
   margin-bottom: 0;
+}
+
+/* line 1, ../scss/charts/_list.scss */
+
+.ListChart {
+  margin-top: 17px;
+}
+
+/* line 5, ../scss/charts/_list.scss */
+
+.ListChart-filter {
+  margin-bottom: 16px;
+}
+
+/* line 7, ../scss/charts/_list.scss */
+
+.ListChart-filter label {
+  padding: 5px 10px;
+}
+
+/* line 9, ../scss/charts/_list.scss */
+
+.ListChart-filter label:first-child {
+  padding-left: 0;
+}
+
+/* line 12, ../scss/charts/_list.scss */
+
+.ListChart-filter label:last-child {
+  padding-right: 0;
+}
+
+/* line 15, ../scss/charts/_list.scss */
+
+.ListChart-filter label input[type="checkbox"] {
+  margin-right: 5px;
+  vertical-align: middle;
+}
+
+/* line 22, ../scss/charts/_list.scss */
+
+.ListChart-listWrapper {
+  position: relative;
+}
+
+/* line 26, ../scss/charts/_list.scss */
+
+.ListChart-list {
+  font-size: 14px;
+  text-align: justify;
+}
+
+/* line 32, ../scss/charts/_list.scss */
+
+.ListChart-item {
+  display: inline;
+  margin-right: 3px;
+}
+
+/* line 37, ../scss/charts/_list.scss */
+
+.ListChart-itemName {
+  text-decoration: none;
+}
+
+/* line 39, ../scss/charts/_list.scss */
+
+.ListChart-itemName:hover,
+.ListChart-itemName:focus {
+  text-decoration: underline;
+}
+
+/* line 44, ../scss/charts/_list.scss */
+
+.ListChart-chart {
+  pointer-events: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  margin: auto;
+}
+
+/* line 53, ../scss/charts/_list.scss */
+
+.ListChart-axis path,
+.ListChart-axis line {
+  display: none;
+}
+
+/* line 57, ../scss/charts/_list.scss */
+
+.ListChart-axis line {
+  fill: none;
+  stroke: #ccc;
+  shape-rendering: crispEdges;
+}
+
+/* line 63, ../scss/charts/_list.scss */
+
+.ListChart-axis text {
+  fill: #999;
 }
 
 /* line 1, ../scss/_main.scss */
