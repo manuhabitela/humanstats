@@ -119,6 +119,20 @@ casper
 			});
 		});
 	})
+	.then(function getTalksSlidesNVideos() {
+		casper.thenOpen(humantalks.url + '/talks?filter=slides', function openedSlidesPage() {
+			var slideTalkIds = _(humantalks.talks()).pluck('id');
+			talks.each(function(talk) {
+				talk.set('slides', !!(talk.id && _(slideTalkIds).contains(talk.id)));
+			});
+		});
+		casper.thenOpen(humantalks.url + '/talks?filter=video', function openedVideoPage() {
+			var videoTalkIds = _(humantalks.talks()).pluck('id');
+			talks.each(function(talk) {
+				talk.set('video', !!(talk.id && _(videoTalkIds).contains(talk.id)));
+			});
+		});
+	})
 	.then(function saveMeetupAttendees() {
 		var openedMeetupEvent = function openedMeetupEvent() {
 			loadMore = meetup.loadMoreAttendees();

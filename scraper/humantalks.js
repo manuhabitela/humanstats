@@ -139,7 +139,7 @@ HumanTalks.prototype = {
 			//todo: refactor event id/city getter (code copied/pasted here and in events())
 			var eventURL = window.location.href;
 			var city = eventURL.match(/\/cities\/(.*)\/events/);
-			city = city[1] ? city[1] : '';
+			city = city && city[1] ? city[1] : '';
 			eventId = eventURL.substr(eventURL.lastIndexOf('/')+1)*1;
 
 			var elements = document.querySelectorAll('.talks .talk');

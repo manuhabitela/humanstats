@@ -7,8 +7,14 @@ define(["backbone", "underscore", "d3"], function(Backbone, _, d3) {
 				'<label>Rechercher ',
 					'<input type="text" name="ListChart-search" class="ListChart-search">',
 				'</label>',
-				'<label><input type="checkbox" name="ListChart-slides" class="ListChart-slides">Avec slides</label>',
-				'<label><input type="checkbox" name="ListChart-video" class="ListChart-video">Avec vidéo</label>',
+				'<label>',
+					'<input type="checkbox" name="ListChart-slides" class="ListChart-slides">',
+					'Avec slides <span class="u-icon-pictures"></span>',
+				'</label>',
+				'<label>',
+					'<input type="checkbox" name="ListChart-video" class="ListChart-video">',
+					'Avec vidéo <span class="u-icon-video"></span>',
+				'</label>',
 			'</div>',
 			'<div class="ListChart-listWrapper">',
 				'<ul class="ListChart-list"></ul>',
@@ -17,15 +23,15 @@ define(["backbone", "underscore", "d3"], function(Backbone, _, d3) {
 		].join(''),
 
 		itemTpl: [
-			'<% if (talk.video) { %>',
-				'<span class="u-icon-video"></span>',
-			'<% } %>',
-			'<% if (talk.slides) { %>',
-				'<span class="u-icon-pictures"></span>',
-			'<% } %>',
-			'<a class="ListChart-itemName" href="<%= data.talks.get(talk.id).getURL() %>" target="_blank">',
+			'<a style="color: <%= color %>" class="ListChart-colored ListChart-itemName" href="<%= data.talks.get(talk.id).getURL() %>" target="_blank">',
 				'<%= talk.name %>',
-			'</a>'
+				'<% if (!video && talk.video) { %>',
+					'&nbsp;<span title="La vidéo de ce talk est disponible" class="ListChart-colored ListChart-icon u-icon-video"></span>',
+				'<% } %>',
+				'<% if (!slides && talk.slides) { %>',
+					'&nbsp;<span title="Le support de ce talk est disponible" class="ListChart-colored ListChart-icon u-icon-pictures"></span>',
+				'<% } %>',
+			'</a>',
 		].join(''),
 
 		initialize: function(options) {
@@ -76,14 +82,20 @@ define(["backbone", "underscore", "d3"], function(Backbone, _, d3) {
 			this.updateFilteredData();
 			this.talks = this.data.filtered.filteredTalks.reverse();
 
+			var slides = this.$filter.slides.prop('checked');
+			var video = this.$filter.video.prop('checked');
 
 			var selection = this.list.selectAll('.ListChart-item').data( this.talks );
 			selection.enter().append('li').attr('class', 'ListChart-item');
-			selection
-				.html(function(d) { return that.itemTemplate({ talk: d, data: that.data }); })
-				.select('a')
-				.style("color", function(d) { return that.data.cities.findWhere({ id: d.city }).get('color'); });
-
+			selection.html(function(d) {
+				return that.itemTemplate({
+					talk: d,
+					data: that.data,
+					color: that.data.cities.findWhere({ id: d.city }).get('color'),
+					slides: slides,
+					video: video
+				});
+			});
 			selection.exit().remove();
 
 			// this.height = this.$('.ListChart-list').height();
@@ -110,26 +122,23 @@ define(["backbone", "underscore", "d3"], function(Backbone, _, d3) {
 			var search = this.$filter.search.val();
 			var slides = this.$filter.slides.prop('checked');
 			var video = this.$filter.video.prop('checked');
+			var activeFilters = {};
+			if (search.length) activeFilters.search = true;
+			if (!!slides) activeFilters.slides = true;
+			if (!!video) activeFilters.video = true;
 			this.data.filtered.filteredTalks = _(this.data.filtered.talks).filter(function(talk) {
-				var isOk = null;
+				var isOk = {};
 
-				if (search)
-					isOk = talk.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
+				if (activeFilters.search)
+					isOk.search = talk.name.toLowerCase().indexOf(search.toLowerCase()) !== -1;
 
-				if (!!slides && talk.slides && isOk !== false)
-					isOk = true;
+				if (activeFilters.slides)
+					isOk.slides = !!talk.slides;
 
-				if (!!video && talk.video && isOk !== false)
-					isOk = true;
+				if (activeFilters.video)
+					isOk.video = !!talk.video;
 
-				if (!search && !slides && !video)
-					isOk = true;
-
-				if (isOk && talk.eventId) {
-					var event = this.data.events.get(talk.eventId);
-					talk.date = event ? event.get('date') : null;
-				}
-				return isOk;
+				return _.isEqual(activeFilters, isOk);
 			}, this);
 		},
 	});

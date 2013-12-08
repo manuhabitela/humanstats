@@ -2793,43 +2793,49 @@ ul {
 
 .ListChart-filter label input[type="checkbox"] {
   margin-right: 5px;
+}
+
+/* line 18, ../scss/charts/_list.scss */
+
+.ListChart-filter label * {
+  display: inline-block;
   vertical-align: middle;
 }
 
-/* line 22, ../scss/charts/_list.scss */
+/* line 25, ../scss/charts/_list.scss */
 
 .ListChart-listWrapper {
   position: relative;
 }
 
-/* line 26, ../scss/charts/_list.scss */
+/* line 29, ../scss/charts/_list.scss */
 
 .ListChart-list {
   font-size: 14px;
   text-align: justify;
 }
 
-/* line 32, ../scss/charts/_list.scss */
+/* line 35, ../scss/charts/_list.scss */
 
 .ListChart-item {
   display: inline;
-  margin-right: 3px;
+  margin-right: 6px;
 }
 
-/* line 37, ../scss/charts/_list.scss */
+/* line 40, ../scss/charts/_list.scss */
 
 .ListChart-itemName {
   text-decoration: none;
 }
 
-/* line 39, ../scss/charts/_list.scss */
+/* line 42, ../scss/charts/_list.scss */
 
 .ListChart-itemName:hover,
 .ListChart-itemName:focus {
   text-decoration: underline;
 }
 
-/* line 44, ../scss/charts/_list.scss */
+/* line 50, ../scss/charts/_list.scss */
 
 .ListChart-chart {
   pointer-events: none;
@@ -2839,14 +2845,14 @@ ul {
   margin: auto;
 }
 
-/* line 53, ../scss/charts/_list.scss */
+/* line 59, ../scss/charts/_list.scss */
 
 .ListChart-axis path,
 .ListChart-axis line {
   display: none;
 }
 
-/* line 57, ../scss/charts/_list.scss */
+/* line 63, ../scss/charts/_list.scss */
 
 .ListChart-axis line {
   fill: none;
@@ -2854,7 +2860,7 @@ ul {
   shape-rendering: crispEdges;
 }
 
-/* line 63, ../scss/charts/_list.scss */
+/* line 69, ../scss/charts/_list.scss */
 
 .ListChart-axis text {
   fill: #999;
