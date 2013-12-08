@@ -4,7 +4,7 @@
 			'<ul class="CitiesList">',
 				'<li class="CitiesList-item" data-color="#000"><label class="CitiesList-item-inner Button">',
 					'<input type="checkbox" class="CitiesList-input CitiesList-toggle u-isInvisible">',
-					'<span class="CitiesList-label">Tout</span>',
+					'<span class="CitiesList-label">Tout cocher</span>',
 				'</label></li>',
 				'<% _.each(cities, function(city) { %>',
 				'<li class="CitiesList-item" data-id="<%- city.id %>" data-color="<%- city.color %>"><label class="CitiesList-item-inner Button">',
@@ -67,7 +67,7 @@
 
 			var activeItems = this.collection.activeItems.length > 0;
 			this.$('.CitiesList-toggle + .CitiesList-label')
-				.text(activeItems && activeItems !== that.collection.length ? 'Rien' : 'Tout')
+				.text(activeItems && activeItems !== that.collection.length ? 'Tout décocher' : 'Tout cocher')
 				.closest('.CitiesList-item').toggleClass('CitiesList-item--active', activeItems);
 		}
 	});
