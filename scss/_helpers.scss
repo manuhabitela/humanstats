@@ -26,15 +26,15 @@
 	.u-closable-close {
 		float: right;
 		font-size: 21px;
-		line-height: 1;
-		padding: 0;
+		line-height: 10px;
+		padding: 10px;
 		cursor: pointer;
 		border: 0;
 		background: 0;
 		-webkit-appearance: none;
 		position: relative;
-		top: 0;
-		right: -24px;
+		top: -10px;
+		right: -35px;
 		color: inherit;
 		opacity: 0.6;
 		&:hover, &:focus {

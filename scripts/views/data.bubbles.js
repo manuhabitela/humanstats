@@ -16,8 +16,10 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				'</div>',
 				'<p class="BubblesChart-golden u-paddingButtonM u-marginTs u-isHidden">Hey, ces gens sont venus à tous les Human Talks de leur ville !</p>',
 			'</div>',
-			'<svg class="BubblesChart-chart"></svg>',
-			'<div class="BubblesChart-userInfo u-closable u-isHidden"></div>'
+			'<div class="BubblesChart-chartWrapper">',
+				'<svg class="BubblesChart-chart"></svg>',
+				'<div class="BubblesChart-userInfo u-closable u-isHidden"></div>',
+			'</div>'
 		].join(''),
 
 		userInfoTpl: [
