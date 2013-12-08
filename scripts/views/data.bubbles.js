@@ -108,7 +108,6 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				};
 				this.$slider.input.on('change', this.onSliderChange);
 				this.$slider.input.on('mouseup', this.onSliderMouseup);
-
 			}
 
 			this.updateFilteredData();
@@ -121,7 +120,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			this.$slider.max.text( this.$slider.input.attr('max') );
 			if (!this.attendees)
 				this.$slider.input.val(1);
-			if (this.$slider.input.val() > this.$slider.input.attr('max'))
+			if (this.$slider.input.val()*1 > this.$slider.input.attr('max')*1)
 				this.$slider.input.val(this.$slider.input.attr('max'));
 
 			this.updateFilteredData();
