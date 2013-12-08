@@ -26,8 +26,7 @@
 		}
 
 			.CitiesList-input,
-			.CitiesList-label,
-			.CitiesList-toggle {
+			.CitiesList-label {
 				display: inline-block;
 				vertical-align: middle;
 			}
@@ -37,12 +36,7 @@
 				margin-left: 5px;
 			}
 
-			.CitiesList-toggle {
-				background: none;
-				border: none;
-				outline: 0;
-				padding: 0;
-				margin: 0;
+			.CitiesList-toggle + .CitiesList-label {
 				font-size: 14px;
 			}
 

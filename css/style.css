@@ -2576,30 +2576,24 @@ ul {
   border-bottom-left-radius: 0;
 }
 
-/* line 30, ../scss/components/_cities-list.scss */
+/* line 29, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-input,
-.CitiesList-item .CitiesList-label,
-.CitiesList-item .CitiesList-toggle {
+.CitiesList-item .CitiesList-label {
   display: inline-block;
   vertical-align: middle;
 }
 
-/* line 36, ../scss/components/_cities-list.scss */
+/* line 35, ../scss/components/_cities-list.scss */
 
 .CitiesList-item .CitiesList-input + .CitiesList-label,
 .CitiesList-item .CitiesList-label + .CitiesList-input {
   margin-left: 5px;
 }
 
-/* line 40, ../scss/components/_cities-list.scss */
+/* line 39, ../scss/components/_cities-list.scss */
 
-.CitiesList-item .CitiesList-toggle {
-  background: none;
-  border: none;
-  outline: 0;
-  padding: 0;
-  margin: 0;
+.CitiesList-item .CitiesList-toggle + .CitiesList-label {
   font-size: 14px;
 }
 
