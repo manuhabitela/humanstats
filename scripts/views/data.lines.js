@@ -74,6 +74,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 
 			var data = _(this.data.filtered.events).map(function(d) {
 				var obj = {
+					id: d.id,
 					date: that.parseDate(d.date),
 					attendees: d.attendeeIds.length,
 					city: d.city,
@@ -142,6 +143,7 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 			this.chart.selectAll(".LinesChart-dot")
 				.on('.mouseover', null)
 				.on('.mouseout', null)
+				.on('.click', null)
 				.on('mouseover', function(d) {
 					clearTimeout(tooltipTimeout);
 					that.tip.show(d);
@@ -149,6 +151,9 @@ define(["backbone", "underscore", "d3", "d3utils", "moment", "d3tip", "mixins"],
 				.on('mouseout', function() {
 					clearTimeout(tooltipTimeout);
 					tooltipTimeout = setTimeout(that.tip.hide, 500);
+				})
+				.on('click', function(d) {
+					window.open( that.data.events.get(d.id).getURL() );
 				})
 				.transition()
 					.attr("r", this.dotsScale(cities.length))
