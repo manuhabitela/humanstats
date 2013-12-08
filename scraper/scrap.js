@@ -38,6 +38,10 @@ var cities = new models.Cities(),
 	events = new models.Events(),
 	talks = new models.Talks(),
 	users = new models.Users(),
+// var cities = new models.Cities(IO.getDataFromJSON('./data/cities.json')),
+	// events = new models.Events(IO.getDataFromJSON('./data/events.json')),
+	// talks = new models.Talks(IO.getDataFromJSON('./data/talks.json')),
+	// users = new models.Users(IO.getDataFromJSON('./data/users.json')),
 	meetups = IO.getDataFromJSON('./data/meetups.json'),
 	humantalks = new HumanTalks({ casper: casper }),
 	meetup = new Meetup({ casper: casper });
@@ -58,6 +62,7 @@ function saveAll() {
 }
 
 casper
+	// .start()
 	.start(humantalks.url)
 	.then(function getAndLocateCities() {
 		cities.add(humantalks.cities());
@@ -155,6 +160,7 @@ casper
 		users.setAttendance(events);
 		users.setTalks(talks);
 		users.setMainCities(events);
+		users.setOrganizedCities(cities);
 		cities.setAttendeesCount(events);
 		saveAll();
 	})

@@ -152,11 +152,12 @@ define(function (require, exports, module) {
 		htURL: 'http://humantalks.com/cities/<%= city %>/events/<%= event %>',
 		meetupURL: 'http://www.meetup.com/<%= city %>/events/<%= event %>/',
 		getURL: function() {
-			return _.template(this.htURL, { city: this.get('city'), event: this.get('id') });
+			var meetup = this.get('meetup');
+			return meetup ? this.getMeetupURL() : _.template(this.htURL, { city: this.get('city'), event: this.get('id') });
 		},
 		getMeetupURL: function() {
 			var meetup = this.get('meetup');
-			return meetup ? _.template(this.meetupURL, { city: meetup.group, event: meetup.id }) : false;
+			return _.template(this.meetupURL, { city: meetup.group, event: meetup.id });
 		}
 	});
 	var Events = models.Events = BaseCollection.extend({
@@ -275,6 +276,17 @@ define(function (require, exports, module) {
 			if (talkIds.length)
 				this.set('talkIds', talkIds);
 		},
+		setOrganizedCities: function(cities) {
+			var cityIds = [];
+			var id = this.id;
+			cities.each(function(city) {
+				if ( id && city.get('organizerIds') && city.get('organizerIds').length && _(city.get('organizerIds')).contains(id) ) {
+					cityIds.push(city.id);
+				}
+			}, this);
+			if (cityIds.length)
+				this.set('organizedCityIds', cityIds);
+		},
 		setMainCities: function(events) {
 			var attended = this.get('attendedEventIds') ? this.get('attendedEventIds').all : null;
 			var cities = _(attended).chain().map(function(eventId) {
@@ -282,7 +294,7 @@ define(function (require, exports, module) {
 				return event ? event.city : null;
 			}).filter(function(city) { return !!city; }).value();
 			//array of all the cities the user has been to, in order from most gone to to least gone to
-			this.set('mainCities', _(cities).chain()
+			this.set('mainCityIds', _(cities).chain()
 				.countBy()
 				.pairs()
 				.sortBy(function(item) { return item[1]*-1; })
@@ -315,6 +327,12 @@ define(function (require, exports, module) {
 			_(this.models).each(function(user) {
 				if (user.get('id') !== undefined)
 					user.setMainCities(events);
+			}, this);
+		},
+		setOrganizedCities: function(events) {
+			_(this.models).each(function(user) {
+				if (user.get('id') !== undefined)
+					user.setOrganizedCities(events);
 			}, this);
 		},
 		handleDuplicates: function(addedUser) {
