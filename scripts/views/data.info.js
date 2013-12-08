@@ -6,7 +6,7 @@ define(["backbone", "underscore", "d3", "d3utils", "mixins"], function(Backbone,
 			events: '<span class="TextChart-number"><%- value %></span> <%- _("évènement").pluralize(value) %>',
 			organizers: '<span class="TextChart-number"><%- value %></span> <%- _("organisateur").pluralize(value) %>',
 			talkers: '<span class="TextChart-number"><%- value %></span> <%- _("talker").pluralize(value) %>',
-			attendees: '<span class="TextChart-number"><%- value[0] %></span> <%- _("participant").pluralize(value) %> accueillies <span class="TextChart-number"><%- value[1] %></span> fois',
+			attendees: '<span class="TextChart-number"><%- value[0] %></span> <%- _("participant").pluralize(value[0]) %> <%= (value[0] > 1) ? "accueillies" : "accueillis" %> <span class="TextChart-number"><%- value[1] %></span> fois',
 		},
 
 		initialize: function(options) {
