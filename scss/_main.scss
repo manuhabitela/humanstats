@@ -8,7 +8,7 @@ body {
 	font-family: helvetica, arial, sans-serif;
 	font-size: 16px;
 	line-height: 1.428571429;
-	padding: 0 0 200px;
+	padding: 0;
 }
 
 a {
@@ -21,4 +21,14 @@ a {
 
 .cities-container {
 	margin-bottom: 3px;
+}
+
+.placeholder {
+	margin: 20% auto;
+	text-align: center;
+}
+
+#footer {
+	font-size: 13px;
+	margin: 100px 0 20px;
 }

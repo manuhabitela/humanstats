@@ -40,6 +40,8 @@ require.config({
 	}
 });
 
-require(["./app"], function(HumanStatistics) {
+require(["./app", "jquery"], function(HumanStatistics) {
+	$('.placeholder').remove();
+	$('.js-showWhenReady').removeClass('u-isHidden');
 	window.myApp = new HumanStatistics('#container');
 });

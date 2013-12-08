@@ -2779,63 +2779,52 @@ ul {
 
 /* line 9, ../scss/charts/_list.scss */
 
-.ListChart-filter label:first-child {
-  padding-left: 0;
-}
-
-/* line 12, ../scss/charts/_list.scss */
-
-.ListChart-filter label:last-child {
-  padding-right: 0;
-}
-
-/* line 15, ../scss/charts/_list.scss */
-
 .ListChart-filter label input[type="checkbox"] {
   margin-right: 5px;
 }
 
-/* line 18, ../scss/charts/_list.scss */
+/* line 12, ../scss/charts/_list.scss */
 
 .ListChart-filter label * {
   display: inline-block;
   vertical-align: middle;
 }
 
-/* line 25, ../scss/charts/_list.scss */
+/* line 19, ../scss/charts/_list.scss */
 
 .ListChart-listWrapper {
   position: relative;
+  padding: 0 10px;
 }
 
-/* line 29, ../scss/charts/_list.scss */
+/* line 24, ../scss/charts/_list.scss */
 
 .ListChart-list {
   font-size: 14px;
   text-align: justify;
 }
 
-/* line 35, ../scss/charts/_list.scss */
+/* line 30, ../scss/charts/_list.scss */
 
 .ListChart-item {
   display: inline;
   margin-right: 6px;
 }
 
-/* line 40, ../scss/charts/_list.scss */
+/* line 35, ../scss/charts/_list.scss */
 
 .ListChart-itemName {
   text-decoration: none;
 }
 
-/* line 42, ../scss/charts/_list.scss */
+/* line 37, ../scss/charts/_list.scss */
 
 .ListChart-itemName:hover,
 .ListChart-itemName:focus {
   text-decoration: underline;
 }
 
-/* line 50, ../scss/charts/_list.scss */
+/* line 45, ../scss/charts/_list.scss */
 
 .ListChart-chart {
   pointer-events: none;
@@ -2845,14 +2834,14 @@ ul {
   margin: auto;
 }
 
-/* line 59, ../scss/charts/_list.scss */
+/* line 54, ../scss/charts/_list.scss */
 
 .ListChart-axis path,
 .ListChart-axis line {
   display: none;
 }
 
-/* line 63, ../scss/charts/_list.scss */
+/* line 58, ../scss/charts/_list.scss */
 
 .ListChart-axis line {
   fill: none;
@@ -2860,7 +2849,7 @@ ul {
   shape-rendering: crispEdges;
 }
 
-/* line 69, ../scss/charts/_list.scss */
+/* line 64, ../scss/charts/_list.scss */
 
 .ListChart-axis text {
   fill: #999;
@@ -2880,7 +2869,7 @@ body {
   font-family: helvetica, arial, sans-serif;
   font-size: 16px;
   line-height: 1.428571429;
-  padding: 0 0 200px;
+  padding: 0;
 }
 
 /* line 14, ../scss/_main.scss */
@@ -2899,4 +2888,18 @@ a {
 
 .cities-container {
   margin-bottom: 3px;
+}
+
+/* line 26, ../scss/_main.scss */
+
+.placeholder {
+  margin: 20% auto;
+  text-align: center;
+}
+
+/* line 31, ../scss/_main.scss */
+
+#footer {
+  font-size: 13px;
+  margin: 100px 0 20px;
 }

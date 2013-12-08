@@ -6,12 +6,6 @@
 		margin-bottom: 16px;
 		label {
 			padding: 5px 10px;
-			&:first-child {
-				padding-left: 0;
-			}
-			&:last-child {
-				padding-right: 0;
-			}
 			input[type="checkbox"] {
 				margin-right: 5px;
 			}
@@ -24,6 +18,7 @@
 
 	.ListChart-listWrapper {
 		position: relative;
+		padding: 0 10px;
 	}
 
 		.ListChart-list {

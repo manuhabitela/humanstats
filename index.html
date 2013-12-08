@@ -6,11 +6,10 @@
 	<head>
 		<meta charset="utf-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Human Talkstistics</title>
+		<title>Human Stats : les Human Talks en détails</title>
 		<meta name="description" content="">
 		<meta name="viewport" content="width=device-width">
 
-		<!-- <link href='http://fonts.googleapis.com/css?family=PT+Sans|PT+Serif' rel='stylesheet' type='text/css'> -->
 		<link rel="stylesheet" href="css/style.css">
 
 		<script data-main="scripts/main" src="bower_components/requirejs/require.js"></script>
@@ -20,11 +19,19 @@
 			<p class="obsolete-browser">Vous utilisez un navigateur <strong>obsolète</strong>. <a href="http://browsehappy.com/">Mettez-le à jour</a> pour naviguer sur Internet de façon <strong>sécurisée</strong> ! Et accessoirement pour voir ce site.</p>
 		<![endif]-->
 
-		<div id="container" class="u-textCenter">
-			<div class="info-container"></div>
-			<div class="Grid Grid--center">
-				<div class="tabbed-data-container Grid-cell Grid-cell--sizeFit u-marginRl"></div>
-				<div class="cities-container Grid-cell Grid-cell--sizeFit u-marginLl"></div>
+		<div class="placeholder">Chargement...</div>
+
+		<div class="content u-isHidden js-showWhenReady">
+			<div id="container" class="u-textCenter">
+				<div class="info-container"></div>
+				<div class="Grid Grid--center">
+					<div class="tabbed-data-container Grid-cell Grid-cell--sizeFit u-marginRl"></div>
+					<div class="cities-container Grid-cell Grid-cell--sizeFit u-marginLl"></div>
+				</div>
+			</div>
+
+			<div id="footer" class="u-textCenter">
+				<p>Les <a href="http://humantalks.com">Human Talks</a> en détails, par <a href="http://twitter.com/Leimina">Leimi</a>. <a href="http://github.com/leimi/humanstats">Contribuer sur GitHub</a>.</p>
 			</div>
 		</div>
 	</body>
